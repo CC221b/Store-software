@@ -3,8 +3,7 @@ namespace DO;
 
 public struct OrderItem
 {
-    public int ID { get; set;
-    }
+    public int ID { get; set;}
     public int ProductId { get; set; }
     public int OrderId { get; set; }
     public double Price { get; set; }

@@ -2,7 +2,6 @@
 namespace DO;
 public struct Order
 {
-
     public int ID { get; set; }
     public string CustomerName { get; set; }
     public string CustomerEmail { get; set; }
@@ -13,7 +12,6 @@ public struct Order
 
     public override string ToString() => $@"
     Order ID: {ID}
-
     CustomerName: {CustomerName}
     CustomerEmail: {CustomerEmail}
     CustomerAdress: {CustomerAdress}

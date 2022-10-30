@@ -2,7 +2,6 @@
 namespace DO;
 
 public enum Categories
-
 {
     percussion,//הקשה
     stringed,//מיתרים

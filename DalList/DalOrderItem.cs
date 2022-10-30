@@ -27,9 +27,6 @@ public class DalOrderItem
         throw new Exception("Sorry, no orderItem was found matching the order_ID and product_ID numbers.");
     }
 
-    /// <summary>
-    /// האם גם כאן בלי פרטים?
-    /// </summary>
     public List<DO.OrderItem> ReadByOrderID(int ID)
     {
         List<DO.OrderItem> OrderItems = new List<DO.OrderItem>();
@@ -68,7 +65,7 @@ public class DalOrderItem
         else
         {
             Tuple<int, int>[] orderItems = new Tuple<int, int>[DataSource.Config.index_OrderItem];
-            for (int i = 0; i < DataSource.Config.orderItem_ID; i++)
+            for (int i = 0; i < DataSource.Config.OrderItem_ID; i++)
             {
                 orderItems[i] = new Tuple<int, int>(DataSource.OrderItem_arr[i].ID, DataSource.OrderItem_arr[i].OrderId);
             }

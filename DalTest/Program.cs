@@ -5,43 +5,49 @@ namespace Dal;
 
 class Program
 {
-    private DalOrder dalO = new DalOrder();
-    private DalProduct dalP = new DalProduct();
-    private DalOrderItem dalOI = new DalOrderItem();
+    private DalOrder _dalO = new DalOrder();
+    private DalProduct _dalP = new DalProduct();
+    private DalOrderItem _dalOI = new DalOrderItem();
     public void Main(string[] args)
-
     {
         Console.WriteLine("enter 0 to Exit\n" +
                           "enter 1 to Product\n" +
                           "enter 2 to Order\n" +
                           "enter 3 to OrderItem\n");
-        int choose = int.Parse(Console.ReadLine());
-        string nameChoose = choose == 1 ? "Product" : choose == 2 ? "Order" : "OrderItem";
-        Console.WriteLine("enter 0 to add" + nameChoose +
-            "\n enter 1 to read" + nameChoose + "with id" +
-            "\n enter 2 to read all" + nameChoose + "s" +
-            "\n enter 3 to update" + nameChoose +
-            "\n enter 4 to delete" + nameChoose +
-            nameChoose == "OrderItem" ? "\n enter 5 to read orderItem by product_id and order_id \n " +
-            "enter 6 to read orderItems by order_id\n" : "");
-        int chooseMethod = int.Parse(Console.ReadLine());
-        switch (choose)
+        int choose = Convert.ToInt32(Console.ReadLine());
+        while (choose!=0)
         {
-            case 1:
-                Product(chooseMethod);
-                break;
-            case 2:
-                Order(chooseMethod);
-                break;
-            case 3:
-                OrderItem(chooseMethod);
-                break;
-            default:
-                break;
+            string nameChoose = choose == 1 ? "Product" : choose == 2 ? "Order" : "OrderItem";
+            Console.WriteLine("enter 0 to add" + nameChoose +
+                "\n enter 1 to read" + nameChoose + "with id" +
+                "\n enter 2 to read all" + nameChoose + "s" +
+                "\n enter 3 to update" + nameChoose +
+                "\n enter 4 to delete" + nameChoose +
+                nameChoose == "OrderItem" ? "\n enter 5 to read orderItem by product_id and order_id \n " +
+                "enter 6 to read orderItems by order_id\n" : "");
+            int chooseMethod = int.Parse(Console.ReadLine());
+            switch (choose)
+            {
+                case 1:
+                    _product(chooseMethod);
+                    break;
+                case 2:
+                    _order(chooseMethod);
+                    break;
+                case 3:
+                    _orderItem(chooseMethod);
+                    break;
+                default:
+                    break;
+            }
+            Console.WriteLine("enter 0 to Exit\n" +
+                         "enter 1 to Product\n" +
+                         "enter 2 to Order\n" +
+                         "enter 3 to OrderItem\n");
+            choose = Convert.ToInt32(Console.ReadLine());
         }
-
     }
-    public void Product(int choose)
+    private void _product(int choose)
     {
         DO.Product p = new DO.Product();
         int ID;
@@ -57,7 +63,7 @@ class Program
                 p.Category = (DO.Categories)Convert.ToInt32(Console.ReadLine());
                 try
                 {
-                    dalP.Create(p);
+                    _dalP.Create(p);
                 }
                 catch (Exception ex)
                 {
@@ -69,7 +75,7 @@ class Program
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    p = dalP.Read(ID);
+                    p = _dalP.Read(ID);
                     Console.WriteLine(p);
                 }
                 catch (Exception ex)
@@ -80,7 +86,7 @@ class Program
             case (int)DO.Options.ReadAll:
                 try
                 {
-                    Tuple<int, string>[] products = dalP.ReadAll();
+                    Tuple<int, string>[] products = _dalP.ReadAll();
                     foreach (var item in products)
                     {
                         Console.WriteLine(item);
@@ -97,7 +103,7 @@ class Program
                 DO.Product p1 = new DO.Product();
                 try
                 {
-                    p = dalP.Read(ID);
+                    p = _dalP.Read(ID);
                     Console.WriteLine(p);
                     Console.WriteLine("Write name:");
                     p1.Name = Console.ReadLine();
@@ -113,7 +119,7 @@ class Program
                     p1.Category = p1.Category == null ? p.Category : p1.Category;
                     try
                     {
-                        dalP.Update(p1);
+                        _dalP.Update(p1);
                     }
                     catch (Exception ex)
                     {
@@ -130,7 +136,7 @@ class Program
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    dalP.Delete(ID);
+                    _dalP.Delete(ID);
                 }
                 catch (Exception ex)
                 {
@@ -141,7 +147,7 @@ class Program
                 break;
         }
     }
-    public void Order(int choose)
+    private void _order(int choose)
     {
         DO.Order o = new DO.Order();
         int ID;
@@ -157,7 +163,7 @@ class Program
                 o.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
                 try
                 {
-                    dalO.Create(o);
+                    _dalO.Create(o);
                 }
                 catch (Exception ex)
                 {
@@ -169,7 +175,7 @@ class Program
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    o = dalO.Read(ID);
+                    o = _dalO.Read(ID);
                     Console.WriteLine(o);
                 }
                 catch (Exception ex)
@@ -180,7 +186,7 @@ class Program
             case (int)DO.Options.ReadAll:
                 try
                 {
-                    DO.Order[] orders = dalO.ReadAll();
+                    DO.Order[] orders = _dalO.ReadAll();
                     foreach (var item in orders)
                     {
                         Console.WriteLine(o);
@@ -197,7 +203,7 @@ class Program
                 DO.Order o1 = new DO.Order();
                 try
                 {
-                    o = dalO.Read(order_ID);
+                    o = _dalO.Read(order_ID);
                     Console.WriteLine(o);
                     Console.WriteLine("Write CustomerName:");
                     o1.CustomerName = Console.ReadLine();
@@ -219,7 +225,7 @@ class Program
                     o1.DeliveryDate = o1.DeliveryDate == null ? o.DeliveryDate : o1.DeliveryDate;
                     try
                     {
-                        dalO.Update(o);
+                        _dalO.Update(o);
                     }
                     catch (Exception ex)
                     {
@@ -236,7 +242,7 @@ class Program
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    dalO.Delete(ID); ;
+                    _dalO.Delete(ID); ;
                 }
                 catch (Exception ex)
                 {
@@ -247,7 +253,7 @@ class Program
                 break;
         }
     }
-    public void OrderItem(int choose)
+    private void _orderItem(int choose)
     {
         DO.OrderItem oi = new DO.OrderItem();
         int ID;
@@ -261,7 +267,7 @@ class Program
                 oi.Amount = int.Parse(Console.ReadLine());
                 try
                 {
-                    dalOI.Create(oi);
+                    _dalOI.Create(oi);
                 }
                 catch (Exception ex)
                 {
@@ -273,7 +279,7 @@ class Program
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    oi = dalOI.Read(ID);
+                    oi = _dalOI.Read(ID);
                     Console.WriteLine(oi);
                 }
                 catch (Exception ex)
@@ -284,7 +290,7 @@ class Program
             case (int)DO.Options.ReadAll:
                 try
                 {
-                    Tuple<int, int>[] t = dalOI.ReadAll();
+                    Tuple<int, int>[] t = _dalOI.ReadAll();
                     foreach (var item in t)
                     {
                         Console.WriteLine("ID:" + item.Item1);
@@ -302,7 +308,7 @@ class Program
                 DO.OrderItem oi1 = new DO.OrderItem();
                 try
                 {
-                    oi = dalOI.Read(orderItem_ID);
+                    oi = _dalOI.Read(orderItem_ID);
                     Console.WriteLine(oi);
                     Console.WriteLine("Write ProductId:");
                     oi1.ProductId = int.Parse(Console.ReadLine());
@@ -318,7 +324,7 @@ class Program
                     oi1.Amount = oi1.Amount == null ? oi.Amount : oi1.Amount;
                     try
                     {
-                        dalOI.Update(oi);
+                        _dalOI.Update(oi);
                     }
                     catch (Exception ex)
                     {
@@ -336,7 +342,7 @@ class Program
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    dalOI.Delete(ID);
+                    _dalOI.Delete(ID);
                 }
                 catch (Exception ex)
                 {
@@ -348,7 +354,7 @@ class Program
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    List<DO.OrderItem> orderItems = dalOI.ReadByOrderID(ID);
+                    List<DO.OrderItem> orderItems = _dalOI.ReadByOrderID(ID);
                     foreach (var item in orderItems)
                     {
                         Console.WriteLine(item);
@@ -365,7 +371,7 @@ class Program
                 int orderID = int.Parse(Console.ReadLine());
                 try
                 {
-                    oi = dalOI.ReadByProductIDAndOrderID(productID, orderID);
+                    oi = _dalOI.ReadByProductIDAndOrderID(productID, orderID);
                     Console.WriteLine(oi);
                 }
                 catch (Exception ex)

@@ -17,6 +17,7 @@ public class DalProduct
 
     public int Create(DO.Product p)
     {
+
         try
         {
             Read(p.ID);

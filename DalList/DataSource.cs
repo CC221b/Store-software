@@ -11,7 +11,7 @@ static internal class DataSource
     internal static class Config
     {
         static internal int index_Order = 0, index_Product = 0, index_OrderItem;
-        public static int order_ID = 222222, orderItem_ID = 123456;
+        private static int order_ID = 222222, orderItem_ID = 123456;
 
         public static int Order_ID
         {
@@ -21,14 +21,12 @@ static internal class DataSource
         {
             get { return orderItem_ID++; }
         }
-        //static internal int index_ID_product = 0;
     }
     //Defining a random variable.
-    public static readonly Random rand = new Random(0);
+    public static readonly Random Rand = new Random(0);
 
     //Creating entity arrays.
     internal static DO.Order[] Order_arr = new DO.Order[100];
-
     internal static DO.Product[] Product_arr = new DO.Product[50];
     internal static DO.OrderItem[] OrderItem_arr = new DO.OrderItem[200];
 
@@ -44,8 +42,7 @@ static internal class DataSource
     {
         // An array of 10 items entered manually.
         (string, int, DO.Categories)[] product_arr = new[] {
-            ("Acoustic_Guitar", 600, DO.Cate
-            gories.stringed),
+            ("Acoustic_Guitar", 600, DO.Categories.stringed),
             ("Electro_acoustic_Guitar", 900, DO.Categories.stringed),
             ("Piccolo_Trumpet", 8700,DO.Categories.wind),
             ("Pocket_Trumpet", 3700, DO.Categories.wind),
@@ -70,12 +67,12 @@ static internal class DataSource
             ("menochi","menochi@gmail.com","Y"),("mali","mali@gmail.com","Z") };
 
         //Draw a number that will start the product ID.
-        int rand_productId = rand.Next(333333, 666666);
+        int rand_productId = Rand.Next(333333, 666666);
 
         //add 10 product to product_arr.
         for (int i = 0; i < product_arr.Length; i++)
         {
-            int rand_num_InStock = rand.Next(100);
+            int rand_num_InStock = Rand.Next(100);
             DO.Product p = new Product();
             //I added the index to make sure that a different number will be created each time.
             p.ID = rand_productId + i;
@@ -86,6 +83,7 @@ static internal class DataSource
             AddProduct(p);
         }
 
+        int randomIndex = (int)Rand.NextInt64(0, 19);
         //add 20 order to order_arr.
         for (int i = 0; i < 20; i++)
         {
@@ -95,10 +93,11 @@ static internal class DataSource
             o.CustomerName = customers_arr[i].Item1;
             o.CustomerEmail = customers_arr[i].Item2;
             o.CustomerAdress = customers_arr[i].Item3;
-            o.OrderDate = DateTime.MinValue;
-            //איך משתמשים ב
-            //DATASPAN
-            //להשלים את 2 התכונות החסרות.
+            o.OrderDate = DateTime.Now;
+            TimeSpan t = new TimeSpan((int)Rand.NextInt64(1, 3), 0, 0, 0);
+            o.ShipDate = (randomIndex % 20) % 5 != 0 ? o.OrderDate.Add(t) : DateTime.MinValue;
+            t = new TimeSpan((int)Rand.NextInt64(3, 7), 0, 0, 0);
+            o.DeliveryDate = (randomIndex % 20) % 3 != 0 ? o.ShipDate.Add(t) : DateTime.MinValue;
             AddOrder(o);
         }
 
@@ -108,10 +107,10 @@ static internal class DataSource
         for (int i = 0; i < 20; i++)
         {
             DO.OrderItem oi = new DO.OrderItem();
-            int rand_index_product = rand.Next(10);
+            int rand_index_product = Rand.Next(10);
             //Since this is a musical instrument store, the maximum amount you can order from one instrument is 3 (this is also quite excessive.)
-            int rand_amount = rand.Next(1, 3);
-            oi.ID = Config.orderItem_ID;
+            int rand_amount = Rand.Next(1, 3);
+            oi.ID = Config.OrderItem_ID;
             oi.ProductId = Product_arr[rand_index_product].ID;
             oi.OrderId = Order_arr[i].ID;
             oi.Price = Product_arr[rand_index_product].Price;
@@ -122,17 +121,17 @@ static internal class DataSource
         //The second loop randomly adds order details to the drawn order.
         //A number between 0 and 3 has been drawn and according to this we will advance the loop index,
         //as stated in the requirements for maximum items on one order - 4.
-        int rand_amount_product_in_order = rand.Next(0, 3);
+        int rand_amount_product_in_order = Rand.Next(0, 3);
         for (int i = 0; i < 20; i += rand_amount_product_in_order)
         {
-            int rand_index_order = rand.Next(20);
+            int rand_index_order = Rand.Next(20);
             for (int j = 0; j < rand_amount_product_in_order; j++)
             {
                 DO.OrderItem oi = new DO.OrderItem();
-                int rand_index_product = rand.Next(10);
+                int rand_index_product = Rand.Next(10);
                 //Since this is a musical instrument store, the maximum amount you can order from one instrument is 3 (this is also quite excessive.)
-                int rand_amount = rand.Next(1, 3);
-                oi.ID = Config.orderItem_ID;
+                int rand_amount = Rand.Next(1, 3);
+                oi.ID = Config.OrderItem_ID;
                 oi.ProductId = Product_arr[rand_index_product].ID;
                 oi.OrderId = Order_arr[rand_index_order].ID;
                 oi.Price = Product_arr[rand_index_product].Price;

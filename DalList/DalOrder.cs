@@ -26,10 +26,6 @@ public class DalOrder
         return o.ID;
     }
 
-    /// <summary>
-    /// 
-    /// איזה פרטים לא לשלוח?
-    /// </summary>
     public DO.Order[] ReadAll()
     {
         if (DataSource.Config.index_Order == 0)
