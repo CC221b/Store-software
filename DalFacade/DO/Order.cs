@@ -13,6 +13,7 @@ public struct Order
 
     public override string ToString() => $@"
     Order ID: {ID}
+
     CustomerName: {CustomerName}
     CustomerEmail: {CustomerEmail}
     CustomerAdress: {CustomerAdress}
