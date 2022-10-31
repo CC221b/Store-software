@@ -2,7 +2,6 @@
 using DO;
 
 namespace Dal;
-
 class Program
 {
     private DalOrder _dalO = new DalOrder();
