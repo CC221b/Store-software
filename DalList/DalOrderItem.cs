@@ -56,7 +56,7 @@ public class DalOrderItem
         return oi.ID;
     }
 
-    public Tuple<int, int>[] ReadAll()
+    public DO.OrderItem[] ReadAll()
     {
         if (DataSource.Config.index_OrderItem == 0)
         {
@@ -64,10 +64,10 @@ public class DalOrderItem
         }
         else
         {
-            Tuple<int, int>[] orderItems = new Tuple<int, int>[DataSource.Config.index_OrderItem];
+            DO.OrderItem[] orderItems = new DO.OrderItem[DataSource.Config.index_OrderItem];
             for (int i = 0; i < DataSource.Config.OrderItem_ID; i++)
             {
-                orderItems[i] = new Tuple<int, int>(DataSource.OrderItem_arr[i].ID, DataSource.OrderItem_arr[i].OrderId);
+                orderItems[i] = DataSource.OrderItem_arr[i];
             }
             return orderItems;
         }

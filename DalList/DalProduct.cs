@@ -33,7 +33,7 @@ public class DalProduct
         throw new Exception("Sorry, there is already a product with this ID number.");
     }
 
-    public Tuple<int, string>[] ReadAll()
+    public DO.Product[] ReadAll()
     {
         if (DataSource.Config.index_Product == 0)
         {
@@ -41,10 +41,10 @@ public class DalProduct
         }
         else
         {
-            Tuple<int, string>[] products = new Tuple<int, string>[DataSource.Config.index_Product];
+            DO.Product[] products = new DO.Product[DataSource.Config.index_Product];
             for (int i = 0; i < DataSource.Config.index_Product; i++)
             {
-                products[i] = new Tuple<int, string>(DataSource.Product_arr[i].ID, DataSource.Product_arr[i].Name);
+                products[i] = DataSource.Product_arr[i];
             }
             return products;
         }

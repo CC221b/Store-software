@@ -86,7 +86,7 @@ class Program
             case (int)DO.Options.ReadAll:
                 try
                 {
-                    Tuple<int, string>[] products = _dalP.ReadAll();
+                    DO.Product[] products = _dalP.ReadAll();
                     foreach (var item in products)
                     {
                         Console.WriteLine(item);
@@ -290,11 +290,10 @@ class Program
             case (int)DO.Options.ReadAll:
                 try
                 {
-                    Tuple<int, int>[] t = _dalOI.ReadAll();
+                    DO.OrderItem[] t = _dalOI.ReadAll();
                     foreach (var item in t)
                     {
-                        Console.WriteLine("ID:" + item.Item1);
-                        Console.WriteLine("Order_ID:" + item.Item2);
+                        Console.WriteLine(item);
                     }
                 }
                 catch (Exception ex)
