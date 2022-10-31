@@ -4,27 +4,29 @@ using DO;
 namespace Dal;
 class Program
 {
-    private DalOrder _dalO = new DalOrder();
-    private DalProduct _dalP = new DalProduct();
-    private DalOrderItem _dalOI = new DalOrderItem();
-    public void Main(string[] args)
+    private static DalOrder _dalO = new DalOrder();
+    private static DalProduct _dalP = new DalProduct();
+    private static DalOrderItem _dalOI = new DalOrderItem();
+    public static void Main(string[] args)
     {
         Console.WriteLine("enter 0 to Exit\n" +
                           "enter 1 to Product\n" +
                           "enter 2 to Order\n" +
-                          "enter 3 to OrderItem\n");
-        int choose = Convert.ToInt32(Console.ReadLine());
-        while (choose!=0)
+                          "enter 3 to OrderItem");
+        int choose = int.Parse(Console.ReadLine());
+        while (choose != 0)
         {
-
-            string nameChoose = choose == 1 ? "Product" : choose == 2 ? "Order" : "OrderItem";
-            Console.WriteLine("enter 0 to add" + nameChoose +
-                "\n enter 1 to read" + nameChoose + "with id" +
-                "\n enter 2 to read all" + nameChoose + "s" +
-                "\n enter 3 to update" + nameChoose +
-                "\n enter 4 to delete" + nameChoose +
-                nameChoose == "OrderItem" ? "\n enter 5 to read orderItem by product_id and order_id \n " +
-                "enter 6 to read orderItems by order_id\n" : "");
+            string nameChoose = (choose == 1) ? "Product" : (choose == 2) ? "Order" : "OrderItem";
+            Console.WriteLine("enter 0 to add " + nameChoose +
+                "\nenter 1 to read " + nameChoose + " with id" +
+                "\nenter 2 to read all " + nameChoose + "s" +
+                "\nenter 3 to update " + nameChoose +
+                "\nenter 4 to delete " + nameChoose);
+            if (nameChoose == "OrderItem")
+            {
+                Console.WriteLine("enter 5 to read orderItem by product_id and order_id \n " +
+                "enter 6 to read orderItems by order_id\n");
+            }
             int chooseMethod = int.Parse(Console.ReadLine());
             switch (choose)
             {
@@ -47,19 +49,19 @@ class Program
             choose = Convert.ToInt32(Console.ReadLine());
         }
     }
-    private void _product(int choose)
+    private static void _product(int choose)
     {
         DO.Product p = new DO.Product();
         int ID;
         switch (choose)
         {
             case (int)DO.Options.Add:
-                Console.WriteLine("Write ID, name, price, inStock \n");
+                Console.WriteLine("Write ID, name, price, inStock");
                 p.ID = int.Parse(Console.ReadLine());
                 p.Name = Console.ReadLine();
                 p.Price = int.Parse(Console.ReadLine());
                 p.InStock = int.Parse(Console.ReadLine());
-                Console.WriteLine("choose categories: percussion, stringed, keyboard, wind, electronic \n");
+                Console.WriteLine("choose categories: percussion, stringed, keyboard, wind, electronic");
                 p.Category = (DO.Categories)Convert.ToInt32(Console.ReadLine());
                 try
                 {
@@ -114,7 +116,7 @@ class Program
                     Console.WriteLine("Write inStock:");
                     p1.InStock = int.Parse(Console.ReadLine());
                     p1.InStock = p1.InStock == null ? p.InStock : p1.InStock;
-                    Console.WriteLine("choose categories: percussion, stringed, keyboard, wind, electronic \n");
+                    Console.WriteLine("choose categories: percussion, stringed, keyboard, wind, electronic");
                     p1.Category = (DO.Categories)Convert.ToInt32(Console.ReadLine());
                     p1.Category = p1.Category == null ? p.Category : p1.Category;
                     try
@@ -147,14 +149,14 @@ class Program
                 break;
         }
     }
-    private void _order(int choose)
+    private static void _order(int choose)
     {
         DO.Order o = new DO.Order();
         int ID;
         switch (choose)
         {
             case (int)DO.Options.Add:
-                Console.WriteLine("Write CustomerName, CustomerEmail, CustomerAdress, OrderDate, ShipDate, DeliveryDate \n");
+                Console.WriteLine("Write CustomerName, CustomerEmail, CustomerAdress, OrderDate, ShipDate, DeliveryDate");
                 o.CustomerName = Console.ReadLine();
                 o.CustomerEmail = Console.ReadLine();
                 o.CustomerAdress = Console.ReadLine();
@@ -253,14 +255,14 @@ class Program
                 break;
         }
     }
-    private void _orderItem(int choose)
+    private static void _orderItem(int choose)
     {
         DO.OrderItem oi = new DO.OrderItem();
         int ID;
         switch (choose)
         {
             case (int)DO.Options.Add:
-                Console.WriteLine("Write ProductId, OrderId, Price, Amount \n");
+                Console.WriteLine("Write ProductId, OrderId, Price, Amount");
                 oi.ProductId = int.Parse(Console.ReadLine());
                 oi.OrderId = int.Parse(Console.ReadLine());
                 oi.Price = int.Parse(Console.ReadLine());
