@@ -61,8 +61,9 @@ class Program
                 p.Name = Console.ReadLine();
                 p.Price = int.Parse(Console.ReadLine());
                 p.InStock = int.Parse(Console.ReadLine());
-                Console.WriteLine("choose categories: percussion, stringed, keyboard, wind, electronic");
-                p.Category = (DO.Categories)Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
+                int category = int.Parse(Console.ReadLine());
+                p.Category =(DO.Categories)category;
                 try
                 {
                     _dalP.Create(p);
