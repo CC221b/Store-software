@@ -65,7 +65,7 @@ public class DalOrderItem
         else
         {
             DO.OrderItem[] orderItems = new DO.OrderItem[DataSource.Config.index_OrderItem];
-            for (int i = 0; i < DataSource.Config.OrderItem_ID; i++)
+            for (int i = 0; i < DataSource.Config.index_OrderItem; i++)
             {
                 orderItems[i] = DataSource.OrderItem_arr[i];
             }

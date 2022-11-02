@@ -24,8 +24,8 @@ class Program
                 "\nenter 4 to delete " + nameChoose);
             if (nameChoose == "OrderItem")
             {
-                Console.WriteLine("enter 5 to read orderItem by product_id and order_id \n " +
-                "enter 6 to read orderItems by order_id\n");
+                Console.WriteLine("enter 5 to read orderItem by product_id and order_id\n" +
+                "enter 6 to read orderItems by order_id");
             }
             int chooseMethod = int.Parse(Console.ReadLine());
             switch (choose)
@@ -45,7 +45,7 @@ class Program
             Console.WriteLine("enter 0 to Exit\n" +
                          "enter 1 to Product\n" +
                          "enter 2 to Order\n" +
-                         "enter 3 to OrderItem\n");
+                         "enter 3 to OrderItem");
             choose = Convert.ToInt32(Console.ReadLine());
         }
     }
