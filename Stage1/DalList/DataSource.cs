@@ -113,8 +113,9 @@ static internal class DataSource
             oi.ID = Config.OrderItem_ID;
             oi.ProductId = Product_arr[rand_index_product].ID;
             oi.OrderId = Order_arr[i].ID;
-            oi.Price = Product_arr[rand_index_product].Price;
             oi.Amount = rand_amount;
+            oi.Price = Product_arr[rand_index_product].Price * rand_amount;
+
             AddOrderItem(oi);
         }
 
@@ -134,8 +135,8 @@ static internal class DataSource
                 oi.ID = Config.OrderItem_ID;
                 oi.ProductId = Product_arr[rand_index_product].ID;
                 oi.OrderId = Order_arr[rand_index_order].ID;
-                oi.Price = Product_arr[rand_index_product].Price;
                 oi.Amount = rand_amount;
+                oi.Price = Product_arr[rand_index_product].Price * rand_amount;
                 AddOrderItem(oi);
             }
         }
