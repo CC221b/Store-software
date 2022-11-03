@@ -1,4 +1,9 @@
-﻿using System;
+//מכיוון שאנו בקבוצה מספר אי זוגי של בנות 
+//והמרצה של הקבוצה אינה מרשה לעשות שלישה
+//קיבלתי הנחיה להגיש לבד את הפרויקט.
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
