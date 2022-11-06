@@ -11,15 +11,15 @@ static internal class DataSource
     internal static class Config
     {
         static internal int s_indexOrder = 0, s_indexProduct = 0, s_indexOrderItem;
-        private static int s_orderID = 222222, s_orderItemID = 123456;
+        private static int s_orderId = 222222, s_orderItemId = 123456;
 
-        public static int OrderID
+        public static int OrderId
         {
-            get { return s_orderID++; }
+            get { return s_orderId++; }
         }
-        public static int OrderItemID
+        public static int OrderItemId
         {
-            get { return s_orderItemID++; }
+            get { return s_orderItemId++; }
         }
     }
     //Defining a random variable.
@@ -89,7 +89,7 @@ static internal class DataSource
         {
             DO.Order o = new DO.Order();
             //Automatic ID defined in config.
-            o._id = Config.OrderID;
+            o._id = Config.OrderId;
             o._customerName = customersArr[i].Item1;
             o._customerEmail = customersArr[i].Item2;
             o._customerAdress = customersArr[i].Item3;
@@ -110,7 +110,7 @@ static internal class DataSource
             int randIndexProduct = Rand.Next(10);
             //Since this is a musical instrument store, the maximum amount you can order from one instrument is 3 (this is also quite excessive.)
             int randAmount = Rand.Next(1, 3);
-            oi._id = Config.OrderItemID;
+            oi._id = Config.OrderItemId;
             oi._productId = s_productArr[randIndexProduct]._id;
             oi._orderId = s_orderArr[i]._id;
             oi._amount = randAmount;
@@ -132,7 +132,7 @@ static internal class DataSource
                 int randIndexProduct = Rand.Next(10);
                 //Since this is a musical instrument store, the maximum amount you can order from one instrument is 3 (this is also quite excessive.)
                 int randAmount = Rand.Next(1, 3);
-                oi._id = Config.OrderItemID;
+                oi._id = Config.OrderItemId;
                 oi._productId = s_productArr[randIndexProduct]._id;
                 oi._orderId = s_orderArr[indexOrder]._id;
                 oi._amount = randAmount;

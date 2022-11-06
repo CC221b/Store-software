@@ -18,7 +18,7 @@ public class DalOrder
     {
         if (DataSource.Config.s_indexOrder < DataSource.s_orderArr.Length)
         {
-            o._id = DataSource.Config.OrderID;
+            o._id = DataSource.Config.OrderId;
             DataSource.s_orderArr[DataSource.Config.s_indexOrder++] = o;
         }  
         else
