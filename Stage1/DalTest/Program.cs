@@ -1,8 +1,4 @@
 ﻿
-//מכיוון שאנו בקבוצה מספר אי זוגי של בנות 
-//והמרצה של הקבוצה אינה מרשה לעשות שלישה
-//קיבלתי הנחיה להגיש לבד את הפרויקט
-
 using DO;
 
 namespace Dal;
@@ -61,13 +57,13 @@ class Program
         {
             case (int)DO.Options.Add:
                 Console.WriteLine("Write ID, name, price, inStock");
-                p.ID = int.Parse(Console.ReadLine());
-                p.Name = Console.ReadLine();
-                p.Price = int.Parse(Console.ReadLine());
-                p.InStock = int.Parse(Console.ReadLine());
+                p._id = int.Parse(Console.ReadLine());
+                p._name = Console.ReadLine();
+                p._price = int.Parse(Console.ReadLine());
+                p._inStock = int.Parse(Console.ReadLine());
                 Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
                 int category = int.Parse(Console.ReadLine());
-                p.Category =(DO.Categories)category;
+                p._category = (DO.Categories)category;
                 try
                 {
                     _dalP.Create(p);
@@ -113,17 +109,18 @@ class Program
                     p = _dalP.Read(ID);
                     Console.WriteLine(p);
                     Console.WriteLine("Write name:");
-                    p1.Name = Console.ReadLine();
-                    p1.Name = p1.Name == "" ? p.Name : p1.Name;
+                    p1._name = Console.ReadLine();
+                    p1._name = p1._name == "" ? p._name : p1._name;
                     Console.WriteLine("Write price:");
-                    p1.Price = int.Parse(Console.ReadLine());
-                    p1.Price = p1.Price == null ? p.Price : p1.Price;
+                    p1._price = int.Parse(Console.ReadLine());
+                    p1._price = p1._price == null ? p._price : p1._price;
                     Console.WriteLine("Write inStock:");
-                    p1.InStock = int.Parse(Console.ReadLine());
-                    p1.InStock = p1.InStock == null ? p.InStock : p1.InStock;
-                    Console.WriteLine("choose categories: percussion, stringed, keyboard, wind, electronic");
-                    p1.Category = (DO.Categories)Convert.ToInt32(Console.ReadLine());
-                    p1.Category = p1.Category == null ? p.Category : p1.Category;
+                    p1._inStock = int.Parse(Console.ReadLine());
+                    p1._inStock = p1._inStock == null ? p._inStock : p1._inStock;
+                    Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
+                    category = int.Parse(Console.ReadLine());
+                    p1._category = (DO.Categories)category;
+                    p1._category = p1._category == null ? p._category : p1._category;
                     try
                     {
                         _dalP.Update(p1);
@@ -162,12 +159,12 @@ class Program
         {
             case (int)DO.Options.Add:
                 Console.WriteLine("Write CustomerName, CustomerEmail, CustomerAdress, OrderDate, ShipDate, DeliveryDate");
-                o.CustomerName = Console.ReadLine();
-                o.CustomerEmail = Console.ReadLine();
-                o.CustomerAdress = Console.ReadLine();
-                o.OrderDate = Convert.ToDateTime(Console.ReadLine());
-                o.ShipDate = Convert.ToDateTime(Console.ReadLine());
-                o.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
+                o._customerName = Console.ReadLine();
+                o._customerEmail = Console.ReadLine();
+                o._customerAdress = Console.ReadLine();
+                o._orderDate = Convert.ToDateTime(Console.ReadLine());
+                o._shipDate = Convert.ToDateTime(Console.ReadLine());
+                o._deliveryDate = Convert.ToDateTime(Console.ReadLine());
                 try
                 {
                     _dalO.Create(o);
@@ -213,23 +210,23 @@ class Program
                     o = _dalO.Read(order_ID);
                     Console.WriteLine(o);
                     Console.WriteLine("Write CustomerName:");
-                    o1.CustomerName = Console.ReadLine();
-                    o1.CustomerName = o1.CustomerName == null ? o.CustomerName : o1.CustomerName;
+                    o1._customerName = Console.ReadLine();
+                    o1._customerName = o1._customerName == null ? o._customerName : o1._customerName;
                     Console.WriteLine("Write CustomerEmail:");
-                    o1.CustomerEmail = Console.ReadLine();
-                    o1.CustomerEmail = o1.CustomerEmail == null ? o.CustomerEmail : o1.CustomerEmail;
+                    o1._customerEmail = Console.ReadLine();
+                    o1._customerEmail = o1._customerEmail == null ? o._customerEmail : o1._customerEmail;
                     Console.WriteLine("Write CustomerAdress:");
-                    o1.CustomerAdress = Console.ReadLine();
-                    o1.CustomerAdress = o1.CustomerAdress == null ? o.CustomerAdress : o1.CustomerAdress;
+                    o1._customerAdress = Console.ReadLine();
+                    o1._customerAdress = o1._customerAdress == null ? o._customerAdress : o1._customerAdress;
                     Console.WriteLine("Write OrderDate:");
-                    o1.OrderDate = Convert.ToDateTime(Console.ReadLine());
-                    o1.OrderDate = o1.OrderDate == null ? o.OrderDate : o1.OrderDate;
+                    o1._orderDate = Convert.ToDateTime(Console.ReadLine());
+                    o1._orderDate = o1._orderDate == null ? o._orderDate : o1._orderDate;
                     Console.WriteLine("Write ShipDate:");
-                    o1.ShipDate = Convert.ToDateTime(Console.ReadLine());
-                    o1.ShipDate = o1.ShipDate == null ? o.ShipDate : o1.ShipDate;
+                    o1._shipDate = Convert.ToDateTime(Console.ReadLine());
+                    o1._shipDate = o1._shipDate == null ? o._shipDate : o1._shipDate;
                     Console.WriteLine("Write DeliveryDate:");
-                    o1.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
-                    o1.DeliveryDate = o1.DeliveryDate == null ? o.DeliveryDate : o1.DeliveryDate;
+                    o1._deliveryDate = Convert.ToDateTime(Console.ReadLine());
+                    o1._deliveryDate = o1._deliveryDate == null ? o._deliveryDate : o1._deliveryDate;
                     try
                     {
                         _dalO.Update(o);
@@ -268,10 +265,10 @@ class Program
         {
             case (int)DO.Options.Add:
                 Console.WriteLine("Write ProductId, OrderId, Price, Amount");
-                oi.ProductId = int.Parse(Console.ReadLine());
-                oi.OrderId = int.Parse(Console.ReadLine());
-                oi.Price = int.Parse(Console.ReadLine());
-                oi.Amount = int.Parse(Console.ReadLine());
+                oi._productId = int.Parse(Console.ReadLine());
+                oi._orderId = int.Parse(Console.ReadLine());
+                oi._price = int.Parse(Console.ReadLine());
+                oi._amount = int.Parse(Console.ReadLine());
                 try
                 {
                     _dalOI.Create(oi);
@@ -317,17 +314,17 @@ class Program
                     oi = _dalOI.Read(orderItem_ID);
                     Console.WriteLine(oi);
                     Console.WriteLine("Write ProductId:");
-                    oi1.ProductId = int.Parse(Console.ReadLine());
-                    oi1.ProductId = oi1.ProductId == null ? oi.ProductId : oi1.ProductId;
+                    oi1._productId = int.Parse(Console.ReadLine());
+                    oi1._productId = oi1._productId == null ? oi._productId : oi1._productId;
                     Console.WriteLine("Write OrderId:");
-                    oi1.OrderId = int.Parse(Console.ReadLine());
-                    oi1.OrderId = oi1.OrderId == null ? oi.OrderId : oi1.OrderId;
+                    oi1._orderId = int.Parse(Console.ReadLine());
+                    oi1._orderId = oi1._orderId == null ? oi._orderId : oi1._orderId;
                     Console.WriteLine("Write Price:");
-                    oi1.Price = int.Parse(Console.ReadLine());
-                    oi1.Price = oi1.Price == null ? oi.Price : oi1.Price;
+                    oi1._price = int.Parse(Console.ReadLine());
+                    oi1._price = oi1._price == null ? oi._price : oi1._price;
                     Console.WriteLine("Write Amount:");
-                    oi1.Amount = int.Parse(Console.ReadLine());
-                    oi1.Amount = oi1.Amount == null ? oi.Amount : oi1.Amount;
+                    oi1._amount = int.Parse(Console.ReadLine());
+                    oi1._amount = oi1._amount == null ? oi._amount : oi1._amount;
                     try
                     {
                         _dalOI.Update(oi);

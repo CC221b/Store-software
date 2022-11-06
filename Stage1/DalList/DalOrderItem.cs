@@ -2,72 +2,72 @@
 
 public class DalOrderItem
 {
-    public DO.OrderItem Read(int ID)
+    public DO.OrderItem Read(int id)
     {
-        for (int i = 0; i < DataSource.Config.index_OrderItem; i++)
+        for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
         {
-            if (DataSource.OrderItem_arr[i].ID == ID)
+            if (DataSource.s_orderItemArr[i]._id == id)
             {
-                return DataSource.OrderItem_arr[i];
+                return DataSource.s_orderItemArr[i];
             }
         }
         throw new Exception("Sorry, no orderItem was found matching the orderItem_ID number.");
     }
 
 
-    public DO.OrderItem ReadByProductIDAndOrderID(int product_ID, int order_ID)
+    public DO.OrderItem ReadByProductIDAndOrderID(int productId, int orderId)
     {
-        for (int i = 0; i < DataSource.Config.index_OrderItem; i++)
+        for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
         {
-            if (DataSource.OrderItem_arr[i].ProductId == product_ID && DataSource.OrderItem_arr[i].OrderId == order_ID)
+            if (DataSource.s_orderItemArr[i]._productId == productId && DataSource.s_orderItemArr[i]._orderId == orderId)
             {
-                return DataSource.OrderItem_arr[i];
+                return DataSource.s_orderItemArr[i];
             }
         }
         throw new Exception("Sorry, no orderItem was found matching the order_ID and product_ID numbers.");
     }
 
-    public List<DO.OrderItem> ReadByOrderID(int ID)
+    public List<DO.OrderItem> ReadByOrderID(int id)
     {
-        List<DO.OrderItem> OrderItems = new List<DO.OrderItem>();
-        for (int i = 0; i < DataSource.Config.index_OrderItem; i++)
+        List<DO.OrderItem> orderItems = new List<DO.OrderItem>();
+        for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
         {
-            if (DataSource.OrderItem_arr[i].ID == ID)
+            if (DataSource.s_orderItemArr[i]._id == id)
             {
-                OrderItems.Add(DataSource.OrderItem_arr[i]);
+                orderItems.Add(DataSource.s_orderItemArr[i]);
             }
         }
-        if (OrderItems == null)
+        if (orderItems == null)
         {
             throw new Exception("Sorry, no orderItems was found matching the orderItem_ID number.");
         }
-        return OrderItems;
+        return orderItems;
     }
 
     public int Create(DO.OrderItem oi)
     {
-        if (DataSource.Config.index_OrderItem < DataSource.OrderItem_arr.Length)
+        if (DataSource.Config.s_indexOrderItem < DataSource.s_orderItemArr.Length)
         {
-            oi.ID = DataSource.Config.OrderItem_ID;
-            DataSource.OrderItem_arr[DataSource.Config.index_OrderItem++] = oi;
+            oi._id = DataSource.Config.OrderItemID;
+            DataSource.s_orderItemArr[DataSource.Config.s_indexOrderItem++] = oi;
         }
         else
             throw new Exception("Sorry, there is no more room to enter a new orderItem.");
-        return oi.ID;
+        return oi._id;
     }
 
     public DO.OrderItem[] ReadAll()
     {
-        if (DataSource.Config.index_OrderItem == 0)
+        if (DataSource.Config.s_indexOrderItem == 0)
         {
             throw new Exception("Sorry, there are currently no orderItems in the store.");
         }
         else
         {
-            DO.OrderItem[] orderItems = new DO.OrderItem[DataSource.Config.index_OrderItem];
-            for (int i = 0; i < DataSource.Config.index_OrderItem; i++)
+            DO.OrderItem[] orderItems = new DO.OrderItem[DataSource.Config.s_indexOrderItem];
+            for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
             {
-                orderItems[i] = DataSource.OrderItem_arr[i];
+                orderItems[i] = DataSource.s_orderItemArr[i];
             }
             return orderItems;
         }
@@ -75,27 +75,27 @@ public class DalOrderItem
 
     public void Update(DO.OrderItem oi)
     {
-        for (int i = 0; i < DataSource.Config.index_OrderItem; i++)
+        for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
         {
-            if (DataSource.OrderItem_arr[i].ID == oi.ID)
+            if (DataSource.s_orderItemArr[i]._id == oi._id)
             {
-                DataSource.OrderItem_arr[i] = oi;
+                DataSource.s_orderItemArr[i] = oi;
                 return;
             }
         }
         throw new Exception("Sorry, no order with the required ID number exists.");
     }
 
-    public void Delete(int ID)
+    public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.Config.index_OrderItem; i++)
+        for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
         {
-            if (DataSource.OrderItem_arr[i].ID == ID)
+            if (DataSource.s_orderItemArr[i]._id == id)
             {
                 DO.OrderItem oi = new DO.OrderItem();
-                DataSource.OrderItem_arr[i] = DataSource.OrderItem_arr[DataSource.Config.index_OrderItem];
-                DataSource.OrderItem_arr[DataSource.Config.index_OrderItem] = oi;
-                DataSource.Config.index_OrderItem--;
+                DataSource.s_orderItemArr[i] = DataSource.s_orderItemArr[DataSource.Config.s_indexOrderItem];
+                DataSource.s_orderItemArr[DataSource.Config.s_indexOrderItem] = oi;
+                DataSource.Config.s_indexOrderItem--;
                 return;
             }
         }

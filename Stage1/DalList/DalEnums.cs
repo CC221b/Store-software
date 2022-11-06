@@ -1,8 +1,6 @@
-﻿
+﻿namespace Dal;
 
-namespace Dal;
-
-    public class DalEnums
-    {
-    }
+public class DalEnums
+{
+}
 

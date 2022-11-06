@@ -4,11 +4,11 @@ public class DalOrder
 {
     public DO.Order Read(int ID)
     {
-        for (int i = 0; i < DataSource.Config.index_Order; i++)
+        for (int i = 0; i < DataSource.Config.s_indexOrder; i++)
         {
-            if (DataSource.Order_arr[i].ID == ID)
+            if (DataSource.s_orderArr[i]._id == ID)
             {
-                return DataSource.Order_arr[i];
+                return DataSource.s_orderArr[i];
             }
         }
         throw new Exception("Sorry, no order was found matching the order_ID number.");
@@ -16,28 +16,28 @@ public class DalOrder
 
     public int Create(DO.Order o)
     {
-        if (DataSource.Config.index_Order < DataSource.Order_arr.Length)
+        if (DataSource.Config.s_indexOrder < DataSource.s_orderArr.Length)
         {
-            o.ID = DataSource.Config.Order_ID;
-            DataSource.Order_arr[DataSource.Config.index_Order++] = o;
+            o._id = DataSource.Config.OrderID;
+            DataSource.s_orderArr[DataSource.Config.s_indexOrder++] = o;
         }  
         else
             throw new Exception("Sorry, there is no more room to enter a new order.");
-        return o.ID;
+        return o._id;
     }
 
     public DO.Order[] ReadAll()
     {
-        if (DataSource.Config.index_Order == 0)
+        if (DataSource.Config.s_indexOrder == 0)
         {
             throw new Exception("Sorry, there are currently no orders in the store.");
         }
         else
         {
-            DO.Order[] orders = new DO.Order[DataSource.Config.index_Order];
-            for (int i = 0; i < DataSource.Config.index_Order; i++)
+            DO.Order[] orders = new DO.Order[DataSource.Config.s_indexOrder];
+            for (int i = 0; i < DataSource.Config.s_indexOrder; i++)
             {
-                orders[i] = DataSource.Order_arr[i];
+                orders[i] = DataSource.s_orderArr[i];
             }
             return orders;
         }
@@ -45,27 +45,27 @@ public class DalOrder
 
     public void Update(DO.Order o)
     {
-        for (int i = 0; i < DataSource.Config.index_Order; i++)
+        for (int i = 0; i < DataSource.Config.s_indexOrder; i++)
         {
-            if (DataSource.Order_arr[i].ID == o.ID)
+            if (DataSource.s_orderArr[i]._id == o._id)
             {
-                DataSource.Order_arr[i] = o;
+                DataSource.s_orderArr[i] = o;
                 return;
             }
         }
         throw new Exception("Sorry, no order with the required ID number exists.");
     }
 
-    public void Delete(int ID)
+    public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.Config.index_Order; i++)
+        for (int i = 0; i < DataSource.Config.s_indexOrder; i++)
         {
-            if (DataSource.Order_arr[i].ID == ID)
+            if (DataSource.s_orderArr[i]._id == id)
             {
                 DO.Order o = new DO.Order();
-                DataSource.Order_arr[i] = DataSource.Order_arr[DataSource.Config.index_Order];
-                DataSource.Order_arr[DataSource.Config.index_Order] = o;
-                DataSource.Config.index_Order--;
+                DataSource.s_orderArr[i] = DataSource.s_orderArr[DataSource.Config.s_indexOrder];
+                DataSource.s_orderArr[DataSource.Config.s_indexOrder] = o;
+                DataSource.Config.s_indexOrder--;
                 return;
             }
         }

@@ -2,20 +2,20 @@
 namespace DO;
 public struct Order
 {
-    public int ID { get; set; }
-    public string CustomerName { get; set; }
-    public string CustomerEmail { get; set; }
-    public string CustomerAdress { get; set; }
-    public DateTime OrderDate { get; set; }
-    public DateTime ShipDate { get; set; }
-    public DateTime DeliveryDate { get; set; }
+    public int _id { get; set; }
+    public string _customerName { get; set; }
+    public string _customerEmail { get; set; }
+    public string _customerAdress { get; set; }
+    public DateTime _orderDate { get; set; }
+    public DateTime _shipDate { get; set; }
+    public DateTime _deliveryDate { get; set; }
 
     public override string ToString() => $@"
-    Order ID: {ID}
-    CustomerName: {CustomerName}
-    CustomerEmail: {CustomerEmail}
-    CustomerAdress: {CustomerAdress}
-    OrderDate: {OrderDate}
-    ShipDate: {ShipDate}
-    DeliveryDate: {DeliveryDate}";
+    Order ID: {_id}
+    CustomerName: {_customerName}
+    CustomerEmail: {_customerEmail}
+    CustomerAdress: {_customerAdress}
+    OrderDate: {_orderDate}
+    ShipDate: {_shipDate}
+    DeliveryDate: {_deliveryDate}";
 }

@@ -3,11 +3,11 @@ namespace DO;
 
 public enum Categories
 {
-    percussion,//הקשה
-    stringed,//מיתרים
-    keyboard,//קלידים
-    wind,//נשיפה
-    electronic//אלקטרוני
+    Percussion,//הקשה
+    Stringed,//מיתרים
+    Keyboard,//קלידים
+    Wind,//נשיפה
+    Electronic//אלקטרוני
 }
 
 public enum Options
@@ -17,8 +17,9 @@ public enum Options
     ReadAll,//קריאת כל הישיות
     Update,//עדכון
     Delete,//מחיקה
-    ReadByProductIDandOrderID,
-    ReadByOrderID,
+    //פונקציות בשביל פרטי הזמנה:
+    ReadByProductIDandOrderID,//קריאת פריט ע"י מזהה מוצר ומזהה הזמנה
+    ReadByOrderID,//רשימת פריטים ע"י מזהה הזמנה
 }
 
 
