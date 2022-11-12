@@ -1,4 +1,4 @@
-﻿namespace DalFacade
+﻿namespace DalList
 {
     public class Class1
     {

@@ -1,6 +1,4 @@
-﻿//// See https://aka.ms/new-console-template for more information
-//Console.WriteLine("Hello, World!");
-
+﻿
 //מכיוון שאנו מספר אי זוגי של בנות ולא ניתנה לי רשות לעשות שלישה, אין לי איך לעשות את רעיון המיזוג שבשלב 0.
 namespace Targil0
 {
