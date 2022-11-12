@@ -31,9 +31,9 @@ static internal class DataSource
     internal static DO.OrderItem[] s_orderItemArr = new DO.OrderItem[200];
 
     //Adding functions to entity arrays.
-    public static void AddProduct(DO.Product product) { s_productArr[Config.s_indexProduct++] = product; }
-    public static void AddOrder(DO.Order order) { s_orderArr[Config.s_indexOrder++] = order; }
-    public static void AddOrderItem(DO.OrderItem orderItem) { s_orderItemArr[Config.s_indexOrderItem++] = orderItem; }
+    private static void AddProduct(DO.Product product) { s_productArr[Config.s_indexProduct++] = product; }
+    private static void AddOrder(DO.Order order) { s_orderArr[Config.s_indexOrder++] = order; }
+    private static void AddOrderItem(DO.OrderItem orderItem) { s_orderItemArr[Config.s_indexOrderItem++] = orderItem; }
 
     /// <summary>
     /// A function that initializes 10 products.
