@@ -6,7 +6,7 @@
 ///3252-ארבעה ספרות ראשונות של הת"ז
 /// </summary>
 
-namespace Targil0
+namespace Stage0
 {
     partial class Program
     {
