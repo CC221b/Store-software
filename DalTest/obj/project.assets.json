@@ -52,11 +52,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\DalTest\\DalTest.csproj",
+      "projectUniqueName": "C:\\Users\\57030\\Source5\\DalTest\\DalTest.csproj",
       "projectName": "DalTest",
-      "projectPath": "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\DalTest\\DalTest.csproj",
+      "projectPath": "C:\\Users\\57030\\Source5\\DalTest\\DalTest.csproj",
       "packagesPath": "C:\\Users\\57030\\.nuget\\packages\\",
-      "outputPath": "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\DalTest\\obj\\",
+      "outputPath": "C:\\Users\\57030\\Source5\\DalTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -77,11 +77,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\DalFacade\\DalFacade.csproj": {
-              "projectPath": "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\DalFacade\\DalFacade.csproj"
+            "C:\\Users\\57030\\Source5\\DalFacade\\DalFacade.csproj": {
+              "projectPath": "C:\\Users\\57030\\Source5\\DalFacade\\DalFacade.csproj"
             },
-            "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\DalList\\DalList.csproj": {
-              "projectPath": "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\DalList\\DalList.csproj"
+            "C:\\Users\\57030\\Source5\\DalList\\DalList.csproj": {
+              "projectPath": "C:\\Users\\57030\\Source5\\DalList\\DalList.csproj"
             }
           }
         }

@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\DalFacade\\DalFacade.csproj",
+      "projectUniqueName": "C:\\Users\\57030\\Source5\\DalFacade\\DalFacade.csproj",
       "projectName": "DalFacade",
-      "projectPath": "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\DalFacade\\DalFacade.csproj",
+      "projectPath": "C:\\Users\\57030\\Source5\\DalFacade\\DalFacade.csproj",
       "packagesPath": "C:\\Users\\57030\\.nuget\\packages\\",
-      "outputPath": "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\DalFacade\\obj\\",
+      "outputPath": "C:\\Users\\57030\\Source5\\DalFacade\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

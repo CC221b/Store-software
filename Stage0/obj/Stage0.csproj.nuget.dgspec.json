@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\Stage0\\Stage0.csproj": {}
+    "C:\\Users\\57030\\Source5\\Stage0\\Stage0.csproj": {}
   },
   "projects": {
-    "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\Stage0\\Stage0.csproj": {
+    "C:\\Users\\57030\\Source5\\Stage0\\Stage0.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\Stage0\\Stage0.csproj",
+        "projectUniqueName": "C:\\Users\\57030\\Source5\\Stage0\\Stage0.csproj",
         "projectName": "Stage0",
-        "projectPath": "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\Stage0\\Stage0.csproj",
+        "projectPath": "C:\\Users\\57030\\Source5\\Stage0\\Stage0.csproj",
         "packagesPath": "C:\\Users\\57030\\.nuget\\packages\\",
-        "outputPath": "E:\\הפרויקט לעלות לGIT דחוף\\dotNet5783_8785\\Stage0\\obj\\",
+        "outputPath": "C:\\Users\\57030\\Source5\\Stage0\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
