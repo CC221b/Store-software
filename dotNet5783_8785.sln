@@ -11,6 +11,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalFacade", "DalFacade\DalFacade.csproj", "{023252F7-7428-4F7F-8217-6D89907945FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalList", "DalList\DalList.csproj", "{4DF13DA2-EFC4-4420-8610-7D9C25EFC4DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalTest", "DalTest\DalTest.csproj", "{B4265773-7C6A-483A-AF9C-1B8E4BED6915}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,18 @@ Global
 		{4E181512-EDE0-4B58-BB7E-62B6ECB8F861}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E181512-EDE0-4B58-BB7E-62B6ECB8F861}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E181512-EDE0-4B58-BB7E-62B6ECB8F861}.Release|Any CPU.Build.0 = Release|Any CPU
+		{023252F7-7428-4F7F-8217-6D89907945FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{023252F7-7428-4F7F-8217-6D89907945FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{023252F7-7428-4F7F-8217-6D89907945FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{023252F7-7428-4F7F-8217-6D89907945FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DF13DA2-EFC4-4420-8610-7D9C25EFC4DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DF13DA2-EFC4-4420-8610-7D9C25EFC4DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DF13DA2-EFC4-4420-8610-7D9C25EFC4DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DF13DA2-EFC4-4420-8610-7D9C25EFC4DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4265773-7C6A-483A-AF9C-1B8E4BED6915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4265773-7C6A-483A-AF9C-1B8E4BED6915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4265773-7C6A-483A-AF9C-1B8E4BED6915}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4265773-7C6A-483A-AF9C-1B8E4BED6915}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
