@@ -2,7 +2,6 @@
 //והמרצה של הקבוצה אינה מרשה לעשות שלישה
 //קיבלתי הנחיה להגיש לבד את הפרויקט.
 using DO;
-using DalApi;
 
 namespace Dal;
 class Program
