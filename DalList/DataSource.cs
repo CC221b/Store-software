@@ -10,7 +10,6 @@ static internal class DataSource
 
     internal static class Config
     {
-        static internal int s_indexOrder = 0, s_indexProduct = 0, s_indexOrderItem;
         private static int s_orderId = 222222, s_orderItemId = 123456;
 
         public static int OrderId
@@ -26,14 +25,14 @@ static internal class DataSource
     public static readonly Random Rand = new Random(0);
 
     //Creating entity arrays.
-    internal static DO.Order[] s_orderArr = new DO.Order[100];
-    internal static DO.Product[] s_productArr = new DO.Product[50];
-    internal static DO.OrderItem[] s_orderItemArr = new DO.OrderItem[200];
+    internal static List<DO.Order> s_orderList = new List<DO.Order>(100);
+    internal static List<DO.Product> s_productList = new List<DO.Product>(50);
+    internal static List<DO.OrderItem> s_orderItemList = new List<DO.OrderItem>(200);
 
     //Adding functions to entity arrays.
-    private static void AddProduct(DO.Product product) { s_productArr[Config.s_indexProduct++] = product; }
-    private static void AddOrder(DO.Order order) { s_orderArr[Config.s_indexOrder++] = order; }
-    private static void AddOrderItem(DO.OrderItem orderItem) { s_orderItemArr[Config.s_indexOrderItem++] = orderItem; }
+    private static void AddProduct(DO.Product product) { s_productList.Add(product); }
+    private static void AddOrder(DO.Order order) { s_orderList.Add(order); }
+    private static void AddOrderItem(DO.OrderItem orderItem) { s_orderItemList.Add(orderItem); }
 
     /// <summary>
     /// A function that initializes 10 products.
@@ -111,10 +110,10 @@ static internal class DataSource
             //Since this is a musical instrument store, the maximum amount you can order from one instrument is 3 (this is also quite excessive.)
             int randAmount = Rand.Next(1, 3);
             oi._id = Config.OrderItemId;
-            oi._productId = s_productArr[randIndexProduct]._id;
-            oi._orderId = s_orderArr[i]._id;
+            oi._productId = s_productList[randIndexProduct]._id;
+            oi._orderId = s_orderList[i]._id;
             oi._amount = randAmount;
-            oi._price = s_productArr[randIndexProduct]._price * randAmount;
+            oi._price = s_productList[randIndexProduct]._price * randAmount;
 
             AddOrderItem(oi);
         }
@@ -133,10 +132,10 @@ static internal class DataSource
                 //Since this is a musical instrument store, the maximum amount you can order from one instrument is 3 (this is also quite excessive.)
                 int randAmount = Rand.Next(1, 3);
                 oi._id = Config.OrderItemId;
-                oi._productId = s_productArr[randIndexProduct]._id;
-                oi._orderId = s_orderArr[indexOrder]._id;
+                oi._productId = s_productList[randIndexProduct]._id;
+                oi._orderId = s_orderList[indexOrder]._id;
                 oi._amount = randAmount;
-                oi._price = s_productArr[randIndexProduct]._price * randAmount;
+                oi._price = s_productList[randIndexProduct]._price * randAmount;
                 AddOrderItem(oi);
             }
             indexOrder++;

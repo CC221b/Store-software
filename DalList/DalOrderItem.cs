@@ -1,107 +1,109 @@
-﻿namespace Dal;
+﻿using DalApi;
+using DO;
 
-public class DalOrderItem
+namespace Dal;
+
+internal class DalOrderItem:IOrderItem
 {
-    public DO.OrderItem Read(int id)
+    public OrderItem Get(int id)
     {
-        for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
+        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
         {
-            if (DataSource.s_orderItemArr[i]._id == id)
+            if (DataSource.s_orderItemList[i]._id == id)
             {
-                return DataSource.s_orderItemArr[i];
+                return DataSource.s_orderItemList[i];
             }
         }
-        throw new Exception("Sorry, no orderItem was found matching the orderItem_ID number.");
+        throw new ExceptionNotExists();
     }
 
 
-    public DO.OrderItem ReadByProductIDAndOrderID(int productId, int orderId)
+    public OrderItem GetByProductIDAndOrderID(int productId, int orderId)
     {
-        for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
+        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
         {
-            if (DataSource.s_orderItemArr[i]._productId == productId && DataSource.s_orderItemArr[i]._orderId == orderId)
+            if (DataSource.s_orderItemList[i]._productId == productId && DataSource.s_orderItemList[i]._orderId == orderId)
             {
-                return DataSource.s_orderItemArr[i];
+                return DataSource.s_orderItemList[i];
             }
         }
-        throw new Exception("Sorry, no orderItem was found matching the order_ID and product_ID numbers.");
+        throw new ExceptionNotExists();
     }
 
 
 
-    public List<DO.OrderItem> ReadByOrderID(int id)
+    public List<OrderItem> GetByOrderID(int id)
     {
-        List<DO.OrderItem> orderItems = new List<DO.OrderItem>();
-        for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
+        List<OrderItem> orderItems = new List<OrderItem>();
+        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
         {
-            if (DataSource.s_orderItemArr[i]._id == id)
+            if (DataSource.s_orderItemList[i]._id == id)
             {
-                orderItems.Add(DataSource.s_orderItemArr[i]);
+                orderItems.Add(DataSource.s_orderItemList[i]);
             }
         }
         if (orderItems == null)
         {
-            throw new Exception("Sorry, no orderItems was found matching the orderItem_ID number.");
+            throw new ExceptionNotExists();
         }
         return orderItems;
     }
 
-    public int Create(DO.OrderItem oi)
+    public int Add(OrderItem oi)
     {
-        if (DataSource.Config.s_indexOrderItem < DataSource.s_orderItemArr.Length)
+        if (DataSource.s_orderItemList.Count < 200)
         {
             oi._id = DataSource.Config.OrderItemId;
-            DataSource.s_orderItemArr[DataSource.Config.s_indexOrderItem++] = oi;
+            DataSource.s_orderItemList.Add(oi);
         }
         else
-            throw new Exception("Sorry, there is no more room to enter a new orderItem.");
+            throw new ExceptionNoRoom();
         return oi._id;
     }
 
-    public DO.OrderItem[] ReadAll()
+    public IEnumerable<OrderItem> GetAll()
     {
-        if (DataSource.Config.s_indexOrderItem == 0)
+        if (DataSource.s_orderItemList.Count == 0)
         {
-            throw new Exception("Sorry, there are currently no orderItems in the store.");
+            throw new ExceptionEmpty();
         }
         else
         {
-            DO.OrderItem[] orderItems = new DO.OrderItem[DataSource.Config.s_indexOrderItem];
-            for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
+            OrderItem[] orderItems = new OrderItem[DataSource.s_orderItemList.Count];
+            for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
             {
-                orderItems[i] = DataSource.s_orderItemArr[i];
+                orderItems[i] = DataSource.s_orderItemList[i];
             }
             return orderItems;
         }
     }
 
-    public void Update(DO.OrderItem oi)
+    public void Update(OrderItem oi)
     {
-        for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
+        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
         {
-            if (DataSource.s_orderItemArr[i]._id == oi._id)
+            if (DataSource.s_orderItemList[i]._id == oi._id)
             {
-                DataSource.s_orderItemArr[i] = oi;
+                DataSource.s_orderItemList[i] = oi;
                 return;
             }
         }
-        throw new Exception("Sorry, no order with the required ID number exists.");
+        throw new ExceptionNotExists();
     }
 
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.Config.s_indexOrderItem; i++)
+        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
         {
-            if (DataSource.s_orderItemArr[i]._id == id)
+            if (DataSource.s_orderItemList[i]._id == id)
             {
-                DO.OrderItem oi = new DO.OrderItem();
-                DataSource.s_orderItemArr[i] = DataSource.s_orderItemArr[DataSource.Config.s_indexOrderItem];
-                DataSource.s_orderItemArr[DataSource.Config.s_indexOrderItem] = oi;
-                DataSource.Config.s_indexOrderItem--;
+                OrderItem oi = new OrderItem();
+                DataSource.s_orderItemList[i] = DataSource.s_orderItemList[DataSource.s_orderItemList.Count];
+                DataSource.s_orderItemList[DataSource.s_orderItemList.Count] = oi;
                 return;
             }
         }
-        throw new Exception("Sorry, no orderItem with the required ID number exists.");
+        throw new ExceptionNotExists();
     }
 }
 

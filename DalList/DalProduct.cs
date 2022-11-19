@@ -1,48 +1,50 @@
-﻿namespace Dal;
+﻿using DalApi;
+using DO;
+namespace Dal;
 
-public class DalProduct
+internal class DalProduct: IProduct
 {
-    public DO.Product Read(int id)
+    public Product Get(int id)
     {
-        for (int i = 0; i < DataSource.Config.s_indexProduct; i++)
+        for (int i = 0; i < DataSource.s_productList.Count; i++)
         {
-            if (DataSource.s_productArr[i]._id == id)
+            if (DataSource.s_productList[i]._id == id)
             {
-                return DataSource.s_productArr[i];
+                return DataSource.s_productList[i];
             }
         }
-        throw new Exception("Sorry, no product was found matching the product_ID number.");
+        throw new ExceptionNotExists();
     }
 
-    public int Create(DO.Product p)
+    public int Add(DO.Product p)
     {
         try
         {
-            Read(p._id);
+            Get(p._id);
         }
         catch (Exception)
         {
-            if (DataSource.Config.s_indexProduct < DataSource.s_productArr.Length)
-                DataSource.s_productArr[DataSource.Config.s_indexProduct++] = p;
+            if (DataSource.s_productList.Count < 50)
+                DataSource.s_productList.Add(p);
             else
-                throw new Exception("Sorry, there is no more room to enter a new product.");
+                throw new ExceptionNoRoom();
             return p._id;
         }
-        throw new Exception("Sorry, there is already a product with this ID number.");
+        throw new ExceptionExists();
     }
 
-    public DO.Product[] ReadAll()
+    public IEnumerable<Product> GetAll()
     {
-        if (DataSource.Config.s_indexProduct == 0)
+        if (DataSource.s_productList.Count == 0)
         {
-            throw new Exception("Sorry, there are currently no products in the store.");
+            throw new ExceptionEmpty();
         }
         else
         {
-            DO.Product[] products = new DO.Product[DataSource.Config.s_indexProduct];
-            for (int i = 0; i < DataSource.Config.s_indexProduct; i++)
+            DO.Product[] products = new DO.Product[DataSource.s_productList.Count];
+            for (int i = 0; i < DataSource.s_productList.Count; i++)
             {
-                products[i] = DataSource.s_productArr[i];
+                products[i] = DataSource.s_productList[i];
             }
             return products;
         }
@@ -50,31 +52,30 @@ public class DalProduct
 
     public void Update(DO.Product p)
     {
-        for (int i = 0; i < DataSource.Config.s_indexProduct; i++)
+        for (int i = 0; i < DataSource.s_productList.Count; i++)
         {
-            if (DataSource.s_productArr[i]._id == p._id)
+            if (DataSource.s_productList[i]._id == p._id)
             {
-                DataSource.s_productArr[i] = p;
+                DataSource.s_productList[i] = p;
                 return;
             }
         }
-        throw new Exception("Sorry, no product with the required ID number exists.");
+        throw new ExceptionNotExists();
     }
 
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.Config.s_indexProduct; i++)
+        for (int i = 0; i < DataSource.s_productList.Count; i++)
         {
-            if (DataSource.s_productArr[i]._id == id)
+            if (DataSource.s_productList[i]._id == id)
             {
                 DO.Product p = new DO.Product();
-                DataSource.s_productArr[i] = DataSource.s_productArr[DataSource.Config.s_indexProduct];
-                DataSource.s_productArr[DataSource.Config.s_indexProduct] = p;
-                DataSource.Config.s_indexProduct--;
+                DataSource.s_productList[i] = DataSource.s_productList[DataSource.s_productList.Count];
+                DataSource.s_productList[DataSource.s_productList.Count] = p;
                 return;
             }
         }
-        throw new Exception("Sorry, no product with the required ID number exists.");
+        throw new ExceptionNotExists();
     }
 
 }

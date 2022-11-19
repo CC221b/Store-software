@@ -1,13 +1,13 @@
 ﻿//מכיוון שאנו בקבוצה מספר אי זוגי של בנות 
 //והמרצה של הקבוצה אינה מרשה לעשות שלישה
 //קיבלתי הנחיה להגיש לבד את הפרויקט.
+using DO;
+using DalApi;
 
 namespace Dal;
 class Program
 {
-    private static DalOrder _dalO = new DalOrder();
-    private static DalProduct _dalP = new DalProduct();
-    private static DalOrderItem _dalOI = new DalOrderItem();
+    static DalList s_IDal = new DalList();
     public static void Main(string[] args)
     {
         Console.WriteLine("enter 0 to Exit\n" +
@@ -52,11 +52,11 @@ class Program
     }
     private static void _product(int choose)
     {
-        DO.Product p = new DO.Product();
+        Product p = new Product();
         int ID;
         switch (choose)
         {
-            case (int)DO.Options.Add:
+            case (int)Options.Add:
                 Console.WriteLine("Write ID, name, price, inStock");
                 p._id = int.Parse(Console.ReadLine());
                 p._name = Console.ReadLine();
@@ -67,30 +67,30 @@ class Program
                 p._category = (DO.Categories)category;
                 try
                 {
-                    _dalP.Create(p);
+                    s_IDal.Product.Add(p);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.Read:
+            case (int)Options.Get:
                 Console.WriteLine("Enter ID:");
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    p = _dalP.Read(ID);
+                    p = s_IDal.Product.Get(ID);
                     Console.WriteLine(p);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.ReadAll:
+            case (int)Options.GetAll:
                 try
                 {
-                    DO.Product[] products = _dalP.ReadAll();
+                    IEnumerable<Product> products = s_IDal.Product.GetAll();
                     foreach (var item in products)
                     {
                         Console.WriteLine(item);
@@ -101,13 +101,13 @@ class Program
                     Console.WriteLine(ex);
                 }
                 break;
-            case (int)DO.Options.Update:
+            case (int)Options.Update:
                 Console.WriteLine("Enter ID to update:");
                 ID = int.Parse(Console.ReadLine());
-                DO.Product p1 = new DO.Product();
+                Product p1 = new Product();
                 try
                 {
-                    p = _dalP.Read(ID);
+                    p = s_IDal.Product.Get(ID);
                     Console.WriteLine(p);
                     Console.WriteLine("Write name:");
                     p1._name = Console.ReadLine();
@@ -120,32 +120,32 @@ class Program
                     p1._inStock = p1._inStock == null ? p._inStock : p1._inStock;
                     Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
                     category = int.Parse(Console.ReadLine());
-                    p1._category = (DO.Categories)category;
+                    p1._category = (Categories)category;
                     p1._category = p1._category == null ? p._category : p1._category;
                     try
                     {
-                        _dalP.Update(p1);
+                        s_IDal.Product.Update(p1);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        Console.WriteLine(ex.Message);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.Delete:
+            case (int)Options.Delete:
                 Console.WriteLine("Enter ID to delete:");
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    _dalP.Delete(ID);
+                    s_IDal.Product.Delete(ID);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             default:
@@ -154,11 +154,11 @@ class Program
     }
     private static void _order(int choose)
     {
-        DO.Order o = new DO.Order();
+        Order o = new Order();
         int ID;
         switch (choose)
         {
-            case (int)DO.Options.Add:
+            case (int)Options.Add:
                 Console.WriteLine("Write CustomerName, CustomerEmail, CustomerAdress, OrderDate, ShipDate, DeliveryDate");
                 o._customerName = Console.ReadLine();
                 o._customerEmail = Console.ReadLine();
@@ -168,30 +168,30 @@ class Program
                 o._deliveryDate = Convert.ToDateTime(Console.ReadLine());
                 try
                 {
-                    _dalO.Create(o);
+                    s_IDal.Order.Add(o);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.Read:
+            case (int)Options.Get:
                 Console.WriteLine("Enter ID:");
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    o = _dalO.Read(ID);
+                    o = s_IDal.Order.Get(ID);
                     Console.WriteLine(o);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.ReadAll:
+            case (int)Options.GetAll:
                 try
                 {
-                    DO.Order[] orders = _dalO.ReadAll();
+                    IEnumerable<Order> orders = s_IDal.Order.GetAll();
                     foreach (var item in orders)
                     {
                         Console.WriteLine(o);
@@ -199,16 +199,16 @@ class Program
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.Update:
+            case (int)Options.Update:
                 Console.WriteLine("Enter Order_ID to update:");
                 int order_ID = int.Parse(Console.ReadLine());
-                DO.Order o1 = new DO.Order();
+                Order o1 = new Order();
                 try
                 {
-                    o = _dalO.Read(order_ID);
+                    o = s_IDal.Order.Get(order_ID);
                     Console.WriteLine(o);
                     Console.WriteLine("Write CustomerName:");
                     o1._customerName = Console.ReadLine();
@@ -230,28 +230,28 @@ class Program
                     o1._deliveryDate = o1._deliveryDate == null ? o._deliveryDate : o1._deliveryDate;
                     try
                     {
-                        _dalO.Update(o);
+                        s_IDal.Order.Add(o);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        Console.WriteLine(ex.Message);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.Delete:
+            case (int)Options.Delete:
                 Console.WriteLine("Enter ID to delete:");
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    _dalO.Delete(ID); ;
+                    s_IDal.Order.Delete(ID); ;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             default:
@@ -260,11 +260,11 @@ class Program
     }
     private static void _orderItem(int choose)
     {
-        DO.OrderItem oi = new DO.OrderItem();
+        OrderItem oi = new OrderItem();
         int ID;
         switch (choose)
         {
-            case (int)DO.Options.Add:
+            case (int)Options.Add:
                 Console.WriteLine("Write ProductId, OrderId, Price, Amount");
                 oi._productId = int.Parse(Console.ReadLine());
                 oi._orderId = int.Parse(Console.ReadLine());
@@ -272,47 +272,47 @@ class Program
                 oi._amount = int.Parse(Console.ReadLine());
                 try
                 {
-                    _dalOI.Create(oi);
+                    s_IDal.OrderItem.Add(oi);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.Read:
+            case (int)Options.Get:
                 Console.WriteLine("Enter ID:");
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    oi = _dalOI.Read(ID);
+                    oi = s_IDal.OrderItem.Get(ID);
                     Console.WriteLine(oi);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.ReadAll:
+            case (int)Options.GetAll:
                 try
                 {
-                    DO.OrderItem[] t = _dalOI.ReadAll();
-                    foreach (var item in t)
+                    IEnumerable<OrderItem> orderItems = s_IDal.OrderItem.GetAll();
+                    foreach (var item in orderItems)
                     {
                         Console.WriteLine(item);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.Update:
+            case (int)Options.Update:
                 Console.WriteLine("Enter OrderItem_ID to update:");
                 int orderItem_ID = int.Parse(Console.ReadLine());
-                DO.OrderItem oi1 = new DO.OrderItem();
+                OrderItem oi1 = new OrderItem();
                 try
                 {
-                    oi = _dalOI.Read(orderItem_ID);
+                    oi = s_IDal.OrderItem.Get(orderItem_ID);
                     Console.WriteLine(oi);
                     Console.WriteLine("Write ProductId:");
                     oi1._productId = int.Parse(Console.ReadLine());
@@ -328,37 +328,37 @@ class Program
                     oi1._amount = oi1._amount == null ? oi._amount : oi1._amount;
                     try
                     {
-                        _dalOI.Update(oi);
+                        s_IDal.OrderItem.Update(oi);
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex);
+                        Console.WriteLine(ex.Message);
                     }
 
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.Delete:
+            case (int)Options.Delete:
                 Console.WriteLine("Enter ID to delete:");
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    _dalOI.Delete(ID);
+                    s_IDal.OrderItem.Delete(ID);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.ReadByOrderID:
+            case (int)Options.GetByOrderID:
                 Console.WriteLine("Enter orderID:");
                 ID = int.Parse(Console.ReadLine());
                 try
                 {
-                    List<DO.OrderItem> orderItems = _dalOI.ReadByOrderID(ID);
+                    List<OrderItem> orderItems = s_IDal.OrderItem.GetByOrderID(ID);
                     foreach (var item in orderItems)
                     {
                         Console.WriteLine(item);
@@ -366,21 +366,21 @@ class Program
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
-            case (int)DO.Options.ReadByProductIDandOrderID:
+            case (int)Options.GetByProductIDandOrderID:
                 Console.WriteLine("Enter orderID and productID:");
                 int productID = int.Parse(Console.ReadLine());
                 int orderID = int.Parse(Console.ReadLine());
                 try
                 {
-                    oi = _dalOI.ReadByProductIDAndOrderID(productID, orderID);
+                    oi = s_IDal.OrderItem.GetByProductIDAndOrderID(productID, orderID);
                     Console.WriteLine(oi);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    Console.WriteLine(ex.Message);
                 }
                 break;
             default:

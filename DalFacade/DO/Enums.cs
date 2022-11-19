@@ -13,13 +13,13 @@ public enum Categories
 public enum Options
 {
     Add,//הוספה
-    Read,//קריאה לפי ת"ז
-    ReadAll,//קריאת כל הישיות
+    Get,//קריאה לפי ת"ז
+    GetAll,//קריאת כל הישיות
     Update,//עדכון
     Delete,//מחיקה
     //פונקציות בשביל פרטי הזמנה:
-    ReadByProductIDandOrderID,//קריאת פריט ע"י מזהה מוצר ומזהה הזמנה
-    ReadByOrderID,//רשימת פריטים ע"י מזהה הזמנה
+    GetByProductIDandOrderID,//קריאת פריט ע"י מזהה מוצר ומזהה הזמנה
+    GetByOrderID,//רשימת פריטים ע"י מזהה הזמנה
 }
 
 
