@@ -1,5 +1,5 @@
-﻿
-namespace DO;
+﻿namespace DO;
+
 public struct Order
 {
     public int _id { get; set; }
