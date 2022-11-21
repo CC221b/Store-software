@@ -2,7 +2,7 @@
 
 public struct Order
 {
-    public int Id { get; set; }
+    public int ID { get; set; }
     public string CustomerName { get; set; }
     public string CustomerEmail { get; set; }
     public string CustomerAdress { get; set; }
@@ -11,7 +11,7 @@ public struct Order
     public DateTime DeliveryDate { get; set; }
 
     public override string ToString() => $@"
-    Order ID: {Id}
+    Order ID: {ID}
     CustomerName: {CustomerName}
     CustomerEmail: {CustomerEmail}
     CustomerAdress: {CustomerAdress}

@@ -2,22 +2,25 @@
 
 public class Order
 {
-    public int _id { get; set; }
-    public string _customerName { get; set; }
-    public string _customerEmail { get; set; }
-    public string _customerAdress { get; set; }
-    public DateTime _orderDate { get; set; }
-    public DateTime _shipDate { get; set; }
-    public DateTime _deliveryDate { get; set; }
-    public OrderItem _orderItemList { get; set; }
-    public int _price { get; set; }
+    public int ID { get; set; }
+    public string CustomerName { get; set; }
+    public string CustomerEmail { get; set; }
+    public string CustomerAdress { get; set; }
+    public DateTime OrderDate { get; set; }
+    public OrderStatus Status { get; set; }
+    public DateTime ShipDate { get; set; }
+    public DateTime DeliveryDate { get; set; }
+    public OrderItem Items { get; set; }
+    public double TotalPrice { get; set; }
 
     public override string ToString() => $@"
-    Order ID: {_id}
-    CustomerName: {_customerName}
-    CustomerEmail: {_customerEmail}
-    CustomerAdress: {_customerAdress}
-    OrderDate: {_orderDate}
-    ShipDate: {_shipDate}
-    DeliveryDate: {_deliveryDate}";
+    Order ID: {ID}
+    CustomerName: {CustomerName}
+    CustomerEmail: {CustomerEmail}
+    CustomerAdress: {CustomerAdress}
+    OrderDate: {OrderDate}
+    Status: {Status}
+    ShipDate: {ShipDate}
+    DeliveryDate: {DeliveryDate}
+    TotalPrice: {TotalPrice}";
 }

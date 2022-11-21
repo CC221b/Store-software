@@ -74,11 +74,11 @@ static internal class DataSource
             int randNumInStock = Rand.Next(100);
             DO.Product p = new Product();
             //I added the index to make sure that a different number will be created each time.
-            p._id = randProductId + i;
-            p._name = productArr[i].Item1;
-            p._price = productArr[i].Item2;
-            p._category = productArr[i].Item3;
-            p._inStock = randNumInStock;
+            p.ID = randProductId + i;
+            p.Name = productArr[i].Item1;
+            p.Price = productArr[i].Item2;
+            p.Category = productArr[i].Item3;
+            p.InStock = randNumInStock;
             AddProduct(p);
         }
 
@@ -88,15 +88,15 @@ static internal class DataSource
         {
             DO.Order o = new DO.Order();
             //Automatic ID defined in config.
-            o._id = Config.OrderId;
-            o._customerName = customersArr[i].Item1;
-            o._customerEmail = customersArr[i].Item2;
-            o._customerAdress = customersArr[i].Item3;
-            o._orderDate = DateTime.Now;
+            o.Id = Config.OrderId;
+            o.CustomerName = customersArr[i].Item1;
+            o.CustomerEmail = customersArr[i].Item2;
+            o.CustomerAdress = customersArr[i].Item3;
+            o.OrderDate = DateTime.Now;
             TimeSpan t = new TimeSpan((int)Rand.NextInt64(1, 3), 0, 0, 0);
-            o._shipDate = (randomIndex % 20) % 5 != 0 ? o._orderDate.Add(t) : DateTime.MinValue;
+            o.ShipDate = (randomIndex % 20) % 5 != 0 ? o.OrderDate.Add(t) : DateTime.MinValue;
             t = new TimeSpan((int)Rand.NextInt64(3, 7), 0, 0, 0);
-            o._deliveryDate = (randomIndex % 20) % 3 != 0 ? o._shipDate.Add(t) : DateTime.MinValue;
+            o.DeliveryDate = (randomIndex % 20) % 3 != 0 ? o.ShipDate.Add(t) : DateTime.MinValue;
             AddOrder(o);
         }
 
@@ -109,11 +109,11 @@ static internal class DataSource
             int randIndexProduct = Rand.Next(10);
             //Since this is a musical instrument store, the maximum amount you can order from one instrument is 3 (this is also quite excessive.)
             int randAmount = Rand.Next(1, 3);
-            oi._id = Config.OrderItemId;
-            oi._productId = s_productList[randIndexProduct]._id;
-            oi._orderId = s_orderList[i]._id;
-            oi._amount = randAmount;
-            oi._price = s_productList[randIndexProduct]._price * randAmount;
+            oi.ID = Config.OrderItemId;
+            oi.ProductId = s_productList[randIndexProduct].ID;
+            oi.OrderId = s_orderList[i].ID;
+            oi.Amount = randAmount;
+            oi.Price = s_productList[randIndexProduct].Price * randAmount;
 
             AddOrderItem(oi);
         }
@@ -131,11 +131,11 @@ static internal class DataSource
                 int randIndexProduct = Rand.Next(10);
                 //Since this is a musical instrument store, the maximum amount you can order from one instrument is 3 (this is also quite excessive.)
                 int randAmount = Rand.Next(1, 3);
-                oi._id = Config.OrderItemId;
-                oi._productId = s_productList[randIndexProduct]._id;
-                oi._orderId = s_orderList[indexOrder]._id;
-                oi._amount = randAmount;
-                oi._price = s_productList[randIndexProduct]._price * randAmount;
+                oi.ID = Config.OrderItemId;
+                oi.ProductId = s_productList[randIndexProduct].ID;
+                oi.OrderId = s_orderList[indexOrder].ID;
+                oi.Amount = randAmount;
+                oi.Price = s_productList[randIndexProduct].Price * randAmount;
                 AddOrderItem(oi);
             }
             indexOrder++;

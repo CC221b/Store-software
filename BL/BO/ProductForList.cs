@@ -2,13 +2,14 @@
 namespace BO;
 public class ProductForList
 {
-    public int _id { get; set; }
-    public string _productName { get; set; }
-    public double _productPrice { get; set; }
-    public BO.Categories _category { get; set; }
+    public int ID { get; set; }
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public BO.Categories Category { get; set; }
+
     public override string ToString() => $@"
-    ID:{_id}
-    productName: {_productName}
-    productPrice: {_productPrice}
-    category: {_category}";
+    ID:{ID}
+    productName: {Name}
+    productPrice: {Price}
+    category: {Category}";
 }

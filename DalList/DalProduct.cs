@@ -8,7 +8,7 @@ internal class DalProduct: IProduct
     {
         for (int i = 0; i < DataSource.s_productList.Count; i++)
         {
-            if (DataSource.s_productList[i].Id == id)
+            if (DataSource.s_productList[i].ID == id)
             {
                 return DataSource.s_productList[i];
             }
@@ -20,7 +20,7 @@ internal class DalProduct: IProduct
     {
         try
         {
-            Get(p.Id);
+            Get(p.ID);
         }
         catch (Exception)
         {
@@ -28,7 +28,7 @@ internal class DalProduct: IProduct
                 DataSource.s_productList.Add(p);
             else
                 throw new ExceptionNoRoom();
-            return p.Id;
+            return p.ID;
         }
         throw new ExceptionExists();
     }
@@ -54,7 +54,7 @@ internal class DalProduct: IProduct
     {
         for (int i = 0; i < DataSource.s_productList.Count; i++)
         {
-            if (DataSource.s_productList[i].Id == p.Id)
+            if (DataSource.s_productList[i].ID == p.ID)
             {
                 DataSource.s_productList[i] = p;
                 return;
@@ -67,7 +67,7 @@ internal class DalProduct: IProduct
     {
         for (int i = 0; i < DataSource.s_productList.Count; i++)
         {
-            if (DataSource.s_productList[i].Id == id)
+            if (DataSource.s_productList[i].ID == id)
             {
                 DO.Product p = new DO.Product();
                 DataSource.s_productList[i] = DataSource.s_productList[DataSource.s_productList.Count];

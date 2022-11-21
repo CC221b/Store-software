@@ -5,16 +5,16 @@ namespace BO;
 
 public class Cart
 {
-    public string _customerName { get; set; }
-    public string _customerEmail { get; set; }
-    public string _customerAdress { get; set; }
-    public OrderItem _Items { get; set; }
-    public int _totalPrice { get; set; }
+    public string CustomerName { get; set; }
+    public string CustomerEmail { get; set; }
+    public string CustomerAdress { get; set; }
+    public OrderItem Items { get; set; }
+    public int TotalPrice { get; set; }
 
     public override string ToString() => $@"
-    customerName: {_customerName}
-    customerEmail: {_customerEmail}
-    customerAdress: {_customerAdress}
-    orderItemList: {_Items}
-    price: {_totalPrice}";
+    customerName: {CustomerName}
+    customerEmail: {CustomerEmail}
+    customerAdress: {CustomerAdress}
+    orderItemList: {Items}
+    price: {TotalPrice}";
 }

@@ -8,7 +8,7 @@ public enum Categories
     Wind,//נשיפה
     Electronic//אלקטרוני
 }
-public enum StateOrder
+public enum OrderStatus
 {
     ConfirmedOrder,//הזמנה אושרה
     SendOrder,//הזמנה נשלחה

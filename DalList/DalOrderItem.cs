@@ -9,7 +9,7 @@ internal class DalOrderItem:IOrderItem
     {
         for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
         {
-            if (DataSource.s_orderItemList[i].Id == id)
+            if (DataSource.s_orderItemList[i].ID == id)
             {
                 return DataSource.s_orderItemList[i];
             }
@@ -37,7 +37,7 @@ internal class DalOrderItem:IOrderItem
         List<OrderItem> orderItems = new List<OrderItem>();
         for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
         {
-            if (DataSource.s_orderItemList[i].Id == id)
+            if (DataSource.s_orderItemList[i].ID == id)
             {
                 orderItems.Add(DataSource.s_orderItemList[i]);
             }
@@ -53,12 +53,12 @@ internal class DalOrderItem:IOrderItem
     {
         if (DataSource.s_orderItemList.Count < 200)
         {
-            oi.Id = DataSource.Config.OrderItemId;
+            oi.ID = DataSource.Config.OrderItemId;
             DataSource.s_orderItemList.Add(oi);
         }
         else
             throw new ExceptionNoRoom();
-        return oi.Id;
+        return oi.ID;
     }
 
     public IEnumerable<OrderItem> GetAll()
@@ -82,7 +82,7 @@ internal class DalOrderItem:IOrderItem
     {
         for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
         {
-            if (DataSource.s_orderItemList[i].Id == oi.Id)
+            if (DataSource.s_orderItemList[i].ID == oi.ID)
             {
                 DataSource.s_orderItemList[i] = oi;
                 return;
@@ -95,7 +95,7 @@ internal class DalOrderItem:IOrderItem
     {
         for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
         {
-            if (DataSource.s_orderItemList[i].Id == id)
+            if (DataSource.s_orderItemList[i].ID == id)
             {
                 OrderItem oi = new OrderItem();
                 DataSource.s_orderItemList[i] = DataSource.s_orderItemList[DataSource.s_orderItemList.Count];
