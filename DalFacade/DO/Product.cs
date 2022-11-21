@@ -3,16 +3,16 @@ namespace DO;
 
 public struct Product
 {
-    public int _id { get; set; }
-    public string _name { get; set; }
-    public double _price { get; set; }
-    public DO.Categories _category { get; set; }
-    public int _inStock { get; set; }
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public DO.Categories Category { get; set; }
+    public int InStock { get; set; }
 
     public override string ToString() => $@"
-    ID: {_id}
-    Product Name: {_name} 
-    category: {_category}
-    Price: {_price}
-    Amount in stock: {_inStock}";
+    ID: {Id}
+    Product Name: {Name} 
+    category: {Category}
+    Price: {Price}
+    Amount in stock: {InStock}";
 }
