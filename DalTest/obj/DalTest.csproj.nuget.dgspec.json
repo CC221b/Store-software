@@ -11,7 +11,7 @@
         "projectName": "DalFacade",
         "projectPath": "C:\\Users\\325288785\\source\\repos\\dotNet5783_8785\\DalFacade\\DalFacade.csproj",
         "packagesPath": "C:\\Users\\325288785\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\325288785\\Source\\Repos\\dotNet5783_8785\\DalFacade\\obj\\",
+        "outputPath": "C:\\Users\\325288785\\source\\repos\\dotNet5783_8785\\DalFacade\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\325288785\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -66,7 +66,7 @@
         "projectName": "DalList",
         "projectPath": "C:\\Users\\325288785\\source\\repos\\dotNet5783_8785\\DalList\\DalList.csproj",
         "packagesPath": "C:\\Users\\325288785\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\325288785\\Source\\Repos\\dotNet5783_8785\\DalList\\obj\\",
+        "outputPath": "C:\\Users\\325288785\\source\\repos\\dotNet5783_8785\\DalList\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\325288785\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -125,7 +125,7 @@
         "projectName": "DalTest",
         "projectPath": "C:\\Users\\325288785\\source\\repos\\dotNet5783_8785\\DalTest\\DalTest.csproj",
         "packagesPath": "C:\\Users\\325288785\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\325288785\\Source\\Repos\\dotNet5783_8785\\DalTest\\obj\\",
+        "outputPath": "C:\\Users\\325288785\\source\\repos\\dotNet5783_8785\\DalTest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\325288785\\AppData\\Roaming\\NuGet\\NuGet.Config",
