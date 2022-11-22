@@ -55,9 +55,9 @@ internal class BlProduct : IProduct
             }
             return productTypeBO;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw new Exception();
+            throw new ExceptionFromDal(ex);
         }
     }
     public void AddProduct(Product product)
