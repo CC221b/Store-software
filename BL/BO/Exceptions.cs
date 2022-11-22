@@ -22,3 +22,8 @@ public class ExceptionInvalidID : Exception
 {
     public override string Message => "Error: Please enter a valid ID number.";
 }
+
+public class ExceptionNotExists : Exception
+{
+    public override string Message => "Error: Item does not exist.";
+}

@@ -1,5 +1,4 @@
 ﻿using BlApi;
-using BO;
 
 namespace BlImplementation;
 
@@ -17,12 +16,12 @@ internal class BlOrder : IOrder
             OrderForList.ID = item.ID;
             OrderForList.CustomerName = item.CustomerName;
             OrderForList.Status = 0;
-            IEnumerable<DO.OrderItem> orderItems= Dal.OrderItem.GetByOrderID(item.ID);
+            IEnumerable<DO.OrderItem> orderItems = Dal.OrderItem.GetByOrderID(item.ID);
             OrderForList.AmountOfItems = orderItems.Count();
             double price = 0;
             foreach (var item1 in orderItems)
             {
-                price+= item1.Price;
+                price += item1.Price;
             }
             OrderForList.TotalPrice = price;
             ListOrderForList.Add(OrderForList);
@@ -30,17 +29,17 @@ internal class BlOrder : IOrder
         return ListOrderForList;
     }
 
-    public BO.Order GetListOrders(int id)
+    public BO.Order GetOrder(int id)
     {
-        BO.Order orderTypeBO = new BO.Order();
         if (id > 0)
         {
             try
             {
                 DO.Order orderTypeDO = new DO.Order();
+                BO.Order orderTypeBO = new BO.Order();
                 orderTypeDO = Dal.Order.Get(id);
                 List<DO.OrderItem> orderItem = new List<DO.OrderItem>();
-                orderItem = Dal.OrderItem.GetByOrderID(id);
+                orderItem = Dal.OrderItem.GetByOrderID(orderTypeDO.ID);
                 orderTypeBO.ID = orderTypeDO.ID;
                 orderTypeBO.CustomerName = orderTypeDO.CustomerName;
                 orderTypeBO.CustomerAdress = orderTypeDO.CustomerAdress;
@@ -68,12 +67,45 @@ internal class BlOrder : IOrder
 
     public BO.Order UpdateOrderShipping(int id)
     {
-        BO.Order order = new BO.Order();
-        return order;
+        try
+        {
+            DO.Order orderTypeDO = new DO.Order();
+            orderTypeDO = Dal.Order.Get(id);
+            if (DateTime.Compare(orderTypeDO.ShipDate, DateTime.Now) > 0)
+            {
+                BO.Order orderTypeBO = new BO.Order();
+                orderTypeDO.ShipDate = DateTime.Now;
+                Dal.Order.Update(orderTypeDO);
+                orderTypeBO = GetOrder(id);
+                return orderTypeBO;
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new BO.ExceptionFromDal(ex);
+        }
+        throw new ExceptionNotExists();
     }
+
     public BO.Order UpdateOrderDelivery(int id)
     {
-        BO.Order order = new BO.Order();
-        return order;
+        try
+        {
+            DO.Order orderTypeDO = new DO.Order();
+            orderTypeDO = Dal.Order.Get(id);
+            if (DateTime.Compare(orderTypeDO.DeliveryDate, DateTime.Now) > 0)
+            {
+                BO.Order orderTypeBO = new BO.Order();
+                orderTypeDO.DeliveryDate = DateTime.Now;
+                Dal.Order.Update(orderTypeDO);
+                orderTypeBO = GetOrder(id);
+                return orderTypeBO;
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new BO.ExceptionFromDal(ex);
+        }
+        throw new ExceptionNotExists();
     }
 }
