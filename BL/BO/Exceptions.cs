@@ -17,3 +17,8 @@ public class ExceptionExistsInOrder : Exception
 {
     public override string Message => "Error: Item already exists in the order.";
 }
+
+public class ExceptionInvalidID : Exception
+{
+    public override string Message => "Error: Please enter a valid ID number.";
+}

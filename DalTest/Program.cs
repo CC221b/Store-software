@@ -264,11 +264,20 @@ class Program
         switch (choose)
         {
             case (int)Options.Add:
+                Product p = new Product();
                 Console.WriteLine("Write ProductId, OrderId, Price, Amount");
                 oi.ProductId = int.Parse(Console.ReadLine());
                 oi.OrderId = int.Parse(Console.ReadLine());
-                oi.Price = int.Parse(Console.ReadLine());
                 oi.Amount = int.Parse(Console.ReadLine());
+                try
+                {
+                    p = s_IDal.Product.Get(oi.ProductId);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                oi.Price =p.Price*oi.Amount ;
                 try
                 {
                     s_IDal.OrderItem.Add(oi);

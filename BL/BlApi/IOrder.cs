@@ -10,7 +10,7 @@ public interface IOrder
     /// <summary>
     /// Order details request (for manager screen and buyer screen).
     /// </summary>
-    public DO.Order GetListOrders(int id);
+    public Order GetListOrders(int id);
     /// <summary>
     /// Order shipping update (admin order management screen).
     /// </summary>

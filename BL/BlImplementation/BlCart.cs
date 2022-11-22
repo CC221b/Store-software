@@ -7,6 +7,7 @@ internal class BlCart: ICart
 {
     public Cart AddProduct(Cart cart, int id)
     {
+
         return cart;
     }
     public Cart UpdateAmountOfProduct(Cart cart, int id, int newAmount) 

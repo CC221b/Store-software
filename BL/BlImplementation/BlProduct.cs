@@ -1,10 +1,13 @@
 ﻿using BlApi;
+using BO;
+
 namespace BlImplementation;
 
 
 internal class BlProduct : IProduct
 {
     DalApi.IDal Dal = new Dal.DalList();
+
     public IEnumerable<BO.ProductForList> GetListProducts()
     {
         IEnumerable<DO.Product> ListProducts = Dal.Product.GetAll();
@@ -20,6 +23,7 @@ internal class BlProduct : IProduct
         }
         return ListProductsForList;
     }
+
     public IEnumerable<BO.ProductItem> GetCatalog()
     {
         IEnumerable<DO.Product> ListProducts = Dal.Product.GetAll();
@@ -37,12 +41,13 @@ internal class BlProduct : IProduct
         }
         return ListProductItem;
     }
+
     public BO.Product GetProduct(int id)
     {
-        try
+        BO.Product productTypeBO = new BO.Product();
+        if (id > 0)
         {
-            BO.Product productTypeBO = new BO.Product();
-            if (id > 0)
+            try
             {
                 DO.Product productTypeDO = new DO.Product();
                 productTypeDO = Dal.Product.Get(id);
@@ -51,14 +56,16 @@ internal class BlProduct : IProduct
                 productTypeBO.Price = productTypeDO.Price;
                 productTypeBO.Category = (BO.Categories)productTypeDO.Category;
                 productTypeBO.InStock = productTypeDO.InStock;
+                return productTypeBO;
             }
-            return productTypeBO;
+            catch (Exception ex)
+            {
+                throw new BO.ExceptionFromDal(ex);
+            } 
         }
-        catch (Exception ex)
-        {
-            throw new BO.ExceptionFromDal(ex);
-        }
+        throw new ExceptionInvalidID();
     }
+
     public void AddProduct(BO.Product product)
     {
         try
@@ -86,6 +93,7 @@ internal class BlProduct : IProduct
             throw new BO.ExceptionInvalidData();
         }
     }
+
     public void DeleteProduct(int id)
     {
         IEnumerable<DO.OrderItem> orderItems = Dal.OrderItem.GetAll();
@@ -105,6 +113,7 @@ internal class BlProduct : IProduct
             throw new BO.ExceptionFromDal(ex);
         }
     }
+
     public void UpdateProduct(BO.Product product)
     {
         try
@@ -113,19 +122,19 @@ internal class BlProduct : IProduct
             {
                 try
                 {
-                    DO.Product product1= new DO.Product();
+                    DO.Product product1 = new DO.Product();
                     product1 = Dal.Product.Get(product.ID);
                     product1.Name = product.Name;
                     product1.Price = product.Price;
                     product1.InStock = product.InStock;
-                    product1.Category =(DO.Categories)product.Category;
+                    product1.Category = (DO.Categories)product.Category;
                     Dal.Product.Update(product1);
                 }
                 catch (Exception ex)
                 {
                     throw new BO.ExceptionFromDal(ex);
-                }  
-            }        
+                }
+            }
         }
         catch (Exception)
         {

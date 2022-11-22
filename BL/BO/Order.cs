@@ -10,7 +10,7 @@ public class Order
     public OrderStatus Status { get; set; }
     public DateTime ShipDate { get; set; }
     public DateTime DeliveryDate { get; set; }
-    public OrderItem Items { get; set; }
+    public List<DO.OrderItem> Items { get; set; }
     public double TotalPrice { get; set; }
 
     public override string ToString() => $@"
