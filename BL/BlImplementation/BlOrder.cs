@@ -62,7 +62,7 @@ internal class BlOrder : IOrder
                 throw new BO.ExceptionFromDal(ex);
             }
         }
-        throw new ExceptionInvalidID();
+        throw new BO.ExceptionInvalidID();
     }
 
     public BO.Order UpdateOrderShipping(int id)
@@ -84,7 +84,7 @@ internal class BlOrder : IOrder
         {
             throw new BO.ExceptionFromDal(ex);
         }
-        throw new ExceptionNotExists();
+        throw new BO.ExceptionNotExists();
     }
 
     public BO.Order UpdateOrderDelivery(int id)
@@ -106,6 +106,6 @@ internal class BlOrder : IOrder
         {
             throw new BO.ExceptionFromDal(ex);
         }
-        throw new ExceptionNotExists();
+        throw new BO.ExceptionNotExists();
     }
 }
