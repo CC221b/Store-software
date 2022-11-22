@@ -9,7 +9,7 @@ public class Cart
     public string CustomerEmail { get; set; }
     public string CustomerAdress { get; set; }
     public List<OrderItem> Items { get; set; }
-    public int TotalPrice { get; set; }
+    public double TotalPrice { get; set; }
 
     public override string ToString() => $@"
     customerName: {CustomerName}

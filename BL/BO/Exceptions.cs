@@ -27,3 +27,8 @@ public class ExceptionNotExists : Exception
 {
     public override string Message => "Error: Item does not exist.";
 }
+
+public class ExceptionOutOfStock : Exception
+{
+    public override string Message => "Error: The product is out of stock, sorry.";
+}
