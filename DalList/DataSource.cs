@@ -88,7 +88,7 @@ static internal class DataSource
         {
             DO.Order o = new DO.Order();
             //Automatic ID defined in config.
-            o.Id = Config.OrderId;
+            o.ID = Config.OrderId;
             o.CustomerName = customersArr[i].Item1;
             o.CustomerEmail = customersArr[i].Item2;
             o.CustomerAdress = customersArr[i].Item3;
