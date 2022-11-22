@@ -1,5 +1,4 @@
 ﻿using BlApi;
-using BO;
 
 namespace BlImplementation;
 
@@ -101,7 +100,7 @@ internal class BlProduct : IProduct
         {
             if (orderItem.ProductId == id)
             {
-                throw new BO.ExceptionExistsInOrder();
+                throw new BO.ExceptionExists();
             }
         }
         try
