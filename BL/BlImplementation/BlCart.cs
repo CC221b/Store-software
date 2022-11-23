@@ -2,6 +2,8 @@
 
 namespace BlImplementation;
 
+
+//להעתיק מהסמינר...כל מה שעשיתי
 internal class BlCart : ICart
 {
     DalApi.IDal Dal = new Dal.DalList();
@@ -37,7 +39,7 @@ internal class BlCart : ICart
                 orderItem.ProductID = id;
                 orderItem.Price = product.Price;
                 orderItem.Amount = 1;
-                orderItem.TotalPrice+= product.Price;
+                orderItem.TotalPrice += product.Price;
                 cart.TotalPrice = cart.TotalPrice + product.Price;
                 cart.Items.Add(orderItem);
             }
@@ -63,18 +65,18 @@ internal class BlCart : ICart
                     if (product.InStock > newAmount - item.Amount)
                     {
                         item.Amount = newAmount;
-                        cart.TotalPrice += item.Price * (newAmount-item.Amount);
+                        cart.TotalPrice += item.Price * (newAmount - item.Amount);
                     }
-                    
-                } 
-                else if(newAmount == 0)
+
+                }
+                else if (newAmount == 0)
                 {
                     cart.TotalPrice -= item.Amount * item.Price;
                     cart.Items.Remove(item);
                 }
                 else
                 {
-                    cart.TotalPrice-=product.Price*(item.Amount-newAmount);
+                    cart.TotalPrice -= product.Price * (item.Amount - newAmount);
                     item.Amount = newAmount;
                     product.InStock += (item.Amount - newAmount);
                 }

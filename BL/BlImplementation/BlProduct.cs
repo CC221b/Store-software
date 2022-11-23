@@ -62,7 +62,7 @@ internal class BlProduct : IProduct
                 throw new BO.ExceptionFromDal(ex);
             } 
         }
-        throw new ExceptionInvalidID();
+        throw new BO.ExceptionInvalidID();
     }
 
     public void AddProduct(BO.Product product)
