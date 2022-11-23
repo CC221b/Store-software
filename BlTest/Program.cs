@@ -4,6 +4,7 @@
 using BlApi;
 using BO;
 using BlImplementation;
+using DalApi;
 
 namespace BlTest;
 class Program
@@ -55,12 +56,64 @@ class Program
         switch (choose)
         {
             case 0://GetListProducts
+                try
+                {
+                    IEnumerable<ProductForList> ListProductForList = s_IBl.Product.GetListProducts();
+                    foreach (var item in ListProductForList)
+                    {
+                        Console.WriteLine(item);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
                 break;
             case 1://GetCatalog
+                try
+                {
+                    IEnumerable<ProductItem> ListProducts = s_IBl.Product.GetCatalog();
+                    foreach (var item in ListProducts)
+                    {
+                        Console.WriteLine(item);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
                 break;
             case 2://GetProduct
+                Console.WriteLine("Enter productID:");
+                int id = Convert.ToInt32(Console.ReadLine());
+                try
+                {
+                    Product product = new Product();
+                    product = s_IBl.Product.GetProduct(id);
+                    Console.WriteLine(product);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
                 break;
             case 3://AddProduct
+                Console.WriteLine("Write ID, name, price, inStock");
+                p.ID = Convert.ToInt32(Console.ReadLine());
+                p.Name = Console.ReadLine();
+                p.Price = Convert.ToInt32(Console.ReadLine());
+                p.InStock = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
+                int category = Convert.ToInt32(Console.ReadLine());
+                p.Category = (BO.Categories)category;
+                try
+                {
+                    s_IBl.Product.AddProduct(p);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
                 break;
             case 4://UpdateProduct
                 break;

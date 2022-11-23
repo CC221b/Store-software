@@ -9,11 +9,19 @@ internal class BlProduct : IProduct
 
     public IEnumerable<BO.ProductForList> GetListProducts()
     {
-        IEnumerable<DO.Product> ListProducts = Dal.Product.GetAll();
+        IEnumerable<DO.Product> ListProducts = new List<DO.Product>();
+        try
+        {
+            ListProducts = Dal.Product.GetAll();
+        }
+        catch (Exception ex)
+        {
+            throw new BO.ExceptionFromDal(ex);
+        }
         List<BO.ProductForList> ListProductsForList = new List<BO.ProductForList>();
-        BO.ProductForList productForList = new BO.ProductForList();
         foreach (var item in ListProducts)
         {
+            BO.ProductForList productForList = new BO.ProductForList();
             productForList.ID = item.ID;
             productForList.Name = item.Name;
             productForList.Price = item.Price;
@@ -25,11 +33,19 @@ internal class BlProduct : IProduct
 
     public IEnumerable<BO.ProductItem> GetCatalog()
     {
-        IEnumerable<DO.Product> ListProducts = Dal.Product.GetAll();
+        IEnumerable<DO.Product> ListProducts = new List<DO.Product>();
+        try
+        {
+            ListProducts = Dal.Product.GetAll();
+        }
+        catch (Exception ex)
+        {
+            throw new BO.ExceptionFromDal(ex);
+        }
         List<BO.ProductItem> ListProductItem = new List<BO.ProductItem>();
-        BO.ProductItem listProductItem = new BO.ProductItem();
         foreach (var item in ListProducts)
         {
+            BO.ProductItem listProductItem = new BO.ProductItem();
             listProductItem.ID = item.ID;
             listProductItem.Name = item.Name;
             listProductItem.Price = item.Price;
@@ -60,37 +76,35 @@ internal class BlProduct : IProduct
             catch (Exception ex)
             {
                 throw new BO.ExceptionFromDal(ex);
-            } 
+            }
         }
         throw new BO.ExceptionInvalidID();
     }
 
     public void AddProduct(BO.Product product)
     {
-        try
+        if (product.ID > 0 && product.Name != "" && product.Price > 0 && product.InStock > 0)
         {
-            if (product.ID > 0 && product.Name != "" && product.Price > 0 && product.InStock > 0)
+            DO.Product product1 = new DO.Product();
+            product1.ID = product.ID;
+            product1.Name = product.Name;
+            product1.Price = product.Price;
+            product1.InStock = product.InStock;
+            product1.Category = (DO.Categories)product.Category;
+            try
             {
-                DO.Product product1 = new DO.Product();
-                product1.ID = product.ID;
-                product1.Name = product.Name;
-                product1.Price = product.Price;
-                product1.InStock = product.InStock;
-                product1.Category = (DO.Categories)product.Category;
-                try
-                {
-                    Dal.Product.Add(product1);
-                }
-                catch (Exception ex)
-                {
-                    throw new BO.ExceptionFromDal(ex);
-                }
+                Dal.Product.Add(product1);
+            }
+            catch (Exception ex)
+            {
+                throw new BO.ExceptionFromDal(ex);
             }
         }
-        catch (Exception)
+        else
         {
-            throw new BO.ExceptionInvalidData();
+            throw new BO.ExceptionInvalidID();
         }
+
     }
 
     public void DeleteProduct(int id)
