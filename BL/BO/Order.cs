@@ -22,5 +22,6 @@ public class Order
     Status: {Status}
     ShipDate: {ShipDate}
     DeliveryDate: {DeliveryDate}
+    Items={Items}
     TotalPrice: {TotalPrice}";
 }

@@ -9,10 +9,11 @@ using DalApi;
 namespace BlTest;
 class Program
 {
-    static IBl s_IBl = new Bl();
+    static IBl s_IBl = new Bl(); 
 
     public static void Main(string[] args)
     {
+        Cart cart = new Cart();
         Console.WriteLine("enter 0 to Exit\n" +
                           "enter 1 to Product\n" +
                           "enter 2 to Order\n" +
@@ -29,7 +30,7 @@ class Program
                     _order();
                     break;
                 case 3:
-                    _cart();
+                    _cart(cart);
                     break;
                 default:
                     break;
@@ -45,7 +46,7 @@ class Program
     private static void _product()
     {
         Product p = new Product();
-        int ID;
+        int id;
         Console.WriteLine("enter 0 to GetListProducts" +
                 "\nenter 1 to GetCatalog" +
                 "\nenter 2 to GetProduct" +
@@ -67,6 +68,7 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.InnerException.Message);
                 }
                 break;
             case 1://GetCatalog
@@ -81,20 +83,21 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.InnerException.Message);
                 }
                 break;
             case 2://GetProduct
                 Console.WriteLine("Enter productID:");
-                int id = Convert.ToInt32(Console.ReadLine());
+                id = Convert.ToInt32(Console.ReadLine());
                 try
                 {
-                    Product product = new Product();
-                    product = s_IBl.Product.GetProduct(id);
-                    Console.WriteLine(product);
+                    p = s_IBl.Product.GetProduct(id);
+                    Console.WriteLine(p);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.InnerException.Message);
                 }
                 break;
             case 3://AddProduct
@@ -113,15 +116,16 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.InnerException.Message);
                 }
                 break;
             case 4://UpdateProduct
                 Console.WriteLine("Enter ID to update:");
-                ID = Convert.ToInt32(Console.ReadLine());
+                id = Convert.ToInt32(Console.ReadLine());
                 Product p1 = new Product();
                 try
                 {
-                    p = s_IBl.Product.GetProduct(ID);
+                    p = s_IBl.Product.GetProduct(id);
                     p1.ID = p.ID;
                     Console.WriteLine("Write name:");
                     p1.Name = Console.ReadLine();
@@ -143,6 +147,7 @@ class Program
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        Console.WriteLine(ex.InnerException.Message);
                     }
                 }
                 catch (Exception ex)
@@ -152,14 +157,15 @@ class Program
                 break;
             case 5://DeleteProduct
                 Console.WriteLine("Enter ID to delete:");
-                ID = int.Parse(Console.ReadLine());
+                id = int.Parse(Console.ReadLine());
                 try
                 {
-                    s_IBl.Product.DeleteProduct(ID);
+                    s_IBl.Product.DeleteProduct(id);
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.InnerException.Message);
                 }
                 break;
             default:
@@ -204,6 +210,7 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.InnerException.Message);
                 }
                 break;
             case 2://UpdateOrderShipping
@@ -217,6 +224,7 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.InnerException.Message);
                 }
                 break;
             case 3://UpdateOrderDelivery
@@ -237,10 +245,11 @@ class Program
         }
     }
 
-    private static void _cart()
+    private static void _cart(Cart cart)
     {
         Product p = new Product();
-        int ID;
+        Cart c1= new Cart();
+        int id;
         Console.WriteLine("enter 0 to AddProduct" +
                 "\nenter 1 to UpdateAmountOfProduct" +
                 "\nenter 2 to MakeAnOrder");
@@ -248,6 +257,18 @@ class Program
         switch (choose)
         {
             case 0://AddProduct
+                Console.WriteLine("enter productID:");
+                id= Convert.ToInt32(Console.ReadLine());
+                try
+                {
+                    c1=s_IBl.Cart.AddProduct(cart,id);
+                    Console.WriteLine(c1);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.InnerException.Message);
+                }
                 break;
             case 1://UpdateAmountOfProduct
                 break;
