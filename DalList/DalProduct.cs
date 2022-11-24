@@ -70,8 +70,7 @@ internal class DalProduct: IProduct
             if (DataSource.s_productList[i].ID == id)
             {
                 DO.Product p = new DO.Product();
-                DataSource.s_productList[i] = DataSource.s_productList[DataSource.s_productList.Count];
-                DataSource.s_productList[DataSource.s_productList.Count] = p;
+                DataSource.s_productList.Remove(DataSource.s_productList[i]);
                 return;
             }
         }

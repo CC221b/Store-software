@@ -116,8 +116,51 @@ class Program
                 }
                 break;
             case 4://UpdateProduct
+                Console.WriteLine("Enter ID to update:");
+                ID = Convert.ToInt32(Console.ReadLine());
+                Product p1 = new Product();
+                try
+                {
+                    p = s_IBl.Product.GetProduct(ID);
+                    p1.ID = p.ID;
+                    Console.WriteLine("Write name:");
+                    p1.Name = Console.ReadLine();
+                    p1.Name = p1.Name == "" ? p.Name : p1.Name;
+                    Console.WriteLine("Write price:");
+                    p1.Price = int.Parse(Console.ReadLine());
+                    p1.Price = p1.Price == null ? p.Price : p1.Price;
+                    Console.WriteLine("Write inStock:");
+                    p1.InStock = Convert.ToInt32(Console.ReadLine());
+                    p1.InStock = p1.InStock == null ? p.InStock : p1.InStock;
+                    Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
+                    category = Convert.ToInt32(Console.ReadLine());
+                    p1.Category = (Categories)category;
+                    p1.Category = p1.Category == null ? p.Category : p1.Category;
+                    try
+                    {
+                        s_IBl.Product.UpdateProduct(p1);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
                 break;
             case 5://DeleteProduct
+                Console.WriteLine("Enter ID to delete:");
+                ID = int.Parse(Console.ReadLine());
+                try
+                {
+                    s_IBl.Product.DeleteProduct(ID);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
                 break;
             default:
                 break;

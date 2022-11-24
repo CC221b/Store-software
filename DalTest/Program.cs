@@ -108,6 +108,7 @@ class Program
                 {
                     p = s_IDal.Product.Get(ID);
                     Console.WriteLine(p);
+                    p1.ID = ID;
                     Console.WriteLine("Write name:");
                     p1.Name = Console.ReadLine();
                     p1.Name = p1.Name == "" ? p.Name : p1.Name;
@@ -209,6 +210,7 @@ class Program
                 {
                     o = s_IDal.Order.Get(order_ID);
                     Console.WriteLine(o);
+                    o1.ID = order_ID;
                     Console.WriteLine("Write CustomerName:");
                     o1.CustomerName = Console.ReadLine();
                     o1.CustomerName = o1.CustomerName == null ? o.CustomerName : o1.CustomerName;
@@ -277,7 +279,7 @@ class Program
                 {
                     Console.WriteLine(ex.Message);
                 }
-                oi.Price =p.Price*oi.Amount ;
+                oi.Price = p.Price * oi.Amount;
                 try
                 {
                     s_IDal.OrderItem.Add(oi);
@@ -322,6 +324,7 @@ class Program
                 {
                     oi = s_IDal.OrderItem.Get(orderItem_ID);
                     Console.WriteLine(oi);
+                    oi1.ID = orderItem_ID;
                     Console.WriteLine("Write ProductId:");
                     oi1.ProductId = int.Parse(Console.ReadLine());
                     oi1.ProductId = oi1.ProductId == null ? oi.ProductId : oi1.ProductId;

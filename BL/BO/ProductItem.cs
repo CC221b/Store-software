@@ -14,6 +14,6 @@ public class ProductItem
     productName: {Name}
     productPrice: {Price}
     category: {Category}
-    inStock: {Amount}
-    amountProductInCart: {InStock}";
+    inStock: {InStock}
+    amountProductInCart: {Amount}";
 }
