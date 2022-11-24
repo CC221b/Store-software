@@ -3,7 +3,6 @@
 namespace BlImplementation;
 
 
-//להעתיק מהסמינר...כל מה שעשיתי
 internal class BlCart : ICart
 {
     DalApi.IDal Dal = new Dal.DalList();
@@ -53,7 +52,6 @@ internal class BlCart : ICart
 
     public BO.Cart UpdateAmountOfProduct(BO.Cart cart, int id, int newAmount)
     {
-        //לבדוק את הפונקציה שוב, מלאי וענינים....
         DO.Product product = new DO.Product();
         product = Dal.Product.Get(id);
         foreach (var item in cart.Items)
@@ -62,10 +60,15 @@ internal class BlCart : ICart
             {
                 if (item.Amount < newAmount)
                 {
-                    if (product.InStock > newAmount - item.Amount)
+                    if (product.InStock > (newAmount - item.Amount))
                     {
                         item.Amount = newAmount;
+                        item.TotalPrice = newAmount * item.Price;
                         cart.TotalPrice += item.Price * (newAmount - item.Amount);
+                    }
+                    else
+                    {
+                        throw new BO.ExceptionOutOfStock();
                     }
 
                 }
@@ -78,13 +81,83 @@ internal class BlCart : ICart
                 {
                     cart.TotalPrice -= product.Price * (item.Amount - newAmount);
                     item.Amount = newAmount;
-                    product.InStock += (item.Amount - newAmount);
+                    item.TotalPrice = newAmount * item.Price;
                 }
             }
         }
         return cart;
     }
+
+    bool IsValidEmail(string email)
+    {
+        var trimmedEmail = email.Trim();
+
+        if (trimmedEmail.EndsWith("."))
+        {
+            return false; // suggested by @TK-421
+        }
+        try
+        {
+            var addr = new System.Net.Mail.MailAddress(email);
+            return addr.Address == trimmedEmail;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     public void MakeAnOrder(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
     {
+        foreach (var item in cart.Items)
+        {
+            DO.Product product = new DO.Product();
+            try
+            {
+                product = Dal.Product.Get(item.ProductID);
+            }
+            catch (Exception ex)
+            {
+                throw new BO.ExceptionFromDal(ex);
+            }
+            if (product.InStock >= item.Amount || item.Amount > 0 || item.Price > 0 || customerName != "" || customerAdress != "" || IsValidEmail(customerEmail))
+            {
+                DO.Order order = new DO.Order();
+                order.CustomerAdress = customerAdress;
+                order.CustomerName = customerName;
+                order.CustomerEmail = customerEmail;
+                order.OrderDate = DateTime.Now;
+                order.ShipDate = new DateTime(0, 0, 0);
+                order.DeliveryDate = new DateTime(0, 0, 0);
+                int OrderID;
+                try
+                {
+                    OrderID = Dal.Order.Add(order);
+                }
+                catch (Exception ex)
+                {
+                    throw new BO.ExceptionFromDal(ex);
+                }
+                DO.OrderItem orderItem = new DO.OrderItem();
+                orderItem.OrderId = OrderID;
+                orderItem.ProductId = item.ProductID;
+                orderItem.Price = item.Price;
+                orderItem.Amount = item.Amount;
+                product.InStock -= item.Amount;
+                try
+                {
+                    Dal.OrderItem.Add(orderItem);
+                    Dal.Product.Update(product);
+                }
+                catch (Exception ex)
+                {
+                    throw new BO.ExceptionFromDal(ex);
+                }
+            }
+            else
+            {
+                throw new BO.ExceptionInvalidData();
+            }
+        }
     }
 }
