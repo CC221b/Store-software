@@ -169,22 +169,69 @@ class Program
 
     private static void _order()
     {
-        Product p = new Product();
-        int ID;
+        Order o = new Order();
         Console.WriteLine("enter 0 to GetListOrders" +
                 "\nenter 1 to GetOrder" +
                 "\nenter 2 to UpdateOrderShipping" +
                 "\nenter 3 to UpdateOrderDelivery");
         int choose = Convert.ToInt32(Console.ReadLine());
+        int id;
         switch (choose)
         {
+
             case 0://GetListOrders
+                try
+                {
+                    IEnumerable<OrderForList> ListOrderForList = s_IBl.Order.GetListOrders();
+                    foreach (var item in ListOrderForList)
+                    {
+                        Console.WriteLine(item);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
                 break;
             case 1://GetOrder
+                Console.WriteLine("Enter orderID:");
+                id = Convert.ToInt32(Console.ReadLine());
+                try
+                {
+                    o = s_IBl.Order.GetOrder(id);
+                    Console.WriteLine(o);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
                 break;
             case 2://UpdateOrderShipping
+                Console.WriteLine("Enter orderID:");
+                id = Convert.ToInt32(Console.ReadLine());
+                try
+                {
+                    o = s_IBl.Order.UpdateOrderShipping(id);
+                    Console.WriteLine(o);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
                 break;
             case 3://UpdateOrderDelivery
+                Console.WriteLine("Enter orderID:");
+                id = Convert.ToInt32(Console.ReadLine());
+                try
+                {
+                    o = s_IBl.Order.UpdateOrderDelivery(id);
+                    Console.WriteLine(o);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                break;
             default:
                 break;
         }

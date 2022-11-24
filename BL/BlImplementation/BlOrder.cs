@@ -10,9 +10,9 @@ internal class BlOrder : IOrder
     {
         IEnumerable<DO.Order> ListOrders = Dal.Order.GetAll();
         List<BO.OrderForList> ListOrderForList = new List<BO.OrderForList>();
-        BO.OrderForList OrderForList = new BO.OrderForList();
         foreach (var item in ListOrders)
         {
+            BO.OrderForList OrderForList = new BO.OrderForList();
             OrderForList.ID = item.ID;
             OrderForList.CustomerName = item.CustomerName;
             OrderForList.Status = 0;
