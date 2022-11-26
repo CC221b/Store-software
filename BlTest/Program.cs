@@ -4,16 +4,16 @@
 using BlApi;
 using BO;
 using BlImplementation;
-using DalApi;
 
 namespace BlTest;
 class Program
 {
-    static IBl s_IBl = new Bl(); 
+    static IBl s_IBl = new Bl();
 
     public static void Main(string[] args)
     {
         Cart cart = new Cart();
+        cart.Items = new List<OrderItem>();
         Console.WriteLine("enter 0 to Exit\n" +
                           "enter 1 to Product\n" +
                           "enter 2 to Order\n" +
@@ -116,7 +116,6 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.InnerException.Message);
                 }
                 break;
             case 4://UpdateProduct
@@ -127,19 +126,39 @@ class Program
                 {
                     p = s_IBl.Product.GetProduct(id);
                     p1.ID = p.ID;
-                    Console.WriteLine("Write name:");
-                    p1.Name = Console.ReadLine();
-                    p1.Name = p1.Name == "" ? p.Name : p1.Name;
-                    Console.WriteLine("Write price:");
-                    p1.Price = int.Parse(Console.ReadLine());
-                    p1.Price = p1.Price == null ? p.Price : p1.Price;
-                    Console.WriteLine("Write inStock:");
-                    p1.InStock = Convert.ToInt32(Console.ReadLine());
-                    p1.InStock = p1.InStock == null ? p.InStock : p1.InStock;
-                    Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
-                    category = Convert.ToInt32(Console.ReadLine());
-                    p1.Category = (Categories)category;
-                    p1.Category = p1.Category == null ? p.Category : p1.Category;
+                    Console.WriteLine("enter 0 to update name\n" +
+                         "enter 1 to update price\n" +
+                         "enter 2 to update inStock\n" +
+                         "enter 3 to update categories\n" +
+                         "enter 4 to update all");
+                    int chooseUpdate = Convert.ToInt32(Console.ReadLine());
+                    switch (chooseUpdate)
+                    {
+                        case 0:
+                            p1.Name = Console.ReadLine();
+                            break;
+                        case 1:
+                            p1.Price = Convert.ToInt32(Console.ReadLine());
+                            break;
+                        case 2:
+                            p1.InStock = Convert.ToInt32(Console.ReadLine());
+                            break;
+                        case 3:
+                            Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
+                            category = Convert.ToInt32(Console.ReadLine());
+                            p1.Category = (Categories)category;
+                            break;
+                        case 4:
+                            p1.Name = Console.ReadLine();
+                            p1.Price = Convert.ToInt32(Console.ReadLine());
+                            p1.InStock = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
+                            category = Convert.ToInt32(Console.ReadLine());
+                            p1.Category = (Categories)category;
+                            break;
+                        default:
+                            break;
+                    }
                     try
                     {
                         s_IBl.Product.UpdateProduct(p1);
@@ -147,7 +166,6 @@ class Program
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
-                        Console.WriteLine(ex.InnerException.Message);
                     }
                 }
                 catch (Exception ex)
@@ -248,7 +266,7 @@ class Program
     private static void _cart(Cart cart)
     {
         Product p = new Product();
-        Cart c1= new Cart();
+        Cart c1 = new Cart();
         int id;
         Console.WriteLine("enter 0 to AddProduct" +
                 "\nenter 1 to UpdateAmountOfProduct" +
@@ -258,10 +276,10 @@ class Program
         {
             case 0://AddProduct
                 Console.WriteLine("enter productID:");
-                id= Convert.ToInt32(Console.ReadLine());
+                id = Convert.ToInt32(Console.ReadLine());
                 try
                 {
-                    c1=s_IBl.Cart.AddProduct(cart,id);
+                    c1 = s_IBl.Cart.AddProduct(cart, id);
                     Console.WriteLine(c1);
                 }
                 catch (Exception ex)
@@ -271,8 +289,36 @@ class Program
                 }
                 break;
             case 1://UpdateAmountOfProduct
+                Console.WriteLine("enter productID:");
+                id = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("enter newAmount:");
+                int newAmount = Convert.ToInt32(Console.ReadLine());
+                try
+                {
+                    c1 = s_IBl.Cart.UpdateAmountOfProduct(cart, id, newAmount);
+                    Console.WriteLine(c1);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.InnerException.Message);
+                }
                 break;
             case 2://MakeAnOrder
+                Console.WriteLine("Enter customerName:");
+                string customerName = Console.ReadLine();
+                Console.WriteLine("Enter customerEmail:");
+                string customerEmail = Console.ReadLine();
+                Console.WriteLine("Enter customerAdress:");
+                string customerAdress = Console.ReadLine();
+                try
+                {
+                    s_IBl.Cart.MakeAnOrder(cart, customerName, customerEmail, customerAdress);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
                 break;
             default:
                 break;

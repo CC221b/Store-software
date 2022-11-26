@@ -29,7 +29,7 @@ internal class BlCart : ICart
                 }
             }
         }
-        if (flag)
+        if (!flag)
         {
             if (product.InStock > 0)
             {
@@ -62,9 +62,9 @@ internal class BlCart : ICart
                 {
                     if (product.InStock > (newAmount - item.Amount))
                     {
+                        cart.TotalPrice += item.Price * (newAmount - item.Amount);
                         item.Amount = newAmount;
                         item.TotalPrice = newAmount * item.Price;
-                        cart.TotalPrice += item.Price * (newAmount - item.Amount);
                     }
                     else
                     {
@@ -109,55 +109,62 @@ internal class BlCart : ICart
 
     public void MakeAnOrder(BO.Cart cart, string customerName, string customerEmail, string customerAdress)
     {
-        foreach (var item in cart.Items)
+        if (customerName != "" && customerAdress != "" && IsValidEmail(customerEmail))
         {
-            DO.Product product = new DO.Product();
-            try
+            foreach (var item in cart.Items)
             {
-                product = Dal.Product.Get(item.ProductID);
-            }
-            catch (Exception ex)
-            {
-                throw new BO.ExceptionFromDal(ex);
-            }
-            if (product.InStock >= item.Amount || item.Amount > 0 || item.Price > 0 || customerName != "" || customerAdress != "" || IsValidEmail(customerEmail))
-            {
-                DO.Order order = new DO.Order();
-                order.CustomerAdress = customerAdress;
-                order.CustomerName = customerName;
-                order.CustomerEmail = customerEmail;
-                order.OrderDate = DateTime.Now;
-                order.ShipDate = new DateTime(0, 0, 0);
-                order.DeliveryDate = new DateTime(0, 0, 0);
-                int OrderID;
+                DO.Product product = new DO.Product();
                 try
                 {
-                    OrderID = Dal.Order.Add(order);
+                    product = Dal.Product.Get(item.ProductID);
                 }
                 catch (Exception ex)
                 {
                     throw new BO.ExceptionFromDal(ex);
                 }
-                DO.OrderItem orderItem = new DO.OrderItem();
-                orderItem.OrderId = OrderID;
-                orderItem.ProductId = item.ProductID;
-                orderItem.Price = item.Price;
-                orderItem.Amount = item.Amount;
-                product.InStock -= item.Amount;
-                try
+                if (product.InStock >= item.Amount && item.Amount > 0 && item.Price > 0)
                 {
-                    Dal.OrderItem.Add(orderItem);
-                    Dal.Product.Update(product);
+                    DO.Order order = new DO.Order();
+                    order.CustomerAdress = customerAdress;
+                    order.CustomerName = customerName;
+                    order.CustomerEmail = customerEmail;
+                    order.OrderDate = DateTime.Now;
+                    order.ShipDate = new DateTime(0, 0, 0);
+                    order.DeliveryDate = new DateTime(0, 0, 0);
+                    int OrderID;
+                    try
+                    {
+                        OrderID = Dal.Order.Add(order);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new BO.ExceptionFromDal(ex);
+                    }
+                    DO.OrderItem orderItem = new DO.OrderItem();
+                    orderItem.OrderId = OrderID;
+                    orderItem.ProductId = item.ProductID;
+                    orderItem.Price = item.Price;
+                    orderItem.Amount = item.Amount;
+                    product.InStock -= item.Amount;
+                    try
+                    {
+                        Dal.OrderItem.Add(orderItem);
+                        Dal.Product.Update(product);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new BO.ExceptionFromDal(ex);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw new BO.ExceptionFromDal(ex);
+                    throw new BO.ExceptionInvalidData();
                 }
             }
-            else
-            {
-                throw new BO.ExceptionInvalidData();
-            }
+        }
+        else
+        {
+            throw new BO.ExceptionInvalidData();
         }
     }
 }

@@ -131,7 +131,7 @@ internal class BlProduct : IProduct
     {
         try
         {
-            if (product.ID > 0 && product.Name != "" && product.Price > 0 && product.InStock > 0)
+            if (product.ID > 0 && product.Name != "" && product.Price >= 0 && product.InStock >= 0)
             {
                 try
                 {
@@ -147,6 +147,10 @@ internal class BlProduct : IProduct
                 {
                     throw new BO.ExceptionFromDal(ex);
                 }
+            }
+            else
+            {
+                throw new BO.ExceptionInvalidData();
             }
         }
         catch (Exception)

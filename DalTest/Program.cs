@@ -109,19 +109,39 @@ class Program
                     p = s_IDal.Product.Get(ID);
                     Console.WriteLine(p);
                     p1.ID = ID;
-                    Console.WriteLine("Write name:");
-                    p1.Name = Console.ReadLine();
-                    p1.Name = p1.Name == "" ? p.Name : p1.Name;
-                    Console.WriteLine("Write price:");
-                    p1.Price = int.Parse(Console.ReadLine());
-                    p1.Price = p1.Price == null ? p.Price : p1.Price;
-                    Console.WriteLine("Write inStock:");
-                    p1.InStock = int.Parse(Console.ReadLine());
-                    p1.InStock = p1.InStock == null ? p.InStock : p1.InStock;
-                    Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
-                    category = int.Parse(Console.ReadLine());
-                    p1.Category = (Categories)category;
-                    p1.Category = p1.Category == null ? p.Category : p1.Category;
+                    Console.WriteLine("enter 0 to update name\n" +
+                         "enter 1 to update price\n" +
+                         "enter 2 to update inStock\n" +
+                         "enter 3 to update categories\n" +
+                         "enter 4 to update all");
+                    int chooseUpdate = Convert.ToInt32(Console.ReadLine());
+                    switch (chooseUpdate)
+                    {
+                        case 0:
+                            p1.Name = Console.ReadLine();
+                            break;
+                        case 1:
+                            p1.Price = Convert.ToInt32(Console.ReadLine());
+                            break;
+                        case 2:
+                            p1.InStock = Convert.ToInt32(Console.ReadLine());
+                            break;
+                        case 3:
+                            Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
+                            category = Convert.ToInt32(Console.ReadLine());
+                            p1.Category = (Categories)category;
+                            break;
+                        case 4:
+                            p1.Name = Console.ReadLine();
+                            p1.Price = Convert.ToInt32(Console.ReadLine());
+                            p1.InStock = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
+                            category = Convert.ToInt32(Console.ReadLine());
+                            p1.Category = (Categories)category;
+                            break;
+                        default:
+                            break;
+                    }
                     try
                     {
                         s_IDal.Product.Update(p1);
@@ -211,24 +231,45 @@ class Program
                     o = s_IDal.Order.Get(order_ID);
                     Console.WriteLine(o);
                     o1.ID = order_ID;
-                    Console.WriteLine("Write CustomerName:");
-                    o1.CustomerName = Console.ReadLine();
-                    o1.CustomerName = o1.CustomerName == null ? o.CustomerName : o1.CustomerName;
-                    Console.WriteLine("Write CustomerEmail:");
-                    o1.CustomerEmail = Console.ReadLine();
-                    o1.CustomerEmail = o1.CustomerEmail == null ? o.CustomerEmail : o1.CustomerEmail;
-                    Console.WriteLine("Write CustomerAdress:");
-                    o1.CustomerAdress = Console.ReadLine();
-                    o1.CustomerAdress = o1.CustomerAdress == null ? o.CustomerAdress : o1.CustomerAdress;
-                    Console.WriteLine("Write OrderDate:");
-                    o1.OrderDate = Convert.ToDateTime(Console.ReadLine());
-                    o1.OrderDate = o1.OrderDate == null ? o.OrderDate : o1.OrderDate;
-                    Console.WriteLine("Write ShipDate:");
-                    o1.ShipDate = Convert.ToDateTime(Console.ReadLine());
-                    o1.ShipDate = o1.ShipDate == null ? o.ShipDate : o1.ShipDate;
-                    Console.WriteLine("Write DeliveryDate:");
-                    o1.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
-                    o1.DeliveryDate = o1.DeliveryDate == null ? o.DeliveryDate : o1.DeliveryDate;
+                    Console.WriteLine("enter 0 to update CustomerName\n" +
+                         "enter 1 to update CustomerEmail\n" +
+                         "enter 2 to update CustomerAdress\n" +
+                         "enter 3 to update OrderDate\n" +
+                         "enter 4 to update ShipDate\n" +
+                         "enter 5 to update DeliveryDate\n" +
+                         "enter 6 to updare all");
+                    int chooseUpdate = Convert.ToInt32(Console.ReadLine());
+                    switch (chooseUpdate)
+                    {
+                        case 0:
+                            o1.CustomerName = Console.ReadLine();
+                            break;
+                        case 1:
+                            o1.CustomerEmail = Console.ReadLine();
+                            break;
+                        case 2:
+                            o1.CustomerAdress = Console.ReadLine();
+                            break;
+                        case 3:
+                            o1.OrderDate = Convert.ToDateTime(Console.ReadLine());
+                            break;
+                        case 4:
+                            o1.ShipDate = Convert.ToDateTime(Console.ReadLine());
+                            break;
+                        case 5:
+                            o1.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
+                            break;
+                        case 6:
+                            o1.CustomerName = Console.ReadLine();
+                            o1.CustomerEmail = Console.ReadLine(); 
+                            o1.CustomerAdress = Console.ReadLine(); 
+                            o1.OrderDate = Convert.ToDateTime(Console.ReadLine());                         
+                            o1.ShipDate = Convert.ToDateTime(Console.ReadLine());
+                            o1.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
+                            break;
+                        default:
+                            break;
+                    }
                     try
                     {
                         s_IDal.Order.Add(o);
@@ -325,18 +366,35 @@ class Program
                     oi = s_IDal.OrderItem.Get(orderItem_ID);
                     Console.WriteLine(oi);
                     oi1.ID = orderItem_ID;
-                    Console.WriteLine("Write ProductId:");
-                    oi1.ProductId = int.Parse(Console.ReadLine());
-                    oi1.ProductId = oi1.ProductId == null ? oi.ProductId : oi1.ProductId;
-                    Console.WriteLine("Write OrderId:");
-                    oi1.OrderId = int.Parse(Console.ReadLine());
-                    oi1.OrderId = oi1.OrderId == null ? oi.OrderId : oi1.OrderId;
-                    Console.WriteLine("Write Price:");
-                    oi1.Price = int.Parse(Console.ReadLine());
-                    oi1.Price = oi1.Price == null ? oi.Price : oi1.Price;
-                    Console.WriteLine("Write Amount:");
-                    oi1.Amount = int.Parse(Console.ReadLine());
-                    oi1.Amount = oi1.Amount == null ? oi.Amount : oi1.Amount;
+                    Console.WriteLine("enter 0 to update ProductId\n" +
+                         "enter 1 to update OrderId\n" +
+                         "enter 2 to update Price\n" +
+                         "enter 3 to update Amount\n" +
+                         "enter 4 to update all");
+                    int chooseUpdate = Convert.ToInt32(Console.ReadLine());
+                    switch (chooseUpdate)
+                    {
+                        case 0:
+                            oi1.ProductId = Convert.ToInt32(Console.ReadLine());
+                            break;
+                        case 1:
+                            oi1.OrderId = Convert.ToInt32(Console.ReadLine());
+                            break;
+                        case 2:
+                            oi1.Price = Convert.ToInt32(Console.ReadLine());
+                            break;
+                        case 3:
+                            oi1.Amount = Convert.ToInt32(Console.ReadLine());
+                            break;
+                        case 4:
+                            oi1.ProductId = Convert.ToInt32(Console.ReadLine());
+                            oi1.OrderId = Convert.ToInt32(Console.ReadLine());
+                            oi1.Price = Convert.ToInt32(Console.ReadLine());
+                            oi1.Amount = Convert.ToInt32(Console.ReadLine());
+                            break;
+                        default:
+                            break;
+                    }
                     try
                     {
                         s_IDal.OrderItem.Update(oi);
