@@ -1,5 +1,4 @@
 ﻿using BlApi;
-
 namespace BlImplementation;
 
 
@@ -7,6 +6,13 @@ internal class BlProduct : IProduct
 {
     DalApi.IDal Dal = new Dal.DalList();
 
+    /// <summary>
+    /// The function returns a list of type productForList.
+    /// fetches the list of products from the data layer and creates a list of type productForList.
+    /// throws errors accordingly.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
     public IEnumerable<BO.ProductForList> GetListProducts()
     {
         IEnumerable<DO.Product> ListProducts = new List<DO.Product>();
@@ -31,6 +37,13 @@ internal class BlProduct : IProduct
         return ListProductsForList;
     }
 
+    /// <summary>
+    /// The function returns a list of productItem type.
+    /// Brings the list of products from the data layer and creates a list of type productItem.
+    /// throws errors accordingly.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
     public IEnumerable<BO.ProductItem> GetCatalog()
     {
         IEnumerable<DO.Product> ListProducts = new List<DO.Product>();
@@ -57,6 +70,16 @@ internal class BlProduct : IProduct
         return ListProductItem;
     }
 
+    /// <summary>
+    /// The function receives an ID,
+    /// fetches the product from the data layer and converts to a logical entity.
+    /// Returns the logical entity.
+    /// throws exceptions accordingly.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
+    /// <exception cref="BO.ExceptionInvalidID"></exception>
     public BO.Product GetProduct(int id)
     {
         BO.Product productTypeBO = new BO.Product();
@@ -81,6 +104,14 @@ internal class BlProduct : IProduct
         throw new BO.ExceptionInvalidID();
     }
 
+    /// <summary>
+    /// The function receives a product of the logical entity type,
+    /// converts it to an entity of the data layer type and tries to insert the product into the list.
+    /// throws exceptions accordingly.
+    /// </summary>
+    /// <param name="product"></param>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
+    /// <exception cref="BO.ExceptionInvalidID"></exception>
     public void AddProduct(BO.Product product)
     {
         if (product.ID > 0 && product.Name != "" && product.Price > 0 && product.InStock > 0)
@@ -107,6 +138,15 @@ internal class BlProduct : IProduct
 
     }
 
+    /// <summary>
+    /// The function receives an ID,
+    /// looks for the product in a list of products it pulled from the data layer,
+    /// and tries to delete the product.
+    /// Throws exceptions accordingly.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="BO.ExceptionExists"></exception>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
     public void DeleteProduct(int id)
     {
         IEnumerable<DO.OrderItem> orderItems = Dal.OrderItem.GetAll();
@@ -127,6 +167,15 @@ internal class BlProduct : IProduct
         }
     }
 
+    /// <summary>
+    /// The function receives an updated product,
+    /// looks for the product in a list of products it pulled from the data layer according to the identifier,
+    /// and tries to update the product.
+    /// Throws exceptions accordingly.
+    /// </summary>
+    /// <param name="product"></param>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
+    /// <exception cref="BO.ExceptionInvalidData"></exception>
     public void UpdateProduct(BO.Product product)
     {
         try

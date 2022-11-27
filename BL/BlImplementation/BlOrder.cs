@@ -6,9 +6,23 @@ internal class BlOrder : IOrder
 {
     DalApi.IDal Dal = new Dal.DalList();
 
+    /// <summary>
+    /// The function returns a list of orderForList objects.
+    /// It fetches all the orders from the data layer and creates a list of orderForList objects and returns the list.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
     public IEnumerable<BO.OrderForList> GetListOrders()
     {
-        IEnumerable<DO.Order> ListOrders = Dal.Order.GetAll();
+        IEnumerable<DO.Order> ListOrders = new List<DO.Order>();
+        try
+        {
+            ListOrders = Dal.Order.GetAll();
+        }
+        catch (Exception ex)
+        {
+            throw new BO.ExceptionFromDal(ex);
+        }
         List<BO.OrderForList> ListOrderForList = new List<BO.OrderForList>();
         foreach (var item in ListOrders)
         {
@@ -29,6 +43,16 @@ internal class BlOrder : IOrder
         return ListOrderForList;
     }
 
+    /// <summary>
+    /// The function returns an order.
+    /// Checking if the ID is correct.
+    /// If so fetches the order from the data entity and converts it to a logical entity and returns the logical entity.
+    /// throws errors accordingly.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
+    /// <exception cref="BO.ExceptionInvalidID"></exception>
     public BO.Order GetOrder(int id)
     {
         if (id > 0)
@@ -65,6 +89,15 @@ internal class BlOrder : IOrder
         throw new BO.ExceptionInvalidID();
     }
 
+    /// <summary>
+    /// Updating order shipment.
+    /// Receives an order number and updates that the order has been sent,
+    /// throws errors accordingly.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
+    /// <exception cref="BO.ExceptionNotExists"></exception>
     public BO.Order UpdateOrderShipping(int id)
     {
         try
@@ -87,6 +120,15 @@ internal class BlOrder : IOrder
         throw new BO.ExceptionNotExists();
     }
 
+    /// <summary>
+    /// Updates receipt of an order.
+    /// Receives an order number and updates that the order has been received,
+    /// throws errors accordingly.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
+    /// <exception cref="BO.ExceptionNotExists"></exception>
     public BO.Order UpdateOrderDelivery(int id)
     {
         try

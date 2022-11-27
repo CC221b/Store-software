@@ -30,7 +30,7 @@ class Program
                     _order();
                     break;
                 case 3:
-                    _cart(cart);
+                    cart=_cart(cart);
                     break;
                 default:
                     break;
@@ -263,10 +263,9 @@ class Program
         }
     }
 
-    private static void _cart(Cart cart)
+    private static Cart _cart(Cart cart)
     {
         Product p = new Product();
-        Cart c1 = new Cart();
         int id;
         Console.WriteLine("enter 0 to AddProduct" +
                 "\nenter 1 to UpdateAmountOfProduct" +
@@ -279,8 +278,8 @@ class Program
                 id = Convert.ToInt32(Console.ReadLine());
                 try
                 {
-                    c1 = s_IBl.Cart.AddProduct(cart, id);
-                    Console.WriteLine(c1);
+                    cart = s_IBl.Cart.AddProduct(cart, id);
+                    Console.WriteLine(cart);
                 }
                 catch (Exception ex)
                 {
@@ -295,8 +294,8 @@ class Program
                 int newAmount = Convert.ToInt32(Console.ReadLine());
                 try
                 {
-                    c1 = s_IBl.Cart.UpdateAmountOfProduct(cart, id, newAmount);
-                    Console.WriteLine(c1);
+                    cart = s_IBl.Cart.UpdateAmountOfProduct(cart, id, newAmount);
+                    Console.WriteLine(cart);
                 }
                 catch (Exception ex)
                 {
@@ -323,5 +322,6 @@ class Program
             default:
                 break;
         }
+        return cart;
     }
 }
