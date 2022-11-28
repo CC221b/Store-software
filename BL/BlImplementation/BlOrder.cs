@@ -1,4 +1,7 @@
 ﻿using BlApi;
+using Microsoft.VisualBasic;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace BlImplementation;
 
@@ -149,5 +152,107 @@ internal class BlOrder : IOrder
             throw new BO.ExceptionFromDal(ex);
         }
         throw new BO.ExceptionNotExists();
+    }
+
+    /// <summary>
+    /// Bonus!!!
+    ///The function gives the administrator several options:
+    ///1. Add a product(the limitation here is whether a product exists and is available in quantity.)
+    ///2. Delete a product - the restriction An order has already been sent...
+    ///3. Update quantity in stock (the limitation - there is enough quantity in stock..)
+    /// </summary>
+    /// <param name="order"></param>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
+    /// <exception cref="BO.ExceptionNotExists"></exception>
+    /// <exception cref="Exception"></exception>
+    public void UpdateOrder(BO.Order order)
+    {
+        try
+        {
+            BO.Order order1 = GetOrder(order.ID);
+            Console.WriteLine("enter 0 to addProduct" +
+                "\nenter 1 to deleteProduct" +
+                "\nenter 2 to UpdateAmountOfProduct");
+            int choose = Convert.ToInt32(Console.ReadLine());
+            int productID, orderID;
+            switch (choose)
+            {
+                case 0:
+                    DO.OrderItem orderItem = new DO.OrderItem();
+                    Console.WriteLine("Write ProductId, OrderId, Price, Amount");
+                    orderItem.ProductId = Convert.ToInt32(Console.ReadLine());
+                    orderItem.OrderId = Convert.ToInt32(Console.ReadLine());
+                    orderItem.Price = Convert.ToInt32(Console.ReadLine());
+                    orderItem.Amount = Convert.ToInt32(Console.ReadLine());
+                    try
+                    {
+                        DO.Product product = Dal.Product.Get(orderItem.ProductId);
+                        if (product.InStock <= orderItem.Amount)
+                        {
+                            throw new BO.ExceptionOutOfStock();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new BO.ExceptionFromDal(ex);
+                    }
+                    order1.Items.Add(orderItem);
+                    break;
+                case 1:
+                    Console.WriteLine("enter productID and orderID to delete:");
+                    productID = Convert.ToInt32(Console.ReadLine());
+                    orderID = Convert.ToInt32(Console.ReadLine());
+                    try
+                    {
+                        DO.OrderItem orderItem1 = Dal.OrderItem.GetByProductIDAndOrderID(productID, orderID);
+                        BO.Order checkOrderStatus = GetOrder(orderID);
+                        if (checkOrderStatus.Status == 0)
+                        {
+                            order1.Items.Remove(orderItem1);
+                        }
+                        else 
+                        {
+                            throw new BO.ExceptionOrderSent();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new BO.ExceptionFromDal(ex);
+                    }
+                    break;
+                case 2:
+                    Console.WriteLine("enter productID and orderID and newAmount to update:");
+                    productID = Convert.ToInt32(Console.ReadLine());
+                    orderID = Convert.ToInt32(Console.ReadLine());
+                    int newAmount = Convert.ToInt32(Console.ReadLine());
+                    try
+                    {
+                        DO.Product product = Dal.Product.Get(productID);
+                        DO.OrderItem orderItem1 = Dal.OrderItem.GetByProductIDAndOrderID(productID, orderID);
+                        if (product.InStock >= (newAmount > orderItem1.Amount ? newAmount - orderItem1.Amount : orderItem1.Amount - newAmount))
+                        {
+                            DO.OrderItem updateOrderItem = order1.Items.Find(item => item.ID == orderItem1.ID);
+                            order1.Items.Remove(orderItem1);
+                            updateOrderItem.Amount = newAmount;
+                            updateOrderItem.Price = product.Price * newAmount;
+                        }
+                        else
+                        {
+                            throw new BO.ExceptionOutOfStock();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new BO.ExceptionFromDal(ex);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            throw new Exception();
+        }
     }
 }

@@ -45,3 +45,11 @@ public class ExceptionOutOfStock : Exception
     public override string Message => "Error: The product is out of stock, sorry.";
 }
 
+/// <summary>
+/// An order has been sent
+/// </summary>
+public class ExceptionOrderSent : Exception
+{
+    public override string Message => "Error: The order has already been sent and cannot be deleted at this time.";
+}
+
