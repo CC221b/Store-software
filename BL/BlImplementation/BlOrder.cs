@@ -1,7 +1,5 @@
 ﻿using BlApi;
-using Microsoft.VisualBasic;
-using System.Collections;
-using System.Collections.Generic;
+
 
 namespace BlImplementation;
 
@@ -173,17 +171,26 @@ internal class BlOrder : IOrder
             Console.WriteLine("enter 0 to addProduct" +
                 "\nenter 1 to deleteProduct" +
                 "\nenter 2 to UpdateAmountOfProduct");
-            int choose = Convert.ToInt32(Console.ReadLine());
+            string? chooseBeforeParse = Console.ReadLine();
+            int.TryParse(chooseBeforeParse, out int choose);
             int productID, orderID;
             switch (choose)
             {
                 case 0:
                     DO.OrderItem orderItem = new DO.OrderItem();
                     Console.WriteLine("Write ProductId, OrderId, Price, Amount");
-                    orderItem.ProductId = Convert.ToInt32(Console.ReadLine());
-                    orderItem.OrderId = Convert.ToInt32(Console.ReadLine());
-                    orderItem.Price = Convert.ToInt32(Console.ReadLine());
-                    orderItem.Amount = Convert.ToInt32(Console.ReadLine());
+                    string? ProductIDBeforeParse = Console.ReadLine();
+                    int.TryParse(ProductIDBeforeParse, out productID);
+                    string? orderIDBeforeParse = Console.ReadLine();
+                    int.TryParse(orderIDBeforeParse, out orderID);
+                    string? priceBeforeParse = Console.ReadLine();
+                    int.TryParse(priceBeforeParse, out int price);
+                    string? amountBeforeParse = Console.ReadLine();
+                    int.TryParse(amountBeforeParse, out int amount);
+                    orderItem.ProductId = productID;
+                    orderItem.OrderId = orderID;
+                    orderItem.Price = price;
+                    orderItem.Amount = amount;
                     try
                     {
                         DO.Product product = Dal.Product.Get(orderItem.ProductId);
@@ -200,8 +207,10 @@ internal class BlOrder : IOrder
                     break;
                 case 1:
                     Console.WriteLine("enter productID and orderID to delete:");
-                    productID = Convert.ToInt32(Console.ReadLine());
-                    orderID = Convert.ToInt32(Console.ReadLine());
+                    ProductIDBeforeParse = Console.ReadLine();
+                    int.TryParse(ProductIDBeforeParse, out productID);
+                    orderIDBeforeParse = Console.ReadLine();
+                    int.TryParse(orderIDBeforeParse, out orderID);
                     try
                     {
                         DO.OrderItem orderItem1 = Dal.OrderItem.GetByProductIDAndOrderID(productID, orderID);
@@ -210,7 +219,7 @@ internal class BlOrder : IOrder
                         {
                             order1.Items.Remove(orderItem1);
                         }
-                        else 
+                        else
                         {
                             throw new BO.ExceptionOrderSent();
                         }
@@ -222,9 +231,12 @@ internal class BlOrder : IOrder
                     break;
                 case 2:
                     Console.WriteLine("enter productID and orderID and newAmount to update:");
-                    productID = Convert.ToInt32(Console.ReadLine());
-                    orderID = Convert.ToInt32(Console.ReadLine());
-                    int newAmount = Convert.ToInt32(Console.ReadLine());
+                    ProductIDBeforeParse = Console.ReadLine();
+                    int.TryParse(ProductIDBeforeParse, out productID);
+                    orderIDBeforeParse = Console.ReadLine();
+                    int.TryParse(orderIDBeforeParse, out orderID);
+                    string? newAmountBeforeParse = Console.ReadLine();
+                    int.TryParse(newAmountBeforeParse, out int newAmount);
                     try
                     {
                         DO.Product product = Dal.Product.Get(productID);

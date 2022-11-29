@@ -13,7 +13,8 @@ class Program
                           "enter 1 to Product\n" +
                           "enter 2 to Order\n" +
                           "enter 3 to OrderItem");
-        int choose = int.Parse(Console.ReadLine());
+        string? chooseBeforeParse = Console.ReadLine();
+        int.TryParse(chooseBeforeParse, out int choose);
         while (choose != 0)
         {
             string nameChoose = (choose == 1) ? "Product" : (choose == 2) ? "Order" : "OrderItem";
@@ -27,7 +28,8 @@ class Program
                 Console.WriteLine("enter 5 to read orderItem by product_id and order_id\n" +
                 "enter 6 to read orderItems by order_id");
             }
-            int chooseMethod = int.Parse(Console.ReadLine());
+            string? chooseMethodBeforeParse = Console.ReadLine();
+            int.TryParse(chooseMethodBeforeParse, out int chooseMethod);
             switch (choose)
             {
                 case 1:
@@ -46,7 +48,8 @@ class Program
                          "enter 1 to Product\n" +
                          "enter 2 to Order\n" +
                          "enter 3 to OrderItem");
-            choose = Convert.ToInt32(Console.ReadLine());
+            chooseBeforeParse = Console.ReadLine();
+            int.TryParse(chooseBeforeParse, out choose);
         }
     }
     private static void _product(int choose)
@@ -57,13 +60,21 @@ class Program
         {
             case (int)Options.Add:
                 Console.WriteLine("Write ID, name, price, inStock");
-                p.ID = int.Parse(Console.ReadLine());
-                p.Name = Console.ReadLine();
-                p.Price = int.Parse(Console.ReadLine());
-                p.InStock = int.Parse(Console.ReadLine());
+                string? idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out ID);
+                string? name = Console.ReadLine();
+                string? priceBeforeParse = Console.ReadLine();
+                double.TryParse(priceBeforeParse, out double price);
+                string? inStockBeforeParse = Console.ReadLine();
+                int.TryParse(inStockBeforeParse, out int inStock);
                 Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
-                int category = int.Parse(Console.ReadLine());
-                p.Category = (DO.Categories)category;
+                string? categoriesBeforeParse = Console.ReadLine();
+                Categories.TryParse(categoriesBeforeParse, out Categories category);
+                p.ID = ID;
+                p.Name = name;
+                p.Price = price;
+                p.InStock = inStock;
+                p.Category = category;
                 try
                 {
                     s_IDal.Product.Add(p);
@@ -75,7 +86,8 @@ class Program
                 break;
             case (int)Options.Get:
                 Console.WriteLine("Enter ID:");
-                ID = int.Parse(Console.ReadLine());
+                idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out ID);
                 try
                 {
                     p = s_IDal.Product.Get(ID);
@@ -102,7 +114,8 @@ class Program
                 break;
             case (int)Options.Update:
                 Console.WriteLine("Enter ID to update:");
-                ID = int.Parse(Console.ReadLine());
+                idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out ID);
                 Product p1 = new Product();
                 try
                 {
@@ -118,26 +131,38 @@ class Program
                     switch (chooseUpdate)
                     {
                         case 0:
-                            p1.Name = Console.ReadLine();
+                            name = Console.ReadLine();
+                            p1.Name = name;
                             break;
                         case 1:
-                            p1.Price = Convert.ToInt32(Console.ReadLine());
+                            priceBeforeParse = Console.ReadLine();
+                            double.TryParse(priceBeforeParse, out price);
+                            p1.Price = price;
                             break;
                         case 2:
-                            p1.InStock = Convert.ToInt32(Console.ReadLine());
+                            inStockBeforeParse = Console.ReadLine();
+                            int.TryParse(inStockBeforeParse, out inStock);
+                            p1.InStock = inStock;
                             break;
                         case 3:
                             Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
-                            category = Convert.ToInt32(Console.ReadLine());
-                            p1.Category = (Categories)category;
+                            categoriesBeforeParse = Console.ReadLine();
+                            Categories.TryParse(categoriesBeforeParse, out category);
+                            p1.Category = category;
                             break;
                         case 4:
-                            p1.Name = Console.ReadLine();
-                            p1.Price = Convert.ToInt32(Console.ReadLine());
-                            p1.InStock = Convert.ToInt32(Console.ReadLine());
+                            name = Console.ReadLine();
+                            priceBeforeParse = Console.ReadLine();
+                            double.TryParse(priceBeforeParse, out price);
+                            inStockBeforeParse = Console.ReadLine();
+                            int.TryParse(inStockBeforeParse, out inStock);
                             Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
-                            category = Convert.ToInt32(Console.ReadLine());
-                            p1.Category = (Categories)category;
+                            categoriesBeforeParse = Console.ReadLine();
+                            Categories.TryParse(categoriesBeforeParse, out category);
+                            p1.Name = name;
+                            p1.Price = price;
+                            p1.InStock = inStock;
+                            p1.Category = category;
                             break;
                         default:
                             break;
@@ -158,7 +183,8 @@ class Program
                 break;
             case (int)Options.Delete:
                 Console.WriteLine("Enter ID to delete:");
-                ID = int.Parse(Console.ReadLine());
+                idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out ID);
                 try
                 {
                     s_IDal.Product.Delete(ID);
@@ -172,6 +198,7 @@ class Program
                 break;
         }
     }
+
     private static void _order(int choose)
     {
         Order o = new Order();
@@ -180,12 +207,21 @@ class Program
         {
             case (int)Options.Add:
                 Console.WriteLine("Write CustomerName, CustomerEmail, CustomerAdress, OrderDate, ShipDate, DeliveryDate");
-                o.CustomerName = Console.ReadLine();
-                o.CustomerEmail = Console.ReadLine();
-                o.CustomerAdress = Console.ReadLine();
-                o.OrderDate = Convert.ToDateTime(Console.ReadLine());
-                o.ShipDate = Convert.ToDateTime(Console.ReadLine());
-                o.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
+                string? CustomerName = Console.ReadLine();
+                string? CustomerAddress = Console.ReadLine();
+                string? CustomerEmail = Console.ReadLine();
+                string? orderDateBeforeParse = Console.ReadLine();
+                DateTime.TryParse(orderDateBeforeParse, out DateTime orderDate);
+                string? shipDateBeforeParse = Console.ReadLine();
+                DateTime.TryParse(shipDateBeforeParse, out DateTime shipDate);
+                string? deliveryDateBeforeParse = Console.ReadLine();
+                DateTime.TryParse(deliveryDateBeforeParse, out DateTime deliveryDate);
+                o.CustomerName = CustomerName;
+                o.CustomerEmail = CustomerAddress;
+                o.CustomerAdress = CustomerEmail;
+                o.OrderDate = orderDate;
+                o.ShipDate = shipDate;
+                o.DeliveryDate = deliveryDate;
                 try
                 {
                     s_IDal.Order.Add(o);
@@ -197,7 +233,8 @@ class Program
                 break;
             case (int)Options.Get:
                 Console.WriteLine("Enter ID:");
-                ID = int.Parse(Console.ReadLine());
+                string? idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out ID);
                 try
                 {
                     o = s_IDal.Order.Get(ID);
@@ -224,13 +261,14 @@ class Program
                 break;
             case (int)Options.Update:
                 Console.WriteLine("Enter Order_ID to update:");
-                int order_ID = int.Parse(Console.ReadLine());
+                string? orderIDBeforeParse = Console.ReadLine();
+                int.TryParse(orderIDBeforeParse, out ID);
                 Order o1 = new Order();
                 try
                 {
-                    o = s_IDal.Order.Get(order_ID);
+                    o = s_IDal.Order.Get(ID);
                     Console.WriteLine(o);
-                    o1.ID = order_ID;
+                    o1.ID = ID;
                     Console.WriteLine("enter 0 to update CustomerName\n" +
                          "enter 1 to update CustomerEmail\n" +
                          "enter 2 to update CustomerAdress\n" +
@@ -242,30 +280,48 @@ class Program
                     switch (chooseUpdate)
                     {
                         case 0:
-                            o1.CustomerName = Console.ReadLine();
+                            CustomerName = Console.ReadLine();
+                            o1.CustomerName = CustomerName;
                             break;
                         case 1:
-                            o1.CustomerEmail = Console.ReadLine();
+                            CustomerEmail = Console.ReadLine();
+                            o1.CustomerEmail = CustomerEmail;
                             break;
                         case 2:
-                            o1.CustomerAdress = Console.ReadLine();
+                            CustomerAddress = Console.ReadLine();
+                            o1.CustomerAdress = CustomerAddress;
                             break;
                         case 3:
-                            o1.OrderDate = Convert.ToDateTime(Console.ReadLine());
+                            orderDateBeforeParse = Console.ReadLine();
+                            DateTime.TryParse(orderDateBeforeParse, out orderDate);
+                            o1.OrderDate = orderDate;
                             break;
                         case 4:
-                            o1.ShipDate = Convert.ToDateTime(Console.ReadLine());
+                            shipDateBeforeParse = Console.ReadLine();
+                            DateTime.TryParse(shipDateBeforeParse, out shipDate);
+                            o1.ShipDate = shipDate;
                             break;
                         case 5:
-                            o1.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
+                            deliveryDateBeforeParse = Console.ReadLine();
+                            DateTime.TryParse(deliveryDateBeforeParse, out deliveryDate);
+                            o1.DeliveryDate = deliveryDate;
                             break;
                         case 6:
-                            o1.CustomerName = Console.ReadLine();
-                            o1.CustomerEmail = Console.ReadLine(); 
-                            o1.CustomerAdress = Console.ReadLine(); 
-                            o1.OrderDate = Convert.ToDateTime(Console.ReadLine());                         
-                            o1.ShipDate = Convert.ToDateTime(Console.ReadLine());
-                            o1.DeliveryDate = Convert.ToDateTime(Console.ReadLine());
+                            CustomerName = Console.ReadLine();
+                            CustomerAddress = Console.ReadLine();
+                            CustomerEmail = Console.ReadLine();
+                            orderDateBeforeParse = Console.ReadLine();
+                            DateTime.TryParse(orderDateBeforeParse, out orderDate);
+                            shipDateBeforeParse = Console.ReadLine();
+                            DateTime.TryParse(shipDateBeforeParse, out shipDate);
+                            deliveryDateBeforeParse = Console.ReadLine();
+                            DateTime.TryParse(deliveryDateBeforeParse, out deliveryDate);
+                            o1.CustomerName = CustomerName;
+                            o1.CustomerEmail = CustomerAddress;
+                            o1.CustomerAdress = CustomerEmail;
+                            o1.OrderDate = orderDate;
+                            o1.ShipDate = shipDate;
+                            o1.DeliveryDate = deliveryDate;
                             break;
                         default:
                             break;
@@ -286,7 +342,8 @@ class Program
                 break;
             case (int)Options.Delete:
                 Console.WriteLine("Enter ID to delete:");
-                ID = int.Parse(Console.ReadLine());
+                idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out ID);
                 try
                 {
                     s_IDal.Order.Delete(ID); ;
@@ -300,6 +357,7 @@ class Program
                 break;
         }
     }
+
     private static void _orderItem(int choose)
     {
         OrderItem oi = new OrderItem();
@@ -308,10 +366,16 @@ class Program
         {
             case (int)Options.Add:
                 Product p = new Product();
-                Console.WriteLine("Write ProductId, OrderId, Price, Amount");
-                oi.ProductId = int.Parse(Console.ReadLine());
-                oi.OrderId = int.Parse(Console.ReadLine());
-                oi.Amount = int.Parse(Console.ReadLine());
+                Console.WriteLine("Write ProductId, OrderId, Amount");
+                string? productIDBeforeParse = Console.ReadLine();
+                int.TryParse(productIDBeforeParse, out int productID);
+                string? orderIDBeforeParse = Console.ReadLine();
+                int.TryParse(orderIDBeforeParse, out int orderID);
+                string? amountBeforeParse = Console.ReadLine();
+                int.TryParse(amountBeforeParse, out int amount);
+                oi.ProductId = productID;
+                oi.OrderId = orderID;
+                oi.Amount = amount;
                 try
                 {
                     p = s_IDal.Product.Get(oi.ProductId);
@@ -332,7 +396,8 @@ class Program
                 break;
             case (int)Options.Get:
                 Console.WriteLine("Enter ID:");
-                ID = int.Parse(Console.ReadLine());
+                string? idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out ID);
                 try
                 {
                     oi = s_IDal.OrderItem.Get(ID);
@@ -359,38 +424,48 @@ class Program
                 break;
             case (int)Options.Update:
                 Console.WriteLine("Enter OrderItem_ID to update:");
-                int orderItem_ID = int.Parse(Console.ReadLine());
+                idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out ID);
                 OrderItem oi1 = new OrderItem();
                 try
                 {
-                    oi = s_IDal.OrderItem.Get(orderItem_ID);
+                    oi = s_IDal.OrderItem.Get(ID);
+                    double price = oi.Price / oi.Amount;
                     Console.WriteLine(oi);
-                    oi1.ID = orderItem_ID;
+                    oi1.ID = ID;
                     Console.WriteLine("enter 0 to update ProductId\n" +
                          "enter 1 to update OrderId\n" +
-                         "enter 2 to update Price\n" +
-                         "enter 3 to update Amount\n" +
-                         "enter 4 to update all");
+                         "enter 2 to update Amount\n" +
+                         "enter 3 to update all");
                     int chooseUpdate = Convert.ToInt32(Console.ReadLine());
                     switch (chooseUpdate)
                     {
                         case 0:
-                            oi1.ProductId = Convert.ToInt32(Console.ReadLine());
+                            productIDBeforeParse = Console.ReadLine();
+                            int.TryParse(productIDBeforeParse, out productID);
+                            oi1.ProductId = productID;
                             break;
                         case 1:
-                            oi1.OrderId = Convert.ToInt32(Console.ReadLine());
+                            orderIDBeforeParse = Console.ReadLine();
+                            int.TryParse(orderIDBeforeParse, out orderID);
+                            oi1.OrderId = orderID;
                             break;
                         case 2:
-                            oi1.Price = Convert.ToInt32(Console.ReadLine());
+                            amountBeforeParse = Console.ReadLine();
+                            int.TryParse(amountBeforeParse, out amount);
+                            oi1.Amount = amount;
                             break;
                         case 3:
-                            oi1.Amount = Convert.ToInt32(Console.ReadLine());
-                            break;
-                        case 4:
-                            oi1.ProductId = Convert.ToInt32(Console.ReadLine());
-                            oi1.OrderId = Convert.ToInt32(Console.ReadLine());
-                            oi1.Price = Convert.ToInt32(Console.ReadLine());
-                            oi1.Amount = Convert.ToInt32(Console.ReadLine());
+                            productIDBeforeParse = Console.ReadLine();
+                            int.TryParse(productIDBeforeParse, out productID);
+                            orderIDBeforeParse = Console.ReadLine();
+                            int.TryParse(orderIDBeforeParse, out orderID);
+                            amountBeforeParse = Console.ReadLine();
+                            int.TryParse(amountBeforeParse, out amount);
+                            oi1.ProductId = productID;
+                            oi1.OrderId = orderID;
+                            oi1.Price = price;
+                            oi1.Amount = amount;
                             break;
                         default:
                             break;
@@ -412,7 +487,8 @@ class Program
                 break;
             case (int)Options.Delete:
                 Console.WriteLine("Enter ID to delete:");
-                ID = int.Parse(Console.ReadLine());
+                idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out ID);
                 try
                 {
                     s_IDal.OrderItem.Delete(ID);
@@ -424,7 +500,8 @@ class Program
                 break;
             case (int)Options.GetByOrderID:
                 Console.WriteLine("Enter orderID:");
-                ID = int.Parse(Console.ReadLine());
+                idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out ID);
                 try
                 {
                     List<OrderItem> orderItems = s_IDal.OrderItem.GetByOrderID(ID);
@@ -440,8 +517,10 @@ class Program
                 break;
             case (int)Options.GetByProductIDandOrderID:
                 Console.WriteLine("Enter orderID and productID:");
-                int productID = int.Parse(Console.ReadLine());
-                int orderID = int.Parse(Console.ReadLine());
+                productIDBeforeParse = Console.ReadLine();
+                int.TryParse(productIDBeforeParse, out productID);
+                orderIDBeforeParse = Console.ReadLine();
+                int.TryParse(orderIDBeforeParse, out orderID);
                 try
                 {
                     oi = s_IDal.OrderItem.GetByProductIDAndOrderID(productID, orderID);

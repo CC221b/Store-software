@@ -18,7 +18,8 @@ class Program
                           "enter 1 to Product\n" +
                           "enter 2 to Order\n" +
                           "enter 3 to Cart");
-        int choose = int.Parse(Console.ReadLine());
+        string? chooseBeforeParse = Console.ReadLine();
+        int.TryParse(chooseBeforeParse, out int choose);
         while (choose != 0)
         {
             switch (choose)
@@ -30,7 +31,7 @@ class Program
                     _order();
                     break;
                 case 3:
-                    cart=_cart(cart);
+                    cart = _cart(cart);
                     break;
                 default:
                     break;
@@ -39,7 +40,8 @@ class Program
                          "enter 1 to Product\n" +
                          "enter 2 to Order\n" +
                          "enter 3 to Cart");
-            choose = Convert.ToInt32(Console.ReadLine());
+            chooseBeforeParse = Console.ReadLine();
+            int.TryParse(chooseBeforeParse, out choose);
         }
     }
 
@@ -53,7 +55,8 @@ class Program
                 "\nenter 3 to AddProduct" +
                 "\nenter 4 to UpdateProduct" +
                 "\nenter 5 to DeleteProduct");
-        int choose = Convert.ToInt32(Console.ReadLine());
+        string? chooseBeforeParse = Console.ReadLine();
+        int.TryParse(chooseBeforeParse, out int choose);
         switch (choose)
         {
             case 0://GetListProducts
@@ -88,7 +91,8 @@ class Program
                 break;
             case 2://GetProduct
                 Console.WriteLine("Enter productID:");
-                id = Convert.ToInt32(Console.ReadLine());
+                string? idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out id);
                 try
                 {
                     p = s_IBl.Product.GetProduct(id);
@@ -102,13 +106,23 @@ class Program
                 break;
             case 3://AddProduct
                 Console.WriteLine("Write ID, name, price, inStock");
-                p.ID = Convert.ToInt32(Console.ReadLine());
-                p.Name = Console.ReadLine();
-                p.Price = Convert.ToInt32(Console.ReadLine());
-                p.InStock = Convert.ToInt32(Console.ReadLine());
+                string? name;
+                Categories category;
+                idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out id);
+                name = Console.ReadLine();
+                string? priceBeforeParse = Console.ReadLine();
+                double.TryParse(priceBeforeParse, out double price);
+                string? inStockBeforeParse = Console.ReadLine();
+                int.TryParse(inStockBeforeParse, out int inStock);
                 Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
-                int category = Convert.ToInt32(Console.ReadLine());
-                p.Category = (BO.Categories)category;
+                string? categoriesBeforeParse = Console.ReadLine();
+                Categories.TryParse(categoriesBeforeParse, out category);
+                p.ID = id;
+                p.Name = name;
+                p.Price = price;
+                p.InStock = inStock;
+                p.Category = category;
                 try
                 {
                     s_IBl.Product.AddProduct(p);
@@ -135,26 +149,38 @@ class Program
                     switch (chooseUpdate)
                     {
                         case 0:
-                            p1.Name = Console.ReadLine();
+                            name = Console.ReadLine();
+                            p1.Name = name;
                             break;
                         case 1:
-                            p1.Price = Convert.ToInt32(Console.ReadLine());
+                            priceBeforeParse = Console.ReadLine();
+                            double.TryParse(priceBeforeParse, out price);
+                            p1.Price = price;
                             break;
                         case 2:
-                            p1.InStock = Convert.ToInt32(Console.ReadLine());
+                            inStockBeforeParse = Console.ReadLine();
+                            int.TryParse(inStockBeforeParse, out inStock);
+                            p1.InStock = inStock;
                             break;
                         case 3:
-                            Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
-                            category = Convert.ToInt32(Console.ReadLine());
-                            p1.Category = (Categories)category;
+                            categoriesBeforeParse = Console.ReadLine();
+                            Categories.TryParse(categoriesBeforeParse, out category);
+                            p1.Category = category;
                             break;
                         case 4:
-                            p1.Name = Console.ReadLine();
-                            p1.Price = Convert.ToInt32(Console.ReadLine());
-                            p1.InStock = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Write ID, name, price, inStock");
+                            name = Console.ReadLine();
+                            priceBeforeParse = Console.ReadLine();
+                            double.TryParse(priceBeforeParse, out price);
+                            inStockBeforeParse = Console.ReadLine();
+                            int.TryParse(inStockBeforeParse, out inStock);
                             Console.WriteLine("choose categories: percussion=0, stringed=1, keyboard=2, wind=3, electronic=4");
-                            category = Convert.ToInt32(Console.ReadLine());
-                            p1.Category = (Categories)category;
+                            categoriesBeforeParse = Console.ReadLine();
+                            Categories.TryParse(categoriesBeforeParse, out category);
+                            p1.Name = name;
+                            p1.Price = price;
+                            p1.InStock = inStock;
+                            p1.Category = category;
                             break;
                         default:
                             break;
@@ -175,7 +201,8 @@ class Program
                 break;
             case 5://DeleteProduct
                 Console.WriteLine("Enter ID to delete:");
-                id = int.Parse(Console.ReadLine());
+                Console.WriteLine("Enter ID to update:");
+                id = Convert.ToInt32(Console.ReadLine());
                 try
                 {
                     s_IBl.Product.DeleteProduct(id);
@@ -198,7 +225,8 @@ class Program
                 "\nenter 1 to GetOrder" +
                 "\nenter 2 to UpdateOrderShipping" +
                 "\nenter 3 to UpdateOrderDelivery");
-        int choose = Convert.ToInt32(Console.ReadLine());
+        string? chooseBeforeParse = Console.ReadLine();
+        int.TryParse(chooseBeforeParse, out int choose);
         int id;
         switch (choose)
         {
@@ -219,7 +247,8 @@ class Program
                 break;
             case 1://GetOrder
                 Console.WriteLine("Enter orderID:");
-                id = Convert.ToInt32(Console.ReadLine());
+                string? idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out id);
                 try
                 {
                     o = s_IBl.Order.GetOrder(id);
@@ -233,7 +262,8 @@ class Program
                 break;
             case 2://UpdateOrderShipping
                 Console.WriteLine("Enter orderID:");
-                id = Convert.ToInt32(Console.ReadLine());
+                idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out id);
                 try
                 {
                     o = s_IBl.Order.UpdateOrderShipping(id);
@@ -247,7 +277,8 @@ class Program
                 break;
             case 3://UpdateOrderDelivery
                 Console.WriteLine("Enter orderID:");
-                id = Convert.ToInt32(Console.ReadLine());
+                idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out id);
                 try
                 {
                     o = s_IBl.Order.UpdateOrderDelivery(id);
@@ -270,12 +301,14 @@ class Program
         Console.WriteLine("enter 0 to AddProduct" +
                 "\nenter 1 to UpdateAmountOfProduct" +
                 "\nenter 2 to MakeAnOrder");
-        int choose = Convert.ToInt32(Console.ReadLine());
+        string? chooseBeforeParse = Console.ReadLine();
+        int.TryParse(chooseBeforeParse, out int choose);
         switch (choose)
         {
             case 0://AddProduct
                 Console.WriteLine("enter productID:");
-                id = Convert.ToInt32(Console.ReadLine());
+                string? idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out id);
                 try
                 {
                     cart = s_IBl.Cart.AddProduct(cart, id);
@@ -289,9 +322,11 @@ class Program
                 break;
             case 1://UpdateAmountOfProduct
                 Console.WriteLine("enter productID:");
-                id = Convert.ToInt32(Console.ReadLine());
+                idBeforeParse = Console.ReadLine();
+                int.TryParse(idBeforeParse, out id);
                 Console.WriteLine("enter newAmount:");
-                int newAmount = Convert.ToInt32(Console.ReadLine());
+                string? idNewAmount = Console.ReadLine();
+                int.TryParse(idNewAmount, out int newAmount);
                 try
                 {
                     cart = s_IBl.Cart.UpdateAmountOfProduct(cart, id, newAmount);
@@ -305,11 +340,11 @@ class Program
                 break;
             case 2://MakeAnOrder
                 Console.WriteLine("Enter customerName:");
-                string customerName = Console.ReadLine();
+                string? customerName = Console.ReadLine();
                 Console.WriteLine("Enter customerEmail:");
-                string customerEmail = Console.ReadLine();
+                string? customerEmail = Console.ReadLine();
                 Console.WriteLine("Enter customerAdress:");
-                string customerAdress = Console.ReadLine();
+                string? customerAdress = Console.ReadLine();
                 try
                 {
                     s_IBl.Cart.MakeAnOrder(cart, customerName, customerEmail, customerAdress);
