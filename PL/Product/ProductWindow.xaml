@@ -1,0 +1,23 @@
+﻿<Window x:Class="PL.Product.ProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Product"
+        mc:Ignorable="d"
+        Title="ProductWindow" Height="450" Width="800">
+    <Grid>
+        <Label Name="lblID" Content="ID" HorizontalAlignment="Left" Height="29" Margin="52,49,0,0" VerticalAlignment="Top" Width="101"/>
+        <Label Name="lblName" Content="Name" HorizontalAlignment="Left" Height="29" Margin="184,49,0,0" VerticalAlignment="Top" Width="101"/>
+        <Label Name="lblPrice" Content="Price" HorizontalAlignment="Left" Height="29" Margin="317,49,0,0" VerticalAlignment="Top" Width="101"/>
+        <Label Name="lblInStock" Content="InStock" HorizontalAlignment="Left" Height="29" Margin="448,49,0,0" VerticalAlignment="Top" Width="101"/>
+        <Label Name="lblCategory" Content="Category" HorizontalAlignment="Left" Height="29" Margin="588,49,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="2.387,0.368"/>
+        <TextBox Name="txtID" HorizontalAlignment="Left" Height="25" Margin="32,83,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtID_TextChanged"/>
+        <TextBox Name="txtName" HorizontalAlignment="Left" Height="25" Margin="162,83,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtName_TextChanged"/>
+        <TextBox Name="txtPrice" HorizontalAlignment="Left" Height="25" Margin="304,83,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtPrice_TextChanged"/>
+        <TextBox Name="txtInStock" HorizontalAlignment="Left" Height="25" Margin="448,83,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtInStock_TextChanged"/>
+        <ComboBox Name="cboxCategory" HorizontalAlignment="Left" Height="25" Margin="574,83,0,0" VerticalAlignment="Top" Width="84" SelectionChanged="cboxCategory_SelectionChanged"/>
+        <Button Name="btnProduct" Content="AddProduct" HorizontalAlignment="Left" Height="46" Margin="552,152,0,0" VerticalAlignment="Top" Width="128" Click="btnProduct_Click"/>
+
+    </Grid>
+</Window>

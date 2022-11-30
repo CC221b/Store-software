@@ -207,4 +207,26 @@ internal class BlProduct : IProduct
             throw new BO.ExceptionInvalidData();
         }
     }
+
+    public IEnumerable<BO.ProductForList> FilterByCategory(BO.Categories category)
+    {
+        IEnumerable<BO.ProductForList> products = new List<BO.ProductForList>();
+        try
+        {
+            products = GetListProducts();
+        }
+        catch (Exception)
+        {
+            throw new Exception();
+        }
+        List<BO.ProductForList> filterByCategoryProducts = new List<BO.ProductForList>();
+        foreach (var item in products)
+        {
+            if (item.Category == category)
+            {
+                filterByCategoryProducts.Add(item);
+            }
+        }
+        return filterByCategoryProducts;
+    }
 }

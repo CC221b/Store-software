@@ -28,4 +28,10 @@ public interface IProduct
     /// Product deletion(for admin screen).
     /// </summary>
     public void DeleteProduct(int id);
+    /// <summary>
+    /// Auxiliary function for filtering products by category.
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public IEnumerable<ProductForList> FilterByCategory(Categories category);
 }

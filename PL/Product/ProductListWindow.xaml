@@ -19,9 +19,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="CategorySelector" Grid.Column="1"  HorizontalAlignment="Stretch" Height="21" Margin="0,31,0,0" VerticalAlignment="Stretch" Width="136"/>
+            <ComboBox Name="CategorySelector" Grid.Column="1"  HorizontalAlignment="Stretch" Height="21" Margin="0,31,0,0" VerticalAlignment="Stretch" Width="136" SelectionChanged="CategorySelector_SelectionChanged"/>
         </Grid>
-        <ListView x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,26,631,25" Grid.Row="1">
+        <ListView x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,26,479,36" Grid.Row="1" Grid.RowSpan="2" MouseDoubleClick="ProductsListview_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
