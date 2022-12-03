@@ -133,7 +133,7 @@ internal class BlProduct : IProduct
         }
         else
         {
-            throw new BO.ExceptionInvalidID();
+            throw new BO.ExceptionInvalidData();
         }
 
     }

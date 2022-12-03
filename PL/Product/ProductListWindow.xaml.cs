@@ -51,7 +51,14 @@ namespace PL.Product
             }
             catch (Exception ex)
             {
-                lblEx.Content = ex.Message;
+                if (ex.InnerException is null)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
+                }
             }
             new Product.ProductWindow(product).Show();
             this.Close();

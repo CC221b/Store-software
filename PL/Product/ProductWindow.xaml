@@ -7,19 +7,20 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
-        <Label Name="lblID" Content="ID" HorizontalAlignment="Left" Height="29" Margin="52,49,0,0" VerticalAlignment="Top" Width="101"/>
-        <Label Name="lblName" Content="Name" HorizontalAlignment="Left" Height="29" Margin="184,49,0,0" VerticalAlignment="Top" Width="101"/>
-        <Label Name="lblPrice" Content="Price" HorizontalAlignment="Left" Height="29" Margin="317,49,0,0" VerticalAlignment="Top" Width="101"/>
-        <Label Name="lblInStock" Content="InStock" HorizontalAlignment="Left" Height="29" Margin="448,49,0,0" VerticalAlignment="Top" Width="101"/>
-        <Label Name="lblCategory" Content="Category" HorizontalAlignment="Left" Height="29" Margin="588,49,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="2.387,0.368"/>
-        <TextBox Name="txtID" HorizontalAlignment="Left" Height="25" Margin="32,83,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtID_TextChanged"/>
-        <TextBox Name="txtName" HorizontalAlignment="Left" Height="25" Margin="162,83,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtName_TextChanged"/>
-        <TextBox Name="txtPrice" HorizontalAlignment="Left" Height="25" Margin="304,83,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtPrice_TextChanged"/>
-        <TextBox Name="txtInStock" HorizontalAlignment="Left" Height="25" Margin="448,83,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtInStock_TextChanged"/>
-        <ComboBox Name="cboxCategory" HorizontalAlignment="Left" Height="25" Margin="574,83,0,0" VerticalAlignment="Top" Width="84" SelectionChanged="cboxCategory_SelectionChanged"/>
-        <Button Name="btnProduct" Content="AddProduct" HorizontalAlignment="Left" Height="46" Margin="552,152,0,0" VerticalAlignment="Top" Width="128" Click="btnProduct_Click"/>
-        <Button Name="btnDeleteFromCart" Content="DeleteFromCart" HorizontalAlignment="Left" Height="46" Margin="552,343,0,0" VerticalAlignment="Top" Width="128" Click="btnDeleteFromCart_Click"/>
-        <Label Name="lblEx" Content="" HorizontalAlignment="Left" Height="42" Margin="32,152,0,0" VerticalAlignment="Top" Width="346"/>
-
+        <Label Name="lblID" Content="ID" HorizontalAlignment="Left" Height="29" Margin="25,67,0,0" VerticalAlignment="Top" Width="101"/>
+        <Label Name="lblName" Content="Name" HorizontalAlignment="Left" Height="28" Margin="25,106,0,0" VerticalAlignment="Top" Width="101"/>
+        <Label Name="lblPrice" Content="Price" HorizontalAlignment="Left" Height="29" Margin="25,152,0,0" VerticalAlignment="Top" Width="101"/>
+        <Label Name="lblInStock" Content="InStock" HorizontalAlignment="Left" Height="29" Margin="25,0,0,0" VerticalAlignment="Center" Width="101"/>
+        <Label Name="lblCategory" Content="Category" HorizontalAlignment="Left" Height="29" Margin="25,247,0,0" VerticalAlignment="Top" Width="101" RenderTransformOrigin="2.387,0.368"/>
+        <TextBox Name="txtID" HorizontalAlignment="Left" Height="26" Margin="78,70,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtID_TextChanged" LostFocus="txtID_LostFocus"/>
+        <TextBox Name="txtName" HorizontalAlignment="Left" Height="25" Margin="78,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtName_TextChanged"/>
+        <TextBox Name="txtPrice" HorizontalAlignment="Left" Height="25" Margin="78,156,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtPrice_TextChanged"/>
+        <TextBox Name="txtInStock" HorizontalAlignment="Left" Height="25" Margin="89,203,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="84" TextChanged="txtInStock_TextChanged"/>
+        <ComboBox Name="cboxCategory" HorizontalAlignment="Left" Height="25" Margin="111,246,0,0" VerticalAlignment="Top" Width="84" SelectionChanged="cboxCategory_SelectionChanged" RenderTransformOrigin="-2.957,4.619"/>
+        <Button Name="btnAddProduct" Content="AddProduct" HorizontalAlignment="Left" Height="28" Margin="67,10,0,0" VerticalAlignment="Top" Width="128" Click="btnAddProduct_Click"/>
+        <Button Name="btnDeleteFromCart" Content="DeleteFromCart" HorizontalAlignment="Left" Height="30" Margin="25,375,0,0" VerticalAlignment="Top" Width="128" Click="btnDeleteFromCart_Click"/>
+        <Button Name="btnUpdateProduct" Content="UpdateProduct" HorizontalAlignment="Left" Height="28" Margin="234,10,0,0" VerticalAlignment="Top" Width="128" Click="btnUpdateProduct_Click" />
+        <Label Name="lblMessage" Content="Messages will be written here..." HorizontalAlignment="Left" Height="31" Margin="400,11,0,0" VerticalAlignment="Top" Width="296"/>
+        <Button Name="btnReplaceState" Content="replaceToUpdateState" HorizontalAlignment="Left" Height="28" Margin="610,10,0,0" VerticalAlignment="Top" Width="162" Click="btnReplaceState_Click"/>
     </Grid>
 </Window>

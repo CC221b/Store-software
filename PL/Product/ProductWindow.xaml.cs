@@ -23,23 +23,46 @@ namespace PL.Product
     {
         private IBl bl = new Bl();
         public BO.Product product = new BO.Product();
+        bool flag = false;
+
+        public void FillingControlsForProductUpdate(BO.Product product)
+        {
+            txtID.Text = product.ID.ToString();
+            txtName.Text = product.Name;
+            txtPrice.Text = product.Price.ToString();
+            txtInStock.Text = product.InStock.ToString();
+            cboxCategory.Text = product.Category.ToString();
+        }
+
         public ProductWindow(IBl bl)
         {
             InitializeComponent();
+            btnUpdateProduct.IsEnabled = false;
+            btnDeleteFromCart.Visibility = Visibility.Hidden;
             cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
         }
 
         public ProductWindow(BO.Product product)
         {
             InitializeComponent();
+            btnDeleteFromCart.Visibility = Visibility.Visible;
             cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
-            txtID.Text = product.ID.ToString();
-            txtName.Text = product.Name;
-            txtPrice.Text = product.Price.ToString();
-            txtInStock.Text = product.InStock.ToString();
-            cboxCategory.Text = product.Category.ToString();
-            btnProduct.Content = "updateProduct";
+            FillingControlsForProductUpdate(product);
+            btnReplaceState.Content = "replaceToAddState";
+            btnAddProduct.IsEnabled = false;
+
         }
+
+        public void InitializationOfTheCells()
+        {
+            txtID.Text = "";
+            txtName.Text = "";
+            txtPrice.Text = "";
+            txtInStock.Text = "";
+            //איך אני מוסיפה עוד איבר לרשימת הCECKBOX איבר דיפולטיבי
+            cboxCategory.SelectedItem = "";
+        }
+
 
         private void txtID_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -74,33 +97,25 @@ namespace PL.Product
             product.Category = selectedCategory;
         }
 
-        private void btnProduct_Click(object sender, RoutedEventArgs e)
+        private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
-            if (this.btnProduct.Content == "AddProduct")
-            {  
-                try
-                {
-                    bl.Product.AddProduct(product);
-                    this.Close();
-                }
-                catch (Exception ex)
-                {
-                    lblEx.Content = ex.Message;
-                }
-            }
-            else
+            try
             {
-                try
+                bl.Product.AddProduct(product);
+                MessageBox.Show("The product was added successfully!!");
+                InitializationOfTheCells();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is null)
                 {
-                    bl.Product.UpdateProduct(product);
-                    this.Close();
+                    MessageBox.Show(ex.Message);
                 }
-                catch (Exception ex)
+                else
                 {
-                    lblEx.Content = ex.Message;
+                    MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
                 }
             }
-            
         }
 
         private void btnDeleteFromCart_Click(object sender, RoutedEventArgs e)
@@ -113,8 +128,82 @@ namespace PL.Product
             }
             catch (Exception ex)
             {
-                lblEx.Content = ex.Message;
+                if (ex.InnerException is null)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
+                }
             }
+        }
+
+        private void btnUpdateProduct_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.Product.UpdateProduct(product);
+                MessageBox.Show("The product was updated successfully!!");
+                InitializationOfTheCells();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is null)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
+                }
+            }
+        }
+
+
+        private void txtID_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (flag)
+            {
+                try
+                {
+                    product = bl.Product.GetProduct(product.ID);
+                    var message = MessageBox.Show("Would you like us to fill in the product details?\n (That way you won't have to fill in all the details).");
+                    FillingControlsForProductUpdate(product);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException is null)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    else
+                    {
+                        MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
+                    }
+                }
+            }
+        }
+
+        private void btnReplaceState_Click(object sender, RoutedEventArgs e)
+        {
+            if (btnReplaceState.Content.ToString() == "replaceToUpdateState")
+            {
+                flag = true;
+                InitializationOfTheCells();
+                this.btnReplaceState.Content = "replaceToAddState";
+                btnUpdateProduct.IsEnabled = true;
+                btnAddProduct.IsEnabled = false;
+            }
+            else
+            {
+                flag = false;
+                InitializationOfTheCells();
+                this.btnReplaceState.Content = "replaceToUpdateState";
+                btnUpdateProduct.IsEnabled = false;
+                btnAddProduct.IsEnabled = true;
+            }
+
         }
     }
 }
