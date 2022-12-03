@@ -77,15 +77,15 @@ namespace PL.Product
         private void btnProduct_Click(object sender, RoutedEventArgs e)
         {
             if (this.btnProduct.Content == "AddProduct")
-            {
+            {  
                 try
                 {
                     bl.Product.AddProduct(product);
                     this.Close();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new Exception();
+                    lblEx.Content = ex.Message;
                 }
             }
             else
@@ -95,9 +95,9 @@ namespace PL.Product
                     bl.Product.UpdateProduct(product);
                     this.Close();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    throw new Exception();
+                    lblEx.Content = ex.Message;
                 }
             }
             
@@ -105,15 +105,16 @@ namespace PL.Product
 
         private void btnDeleteFromCart_Click(object sender, RoutedEventArgs e)
         {
-            //איך יהיה לי עגלה כאן???
-            //try
-            //{
-            //    bl.Cart.UpdateAmountOfProduct(,Convert.ToInt32(txtID.Text), 0);
-            //}
-            //catch (Exception)
-            //{
-            //    throw ;
-            //}
+            //איך יהיה לי עגלה כאן ???
+            BO.Cart cart = new BO.Cart();
+            try
+            {
+                bl.Cart.UpdateAmountOfProduct(cart, Convert.ToInt32(txtID.Text), 0);
+            }
+            catch (Exception ex)
+            {
+                lblEx.Content = ex.Message;
+            }
         }
     }
 }

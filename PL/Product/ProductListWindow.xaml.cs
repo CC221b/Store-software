@@ -49,9 +49,9 @@ namespace PL.Product
             {
                 product.InStock = bl.Product.GetProduct(item.ID).InStock;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception();
+                lblEx.Content = ex.Message;
             }
             new Product.ProductWindow(product).Show();
             this.Close();
