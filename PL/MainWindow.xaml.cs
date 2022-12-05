@@ -32,10 +32,5 @@ namespace PL
         {
             new Product.ProductListWindow(bl).Show();
         }
-
-        private void ProductButton_Click(object sender, RoutedEventArgs e)
-        {
-            new Product.ProductWindow(bl).Show();
-        }
     }
 }

@@ -41,10 +41,10 @@ namespace PL.Product
         {
             var item = (BO.ProductForList)((sender as ListView).SelectedItem);
             BO.Product product = new BO.Product();
-            product.ID= item.ID;
+            product.ID = item.ID;
             product.Name = item.Name;
-            product.Price= item.Price;
-            product.Category= item.Category;
+            product.Price = item.Price;
+            product.Category = item.Category;
             try
             {
                 product.InStock = bl.Product.GetProduct(item.ID).InStock;
@@ -60,8 +60,13 @@ namespace PL.Product
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
                 }
             }
-            new Product.ProductWindow(product).Show();
+            new Product.ProductWindow(product, bl).Show();
             this.Close();
+        }
+
+        private void btnAddProduct_Click(object sender, RoutedEventArgs e)
+        {
+            new Product.ProductWindow(bl).Show();
         }
     }
 }
