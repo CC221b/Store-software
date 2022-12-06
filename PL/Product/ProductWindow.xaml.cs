@@ -23,7 +23,6 @@ namespace PL.Product
     {
         private IBl blp;
         public BO.Product product = new BO.Product();
-        //bool flag = false;
 
         public void FillingControlsForProductUpdate(BO.Product product)
         {
@@ -51,17 +50,6 @@ namespace PL.Product
             btnAddProduct.Visibility = Visibility.Hidden;
 
         }
-
-        public void InitializationOfTheCells()
-        {
-            txtID.Text = "";
-            txtName.Text = "";
-            txtPrice.Text = "";
-            txtInStock.Text = "";
-            //איך אני מוסיפה עוד איבר לרשימת הCECKBOX איבר דיפולטיבי
-            cboxCategory.SelectedItem = "";
-        }
-
 
         private void txtID_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -137,72 +125,5 @@ namespace PL.Product
                 }
             }
         }
-
-
-        //private void txtID_LostFocus(object sender, RoutedEventArgs e)
-        //{
-        //    if (flag)
-        //    {
-        //        try
-        //        {
-        //            product = blp.Product.GetProduct(product.ID);
-        //            var message = MessageBox.Show("Would you like us to fill in the product details?\n (That way you won't have to fill in all the details).");
-        //            FillingControlsForProductUpdate(product);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            if (ex.InnerException is null)
-        //            {
-        //                MessageBox.Show(ex.Message);
-        //            }
-        //            else
-        //            {
-        //                MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-        //            }
-        //        }
-        //    }
-        //}
-
-        //private void btnReplaceState_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (btnReplaceState.Content.ToString() == "replaceToUpdateState")
-        //    {
-        //        flag = true;
-        //        InitializationOfTheCells();
-        //        this.btnReplaceState.Content = "replaceToAddState";
-        //        btnUpdateProduct.IsEnabled = true;
-        //        btnAddProduct.IsEnabled = false;
-        //    }
-        //    else
-        //    {
-        //        flag = false;
-        //        InitializationOfTheCells();
-        //        this.btnReplaceState.Content = "replaceToUpdateState";
-        //        btnUpdateProduct.IsEnabled = false;
-        //        btnAddProduct.IsEnabled = true;
-        //    }
-
-        //}
-
-        //private void btnDeleteFromCart_Click(object sender, RoutedEventArgs e)
-        //{
-        //    איך יהיה לי עגלה כאן ???
-        //    BO.Cart cart = new BO.Cart();
-        //    try
-        //    {
-        //        bl.Cart.UpdateAmountOfProduct(cart, Convert.ToInt32(txtID.Text), 0);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        if (ex.InnerException is null)
-        //        {
-        //            MessageBox.Show(ex.Message);
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-        //        }
-        //    }
-        //}
     }
 }
