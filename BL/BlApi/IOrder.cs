@@ -20,6 +20,12 @@ public interface IOrder
     /// </summary>
     public Order UpdateOrderDelivery(int id);
     /// <summary>
+    /// Order tracking (admin order management screen).
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public OrderTracking GetOrderTracking(int id);
+    /// <summary>
     /// BONUS
     /// will allow adding / downloading / changing the quantity of a product ordered by the manager
     /// </summary>

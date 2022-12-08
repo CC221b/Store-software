@@ -151,6 +151,23 @@ internal class BlOrder : IOrder
         }
         throw new BO.ExceptionNotExists();
     }
+    public BO.OrderTracking GetOrderTracking(int id)
+    {
+        BO.Order order = new BO.Order();
+        BO.OrderTracking orderTracking = new BO.OrderTracking();
+        try
+        {
+            order = GetOrder(id);
+        }
+        catch (Exception ex)
+        {
+            throw new BO.ExceptionFromDal(ex);
+        }
+        if (order.Status > BO.OrderStatus.ConfirmedOrder) orderTracking.DateAndStatus.Add(order.OrderDate, "ConfirmedOrder");
+        if (order.Status > BO.OrderStatus.SendOrder) orderTracking.DateAndStatus.Add(order.ShipDate, "SendOrder");
+        if (order.Status > BO.OrderStatus.ProvidedCustomerOrder) orderTracking.DateAndStatus.Add(order.DeliveryDate, "ProvidedCustomerOrder");
+        return orderTracking;
+    }
 
     /// <summary>
     /// Bonus!!!
