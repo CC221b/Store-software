@@ -1,4 +1,6 @@
 ﻿
+using DO;
+
 namespace DalApi;
 
 public interface ICrud<T>
@@ -7,5 +9,5 @@ public interface ICrud<T>
     public void Delete(int id);
     public void Update(T t);
     public T Get(int ID);
-    public IEnumerable<T> GetAll();
+    public IEnumerable<T> GetAll(Func<T, bool>? func = null);
 }

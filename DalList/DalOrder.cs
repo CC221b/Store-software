@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Linq;
 
 namespace Dal;
 
@@ -29,21 +30,18 @@ internal class DalOrder: IOrder
         return o.ID;
     }
 
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order> GetAll(Func<Order, bool>? func = null)
     {
         if (DataSource.s_orderList.Count == 0)
         {
             throw new ExceptionEmpty();
         }
-        else
-        {
-            Order[] orders = new Order[DataSource.s_orderList.Count];
-            for (int i = 0; i < DataSource.s_orderList.Count; i++)
-            {
-                orders[i] = DataSource.s_orderList[i];
-            }
-            return orders;
-        }
+        return (func == null) ? DataSource.s_orderList : DataSource.s_orderList.Where(func);
+    }
+    private List<string> getAll(Func<string, bool>? func = null)
+    {
+        List<string> result = new List<string>();
+        return (func == null) ? result : result.Where(func).ToList();
     }
 
     public void Update(Order o)

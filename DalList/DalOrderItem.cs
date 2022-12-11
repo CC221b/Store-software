@@ -1,9 +1,10 @@
 ﻿using DalApi;
 using DO;
+using System.Linq;
 
 namespace Dal;
 
-internal class DalOrderItem:IOrderItem
+internal class DalOrderItem : IOrderItem
 {
     public OrderItem Get(int id)
     {
@@ -61,21 +62,13 @@ internal class DalOrderItem:IOrderItem
         return oi.ID;
     }
 
-    public IEnumerable<OrderItem> GetAll()
+    public IEnumerable<OrderItem> GetAll(Func<OrderItem, bool>? func = null)
     {
         if (DataSource.s_orderItemList.Count == 0)
         {
             throw new ExceptionEmpty();
         }
-        else
-        {
-            OrderItem[] orderItems = new OrderItem[DataSource.s_orderItemList.Count];
-            for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
-            {
-                orderItems[i] = DataSource.s_orderItemList[i];
-            }
-            return orderItems;
-        }
+        return (func == null) ? DataSource.s_orderItemList : DataSource.s_orderItemList.Where(func);
     }
 
     public void Update(OrderItem oi)

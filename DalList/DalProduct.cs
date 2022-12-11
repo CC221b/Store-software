@@ -1,5 +1,7 @@
 ﻿using DalApi;
 using DO;
+using System.Linq;
+
 namespace Dal;
 
 internal class DalProduct: IProduct
@@ -33,21 +35,13 @@ internal class DalProduct: IProduct
         throw new ExceptionExists();
     }
 
-    public IEnumerable<Product> GetAll()
+    public IEnumerable<Product> GetAll(Func<Product, bool>? func = null)
     {
-        if (DataSource.s_productList.Count == 0)
+        if (DataSource.s_orderList.Count == 0)
         {
             throw new ExceptionEmpty();
         }
-        else
-        {
-            DO.Product[] products = new DO.Product[DataSource.s_productList.Count];
-            for (int i = 0; i < DataSource.s_productList.Count; i++)
-            {
-                products[i] = DataSource.s_productList[i];
-            }
-            return products;
-        }
+        return (func == null) ? DataSource.s_productList : DataSource.s_productList.Where(func);
     }
 
     public void Update(DO.Product p)
