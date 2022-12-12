@@ -6,7 +6,7 @@ namespace BlImplementation;
 
 internal class BlProduct : IProduct
 {
-    DalApi.IDal Dal = new Dal.DalList();
+    DalApi.IDal Dal = DalApi.Factory.Get();
 
     /// <summary>
     /// The function returns a list of type productForList.

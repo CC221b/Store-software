@@ -1,5 +1,5 @@
-﻿
-namespace BO;
+﻿namespace BO;
+
 public enum Categories
 {
     Percussion,//הקשה

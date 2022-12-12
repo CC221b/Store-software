@@ -1,5 +1,5 @@
-﻿
-namespace BO;
+﻿namespace BO;
+
 public class OrderForList
 {
     public int ID { get; set; }

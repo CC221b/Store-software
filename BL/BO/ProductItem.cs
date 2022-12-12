@@ -1,5 +1,5 @@
-﻿
-namespace BO;
+﻿namespace BO;
+
 public class ProductItem
 {
     public int ID { get; set; }

@@ -5,7 +5,7 @@ namespace BlImplementation;
 
 internal class BlOrder : IOrder
 {
-    DalApi.IDal Dal = new Dal.DalList();
+    DalApi.IDal Dal = DalApi.Factory.Get();
 
     /// <summary>
     /// The function returns a list of orderForList objects.
