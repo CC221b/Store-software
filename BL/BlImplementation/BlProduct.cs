@@ -1,4 +1,6 @@
 ﻿using BlApi;
+using BO;
+
 namespace BlImplementation;
 
 
@@ -13,12 +15,12 @@ internal class BlProduct : IProduct
     /// </summary>
     /// <returns></returns>
     /// <exception cref="BO.ExceptionFromDal"></exception>
-    public IEnumerable<BO.ProductForList> GetListProducts()
+    public IEnumerable<BO.ProductForList> GetAll(Func<DO.Product, bool>? func = null)
     {
         IEnumerable<DO.Product> ListProducts = new List<DO.Product>();
         try
         {
-            ListProducts = Dal.Product.GetAll();
+            ListProducts = Dal.Product.GetAll(func);
         }
         catch (Exception ex)
         {
@@ -37,38 +39,38 @@ internal class BlProduct : IProduct
         return ListProductsForList;
     }
 
-    /// <summary>
-    /// The function returns a list of productItem type.
-    /// Brings the list of products from the data layer and creates a list of type productItem.
-    /// throws errors accordingly.
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="BO.ExceptionFromDal"></exception>
-    public IEnumerable<BO.ProductItem> GetCatalog()
-    {
-        IEnumerable<DO.Product> ListProducts = new List<DO.Product>();
-        try
-        {
-            ListProducts = Dal.Product.GetAll();
-        }
-        catch (Exception ex)
-        {
-            throw new BO.ExceptionFromDal(ex);
-        }
-        List<BO.ProductItem> ListProductItem = new List<BO.ProductItem>();
-        foreach (var item in ListProducts)
-        {
-            BO.ProductItem listProductItem = new BO.ProductItem();
-            listProductItem.ID = item.ID;
-            listProductItem.Name = item.Name;
-            listProductItem.Price = item.Price;
-            listProductItem.Category = (BO.Categories)item.Category;
-            listProductItem.Amount = 0;
-            listProductItem.InStock = item.InStock > 0 ? true : false;
-            ListProductItem.Add(listProductItem);
-        }
-        return ListProductItem;
-    }
+    ///// <summary>
+    ///// The function returns a list of productItem type.
+    ///// Brings the list of products from the data layer and creates a list of type productItem.
+    ///// throws errors accordingly.
+    ///// </summary>
+    ///// <returns></returns>
+    ///// <exception cref="BO.ExceptionFromDal"></exception>
+    //public IEnumerable<BO.ProductItem> GetCatalog()
+    //{
+    //    IEnumerable<DO.Product> ListProducts = new List<DO.Product>();
+    //    try
+    //    {
+    //        ListProducts = Dal.Product.GetAll();
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        throw new BO.ExceptionFromDal(ex);
+    //    }
+    //    List<BO.ProductItem> ListProductItem = new List<BO.ProductItem>();
+    //    foreach (var item in ListProducts)
+    //    {
+    //        BO.ProductItem listProductItem = new BO.ProductItem();
+    //        listProductItem.ID = item.ID;
+    //        listProductItem.Name = item.Name;
+    //        listProductItem.Price = item.Price;
+    //        listProductItem.Category = (BO.Categories)item.Category;
+    //        listProductItem.Amount = 0;
+    //        listProductItem.InStock = item.InStock > 0 ? true : false;
+    //        ListProductItem.Add(listProductItem);
+    //    }
+    //    return ListProductItem;
+    //}
 
     /// <summary>
     /// The function receives an ID,
@@ -80,7 +82,7 @@ internal class BlProduct : IProduct
     /// <returns></returns>
     /// <exception cref="BO.ExceptionFromDal"></exception>
     /// <exception cref="BO.ExceptionInvalidID"></exception>
-    public BO.Product GetProduct(int id)
+    public BO.Product Get(int id)
     {
         BO.Product productTypeBO = new BO.Product();
         if (id > 0)
@@ -104,6 +106,39 @@ internal class BlProduct : IProduct
         throw new BO.ExceptionInvalidID();
     }
 
+    public ProductItem Get(int id, Cart cart)
+    {
+        ProductItem productItem = new ProductItem();
+        if (id > 0)
+        {
+            try
+            {
+                DO.Product product = Dal.Product.Get(id);
+                productItem.ID = product.ID;
+                productItem.Name = product.Name;
+                productItem.Price = product.Price;
+                productItem.Category = (BO.Categories)product.Category;
+                foreach (var item in cart.Items)
+                {
+                    if (item.ID == product.ID)
+                    {
+                        productItem.Amount = item.Amount;
+                    }
+                }
+                productItem.InStock = product.InStock > 0 ? true : false;
+                return productItem;
+            }
+            catch (Exception ex)
+            {
+                throw new BO.ExceptionFromDal(ex);
+            }
+        }
+        else
+        {
+            throw new BO.ExceptionInvalidID();
+        }
+    }
+
     /// <summary>
     /// The function receives a product of the logical entity type,
     /// converts it to an entity of the data layer type and tries to insert the product into the list.
@@ -112,7 +147,7 @@ internal class BlProduct : IProduct
     /// <param name="product"></param>
     /// <exception cref="BO.ExceptionFromDal"></exception>
     /// <exception cref="BO.ExceptionInvalidID"></exception>
-    public void AddProduct(BO.Product product)
+    public void Add(BO.Product product)
     {
         if (product.ID > 0 && product.Name != "" && product.Price > 0 && product.InStock > 0)
         {
@@ -147,7 +182,7 @@ internal class BlProduct : IProduct
     /// <param name="id"></param>
     /// <exception cref="BO.ExceptionExists"></exception>
     /// <exception cref="BO.ExceptionFromDal"></exception>
-    public void DeleteProduct(int id)
+    public void Delete(int id)
     {
         IEnumerable<DO.OrderItem> orderItems = Dal.OrderItem.GetAll();
         foreach (DO.OrderItem orderItem in orderItems)
@@ -176,7 +211,7 @@ internal class BlProduct : IProduct
     /// <param name="product"></param>
     /// <exception cref="BO.ExceptionFromDal"></exception>
     /// <exception cref="BO.ExceptionInvalidData"></exception>
-    public void UpdateProduct(BO.Product product)
+    public void Update(BO.Product product)
     {
         try
         {
@@ -213,7 +248,7 @@ internal class BlProduct : IProduct
         IEnumerable<BO.ProductForList> products = new List<BO.ProductForList>();
         try
         {
-            products = GetListProducts();
+            products = GetAll();
         }
         catch (Exception)
         {

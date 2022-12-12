@@ -88,7 +88,7 @@ namespace PL.Product
         {
             try
             {
-                blp.Product.AddProduct(product);
+                blp.Product.Add(product);
                 MessageBox.Show("The product was added successfully!!");
                 Close();
             }
@@ -109,7 +109,7 @@ namespace PL.Product
         {
             try
             {
-                blp.Product.UpdateProduct(product);
+                blp.Product.Update(product);
                 MessageBox.Show("The product was updated successfully!!");
                 Close();
             }

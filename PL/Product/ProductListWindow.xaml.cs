@@ -28,14 +28,14 @@ namespace PL.Product
         {
             InitializeComponent();
             blp = bl;
-            ProductsListview.ItemsSource = bl.Product.GetListProducts();
+            ProductsListview.ItemsSource = bl.Product.GetAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Categories));
         }
 
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.Categories selectedCategory = (BO.Categories)CategorySelector.SelectedItem;
-            ProductsListview.ItemsSource = blp.Product.FilterByCategory(selectedCategory);
+            //ProductsListview.ItemsSource = blp.Product.(selectedCategory);
         }
 
         private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -44,7 +44,7 @@ namespace PL.Product
             BO.Product product = new BO.Product();
             try
             {
-                product = blp.Product.GetProduct(item.ID);
+                product = blp.Product.Get(item.ID);
             }
             catch (Exception ex)
             {
