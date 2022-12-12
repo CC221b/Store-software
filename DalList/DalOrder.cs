@@ -6,16 +6,15 @@ namespace Dal;
 
 internal class DalOrder: IOrder
 {
-    public Order Get(int ID)
+    public Order Get(int id)
     {
-        for (int i = 0; i < DataSource.s_orderList.Count; i++)
-        {
-            if (DataSource.s_orderList[i].ID == ID)
-            {
-                return DataSource.s_orderList[i];
-            }
-        }
+        return DataSource.s_orderList.Find(order => order.ID == id);
         throw new ExceptionNotExists();
+    }
+
+    public Order Get(Predicate<Order> func)
+    {
+       return DataSource.s_orderList.Find(func);
     }
 
     public int Add(Order o)

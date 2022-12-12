@@ -25,7 +25,7 @@ class Program
             switch (choose)
             {
                 case 1:
-                    _product();
+                    _product(cart);
                     break;
                 case 2:
                     _order();
@@ -45,24 +45,25 @@ class Program
         }
     }
 
-    private static void _product()
+    private static void _product(Cart cart)
     {
         Product p = new Product();
         int id;
         Console.WriteLine("enter 0 to GetListProducts" +
-                "\nenter 1 to GetCatalog" +
+                "\nenter 1 to GetProductItem" +
                 "\nenter 2 to GetProduct" +
                 "\nenter 3 to AddProduct" +
                 "\nenter 4 to UpdateProduct" +
                 "\nenter 5 to DeleteProduct");
         string? chooseBeforeParse = Console.ReadLine();
         int.TryParse(chooseBeforeParse, out int choose);
+        string? idBeforeParse;
         switch (choose)
         {
             case 0://GetListProducts
                 try
                 {
-                    IEnumerable<ProductForList> ListProductForList = s_IBl.Product.GetListProducts();
+                    IEnumerable<ProductForList> ListProductForList = s_IBl.Product.GetAll();
                     foreach (var item in ListProductForList)
                     {
                         Console.WriteLine(item);
@@ -74,14 +75,14 @@ class Program
                     Console.WriteLine(ex.InnerException.Message);
                 }
                 break;
-            case 1://GetCatalog
+            case 1://GetProductItem
                 try
                 {
-                    IEnumerable<ProductItem> ListProducts = s_IBl.Product.GetCatalog();
-                    foreach (var item in ListProducts)
-                    {
-                        Console.WriteLine(item);
-                    }
+                    Console.WriteLine("Enter productID:");
+                    idBeforeParse = Console.ReadLine();
+                    int.TryParse(idBeforeParse, out id);
+                    ProductItem productItem = s_IBl.Product.Get(id, cart);
+                    Console.WriteLine(productItem);
                 }
                 catch (Exception ex)
                 {
@@ -91,11 +92,11 @@ class Program
                 break;
             case 2://GetProduct
                 Console.WriteLine("Enter productID:");
-                string? idBeforeParse = Console.ReadLine();
+                idBeforeParse = Console.ReadLine();
                 int.TryParse(idBeforeParse, out id);
                 try
                 {
-                    p = s_IBl.Product.GetProduct(id);
+                    p = s_IBl.Product.Get(id);
                     Console.WriteLine(p);
                 }
                 catch (Exception ex)
@@ -125,7 +126,7 @@ class Program
                 p.Category = category;
                 try
                 {
-                    s_IBl.Product.AddProduct(p);
+                    s_IBl.Product.Add(p);
                 }
                 catch (Exception ex)
                 {
@@ -138,7 +139,7 @@ class Program
                 Product p1 = new Product();
                 try
                 {
-                    p = s_IBl.Product.GetProduct(id);
+                    p = s_IBl.Product.Get(id);
                     p1.ID = p.ID;
                     Console.WriteLine("enter 0 to update name\n" +
                          "enter 1 to update price\n" +
@@ -187,7 +188,7 @@ class Program
                     }
                     try
                     {
-                        s_IBl.Product.UpdateProduct(p1);
+                        s_IBl.Product.Update(p1);
                     }
                     catch (Exception ex)
                     {
@@ -205,7 +206,7 @@ class Program
                 id = Convert.ToInt32(Console.ReadLine());
                 try
                 {
-                    s_IBl.Product.DeleteProduct(id);
+                    s_IBl.Product.Delete(id);
                 }
                 catch (Exception ex)
                 {
@@ -234,7 +235,7 @@ class Program
             case 0://GetListOrders
                 try
                 {
-                    IEnumerable<OrderForList> ListOrderForList = s_IBl.Order.GetListOrders();
+                    IEnumerable<OrderForList> ListOrderForList = s_IBl.Order.GetAll();
                     foreach (var item in ListOrderForList)
                     {
                         Console.WriteLine(item);
@@ -251,7 +252,7 @@ class Program
                 int.TryParse(idBeforeParse, out id);
                 try
                 {
-                    o = s_IBl.Order.GetOrder(id);
+                    o = s_IBl.Order.Get(id);
                     Console.WriteLine(o);
                 }
                 catch (Exception ex)

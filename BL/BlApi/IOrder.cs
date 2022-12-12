@@ -6,11 +6,11 @@ public interface IOrder
     /// <summary>
     /// Order list request (admin screen).
     /// </summary>
-    public IEnumerable<OrderForList> GetListOrders();
+    public IEnumerable<OrderForList> GetAll(Func<DO.Order, bool>? func = null);
     /// <summary>
     /// Order details request (for manager screen and buyer screen).
     /// </summary>
-    public Order GetOrder(int id);
+    public Order Get(int id);
     /// <summary>
     /// Order shipping update (admin order management screen).
     /// </summary>
@@ -30,5 +30,5 @@ public interface IOrder
     /// will allow adding / downloading / changing the quantity of a product ordered by the manager
     /// </summary>
     /// <param name="order"></param>
-    public void UpdateOrder(Order order);
+    public void Update(Order order);
 }

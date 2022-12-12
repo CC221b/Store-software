@@ -13,12 +13,12 @@ internal class BlOrder : IOrder
     /// </summary>
     /// <returns></returns>
     /// <exception cref="BO.ExceptionFromDal"></exception>
-    public IEnumerable<BO.OrderForList> GetListOrders()
+    public IEnumerable<BO.OrderForList> GetAll(Func<DO.Order, bool>? func = null)
     {
         IEnumerable<DO.Order> ListOrders = new List<DO.Order>();
         try
         {
-            ListOrders = Dal.Order.GetAll();
+            ListOrders = Dal.Order.GetAll(func);
         }
         catch (Exception ex)
         {
@@ -54,7 +54,7 @@ internal class BlOrder : IOrder
     /// <returns></returns>
     /// <exception cref="BO.ExceptionFromDal"></exception>
     /// <exception cref="BO.ExceptionInvalidID"></exception>
-    public BO.Order GetOrder(int id)
+    public BO.Order Get(int id)
     {
         if (id > 0)
         {
@@ -110,7 +110,7 @@ internal class BlOrder : IOrder
                 BO.Order orderTypeBO = new BO.Order();
                 orderTypeDO.ShipDate = DateTime.Now;
                 Dal.Order.Update(orderTypeDO);
-                orderTypeBO = GetOrder(id);
+                orderTypeBO = Get(id);
                 return orderTypeBO;
             }
         }
@@ -141,7 +141,7 @@ internal class BlOrder : IOrder
                 BO.Order orderTypeBO = new BO.Order();
                 orderTypeDO.DeliveryDate = DateTime.Now;
                 Dal.Order.Update(orderTypeDO);
-                orderTypeBO = GetOrder(id);
+                orderTypeBO = Get(id);
                 return orderTypeBO;
             }
         }
@@ -157,7 +157,7 @@ internal class BlOrder : IOrder
         BO.OrderTracking orderTracking = new BO.OrderTracking();
         try
         {
-            order = GetOrder(id);
+            order = Get(id);
         }
         catch (Exception ex)
         {
@@ -180,11 +180,11 @@ internal class BlOrder : IOrder
     /// <exception cref="BO.ExceptionFromDal"></exception>
     /// <exception cref="BO.ExceptionNotExists"></exception>
     /// <exception cref="Exception"></exception>
-    public void UpdateOrder(BO.Order order)
+    public void Update(BO.Order order)
     {
         try
         {
-            BO.Order order1 = GetOrder(order.ID);
+            BO.Order order1 = Get(order.ID);
             Console.WriteLine("enter 0 to addProduct" +
                 "\nenter 1 to deleteProduct" +
                 "\nenter 2 to UpdateAmountOfProduct");
@@ -231,7 +231,7 @@ internal class BlOrder : IOrder
                     try
                     {
                         DO.OrderItem orderItem1 = Dal.OrderItem.GetByProductIDAndOrderID(productID, orderID);
-                        BO.Order checkOrderStatus = GetOrder(orderID);
+                        BO.Order checkOrderStatus = Get(orderID);
                         if (checkOrderStatus.Status == 0)
                         {
                             order1.Items.Remove(orderItem1);

@@ -8,16 +8,14 @@ internal class DalOrderItem : IOrderItem
 {
     public OrderItem Get(int id)
     {
-        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
-        {
-            if (DataSource.s_orderItemList[i].ID == id)
-            {
-                return DataSource.s_orderItemList[i];
-            }
-        }
+        return DataSource.s_orderItemList.Find(orderItem => orderItem.ID == id);
         throw new ExceptionNotExists();
     }
 
+    public OrderItem Get(Predicate<OrderItem> func)
+    {
+        return DataSource.s_orderItemList.Find(func);
+    }
 
     public OrderItem GetByProductIDAndOrderID(int productId, int orderId)
     {
@@ -30,8 +28,6 @@ internal class DalOrderItem : IOrderItem
         }
         throw new ExceptionNotExists();
     }
-
-
 
     public List<OrderItem> GetByOrderID(int id)
     {

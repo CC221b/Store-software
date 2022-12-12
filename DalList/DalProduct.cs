@@ -1,21 +1,22 @@
 ﻿using DalApi;
 using DO;
+using System;
 using System.Linq;
 
 namespace Dal;
 
-internal class DalProduct: IProduct
+internal class DalProduct : IProduct
 {
     public Product Get(int id)
     {
-        for (int i = 0; i < DataSource.s_productList.Count; i++)
-        {
-            if (DataSource.s_productList[i].ID == id)
-            {
-                return DataSource.s_productList[i];
-            }
-        }
+
+        return DataSource.s_productList.Find(product => product.ID == id);
         throw new ExceptionNotExists();
+    }
+
+    public Product Get(Predicate<Product> func)
+    {
+        return DataSource.s_productList.Find(func);
     }
 
     public int Add(DO.Product p)
