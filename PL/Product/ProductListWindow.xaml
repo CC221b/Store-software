@@ -21,6 +21,7 @@
             </Grid.ColumnDefinitions >
             <ComboBox Name="CategorySelector" Grid.Column="1"  HorizontalAlignment="Stretch" Height="21" Margin="0,31,0,0" VerticalAlignment="Stretch" Width="136" SelectionChanged="CategorySelector_SelectionChanged"/>
             <Label Name="lblCategorySelector" Grid.Column="1" Content="Choose a category:" HorizontalAlignment="Left" Height="36" Margin="32,68,0,0" VerticalAlignment="Top" Width="139"/>
+            <Label Name="lblProductList" Content="ProductList" HorizontalAlignment="Center" Height="44" Margin="0,76,0,0" VerticalAlignment="Top" Width="152" FontWeight="Bold" FontSize="18"/>
         </Grid>
         <ListView x:Name="ProductsListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,26,479,36" Grid.Row="1" Grid.RowSpan="2" MouseDoubleClick="ProductsListview_MouseDoubleClick">
             <ListView.View>
