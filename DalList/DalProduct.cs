@@ -9,8 +9,13 @@ internal class DalProduct : IProduct
 {
     public Product Get(int id)
     {
-
-        return DataSource.s_productList.Find(product => product.ID == id);
+        for (int i = 0; i < DataSource.s_productList.Count; i++)
+        {
+            if (DataSource.s_productList[i].ID == id)
+            {
+                return DataSource.s_productList[i];
+            }
+        }
         throw new ExceptionNotExists();
     }
 

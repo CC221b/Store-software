@@ -6,7 +6,7 @@ using DO;
 namespace Dal;
 class Program
 {
-    static DalList s_IDal = new DalList();
+    static DalApi.IDal s_IDal = DalApi.Factory.Get();
     public static void Main(string[] args)
     {
         Console.WriteLine("enter 0 to Exit\n" +

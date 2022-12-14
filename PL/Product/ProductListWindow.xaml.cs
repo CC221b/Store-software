@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml;
 using BlApi;
+using BlImplementation;
 
 namespace PL.Product
 {
@@ -22,13 +23,15 @@ namespace PL.Product
     /// </summary>
     public partial class ProductListWindow : Window
     {
+        int debily = 0;
         private IBl blp;
         public ProductListWindow(IBl bl)
         {
             InitializeComponent();
             blp = bl;
-            ProductsListview.ItemsSource = bl.Product.GetAll();
+            ProductsListview.ItemsSource = blp.Product.GetAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Categories));
+            debily = ProductsListview.Items.Count;
         }
 
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -62,7 +65,9 @@ namespace PL.Product
 
         private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
-            new Product.ProductWindow(blp).Show();
+            new Product.ProductWindow(blp).ShowDialog();
+            ProductsListview.ItemsSource = blp.Product.GetAll();
+            debily = ProductsListview.Items.Count;
         }
     }
 }

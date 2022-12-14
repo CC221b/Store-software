@@ -5,7 +5,7 @@ namespace BlImplementation;
 
 internal class BlCart : ICart
 {
-    DalApi.IDal Dal = DalApi.Factory.Get();
+    private static DalApi.IDal Dal = DalApi.Factory.Get();
 
     /// <summary>
     /// A function that adds a product when first of all it uses the GET function and checks if the product exists.

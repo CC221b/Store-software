@@ -10,27 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BlApi;
 
-namespace PL
+namespace PL.Cart
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for OrderListWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OrderListWindow : Window
     {
-        int debily = 0;
-        IBl bl = BlApi.Factory.Get();
-        public MainWindow()
+        public OrderListWindow()
         {
             InitializeComponent();
-        }
-
-        private void ShowProductsButton_Click(object sender, RoutedEventArgs e)
-        {
-            new Product.ProductListWindow(bl).Show();
         }
     }
 }

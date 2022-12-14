@@ -8,7 +8,13 @@ internal class DalOrderItem : IOrderItem
 {
     public OrderItem Get(int id)
     {
-        return DataSource.s_orderItemList.Find(orderItem => orderItem.ID == id);
+        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
+        {
+            if (DataSource.s_orderItemList[i].ID == id)
+            {
+                return DataSource.s_orderItemList[i];
+            }
+        }
         throw new ExceptionNotExists();
     }
 
