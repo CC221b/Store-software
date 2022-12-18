@@ -21,7 +21,7 @@
             </Grid.ColumnDefinitions >
             <Label Name="lblOrderList" Content="OrderList" HorizontalAlignment="Center" Height="41" Margin="0,22,0,0" VerticalAlignment="Top" Width="164" RenderTransformOrigin="0.641,0.054" FontWeight="Bold" FontSize="18"/>
         </Grid>
-        <ListView x:Name="OrderListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,26,479,36" Grid.Row="1" Grid.RowSpan="2">
+        <ListView x:Name="OrderListview" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,26,479,36" Grid.Row="1" Grid.RowSpan="2" MouseDoubleClick="OrderListview_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

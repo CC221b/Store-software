@@ -48,7 +48,6 @@ namespace PL.Product
             cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
             FillingControlsForProductUpdate(product);
             btnAddProduct.Visibility = Visibility.Hidden;
-
         }
 
         private void txtID_TextChanged(object sender, TextChangedEventArgs e)

@@ -28,5 +28,28 @@ namespace PL.Order
             blp = bl;
             OrderListview.ItemsSource = blp.Order.GetAll();
         }
+
+        private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var item = (BO.OrderForList)((sender as ListView).SelectedItem);
+            BO.Order order = new BO.Order();
+            try
+            {
+                order = blp.Order.Get(item.ID);
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is null)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
+                }
+            }
+            new Order.OrderWindow(order, blp).Show();
+            this.Close();
+        }
     }
 }
