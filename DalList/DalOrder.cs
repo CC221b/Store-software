@@ -1,26 +1,27 @@
 ﻿using DalApi;
 using DO;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace Dal;
 
-internal class DalOrder: IOrder
+internal class DalOrder : IOrder
 {
     public Order Get(int id)
     {
-        for (int i = 0; i < DataSource.s_orderList.Count; i++)
+        IEnumerable<DO.Order> order1 = from order in DataSource.s_orderList
+                                       where order.ID == id
+                                       select order;
+        if (order1 != null && order1.Any())
         {
-            if (DataSource.s_orderList[i].ID == id)
-            {
-                return DataSource.s_orderList[i];
-            }
+            return order1.First();
         }
         throw new ExceptionNotExists();
     }
 
     public Order Get(Predicate<Order> func)
     {
-       return DataSource.s_orderList.Find(func);
+        return DataSource.s_orderList.Find(func);
     }
 
     public int Add(Order o)

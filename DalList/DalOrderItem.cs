@@ -8,12 +8,12 @@ internal class DalOrderItem : IOrderItem
 {
     public OrderItem Get(int id)
     {
-        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
+        IEnumerable<OrderItem> orderItem1 = from orderItem in DataSource.s_orderItemList
+                                            where orderItem.ID == id
+                                            select orderItem;
+        if (orderItem1 != null && orderItem1.Any())
         {
-            if (DataSource.s_orderItemList[i].ID == id)
-            {
-                return DataSource.s_orderItemList[i];
-            }
+            return orderItem1.First();
         }
         throw new ExceptionNotExists();
     }
@@ -25,31 +25,26 @@ internal class DalOrderItem : IOrderItem
 
     public OrderItem GetByProductIDAndOrderID(int productId, int orderId)
     {
-        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
+        IEnumerable<OrderItem> orderItem1 = from orderItem in DataSource.s_orderItemList
+                                            where orderItem.ProductId == productId && orderItem.OrderId == orderId
+                                            select orderItem;
+        if (orderItem1 != null && orderItem1.Any())
         {
-            if (DataSource.s_orderItemList[i].ProductId == productId && DataSource.s_orderItemList[i].OrderId == orderId)
-            {
-                return DataSource.s_orderItemList[i];
-            }
+            return orderItem1.First();
         }
         throw new ExceptionNotExists();
     }
 
     public List<OrderItem> GetByOrderID(int id)
     {
-        List<OrderItem> orderItems = new List<OrderItem>();
-        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
+        IEnumerable<OrderItem> orderItem1 = from orderItem in DataSource.s_orderItemList
+                                            where orderItem.OrderId == id
+                                            select orderItem;
+        if (orderItem1 != null && orderItem1.Any())
         {
-            if (DataSource.s_orderItemList[i].ID == id)
-            {
-                orderItems.Add(DataSource.s_orderItemList[i]);
-            }
+            return orderItem1.ToList();
         }
-        if (orderItems == null)
-        {
-            throw new ExceptionNotExists();
-        }
-        return orderItems;
+        throw new ExceptionNotExists();
     }
 
     public int Add(OrderItem oi)

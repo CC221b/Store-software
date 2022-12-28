@@ -25,15 +25,20 @@ namespace PL.Product
     {
         int debily = 0;
         private IBl blp;
-        public ProductListWindow(IBl bl)
+        string type = "";
+        public ProductListWindow(IBl bl, string type1)
         {
             InitializeComponent();
             blp = bl;
+            type = type1;
+            if (type == "User")
+            {
+                btnAddProduct.Visibility = Visibility.Hidden;
+            }
             ProductsListview.ItemsSource = blp.Product.GetAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Categories));
             debily = ProductsListview.Items.Count;
         }
-
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.Categories selectedCategory = (BO.Categories)CategorySelector.SelectedItem;

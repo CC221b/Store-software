@@ -9,12 +9,12 @@ internal class DalProduct : IProduct
 {
     public Product Get(int id)
     {
-        for (int i = 0; i < DataSource.s_productList.Count; i++)
+        IEnumerable<Product> product1 = from product in DataSource.s_productList
+                                       where product.ID == id
+                                       select product;
+        if (product1 != null && product1.Any())
         {
-            if (DataSource.s_productList[i].ID == id)
-            {
-                return DataSource.s_productList[i];
-            }
+            return product1.First();
         }
         throw new ExceptionNotExists();
     }

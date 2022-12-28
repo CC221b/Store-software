@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DO;
 
 namespace BlImplementation;
 
@@ -118,13 +119,8 @@ internal class BlProduct : IProduct
                 productItem.Name = product.Name;
                 productItem.Price = product.Price;
                 productItem.Category = (BO.Categories)product.Category;
-                foreach (var item in cart.Items)
-                {
-                    if (item.ID == product.ID)
-                    {
-                        productItem.Amount = item.Amount;
-                    }
-                }
+                cart.Items.Where(item => item.ID == product.ID)
+                    .Select(item => productItem.Amount = item.Amount);
                 productItem.InStock = product.InStock > 0 ? true : false;
                 return productItem;
             }
@@ -185,12 +181,10 @@ internal class BlProduct : IProduct
     public void Delete(int id)
     {
         IEnumerable<DO.OrderItem> orderItems = Dal.OrderItem.GetAll();
-        foreach (DO.OrderItem orderItem in orderItems)
+        var quary = orderItems.Where(orderItem => orderItem.ProductId == id);
+        if (quary != null)
         {
-            if (orderItem.ProductId == id)
-            {
-                throw new BO.ExceptionExists();
-            }
+            throw new BO.ExceptionExists();
         }
         try
         {
@@ -241,27 +235,5 @@ internal class BlProduct : IProduct
         {
             throw new BO.ExceptionInvalidData();
         }
-    }
-
-    public IEnumerable<BO.ProductForList> FilterByCategory(BO.Categories category)
-    {
-        IEnumerable<BO.ProductForList> products = new List<BO.ProductForList>();
-        try
-        {
-            products = GetAll();
-        }
-        catch (Exception)
-        {
-            throw new Exception();
-        }
-        List<BO.ProductForList> filterByCategoryProducts = new List<BO.ProductForList>();
-        foreach (var item in products)
-        {
-            if (item.Category == category)
-            {
-                filterByCategoryProducts.Add(item);
-            }
-        }
-        return filterByCategoryProducts;
     }
 }

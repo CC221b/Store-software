@@ -72,7 +72,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.InnerException.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             case 1://GetProductItem
@@ -87,7 +90,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.InnerException.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             case 2://GetProduct
@@ -102,7 +108,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.InnerException.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             case 3://AddProduct
@@ -131,6 +140,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             case 4://UpdateProduct
@@ -193,11 +206,19 @@ class Program
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
+                        if (ex.InnerException != null)
+                        {
+                            Console.WriteLine(ex.InnerException.Message);
+                        }
                     }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             case 5://DeleteProduct
@@ -211,7 +232,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.InnerException.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             default:
@@ -244,6 +268,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             case 1://GetOrder
@@ -258,7 +286,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.InnerException.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             case 2://UpdateOrderShipping
@@ -273,7 +304,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.InnerException.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             case 3://UpdateOrderDelivery
@@ -288,6 +322,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             default:
@@ -318,7 +356,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.InnerException.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             case 1://UpdateAmountOfProduct
@@ -336,7 +377,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                    Console.WriteLine(ex.InnerException.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             case 2://MakeAnOrder
@@ -353,6 +397,10 @@ class Program
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
+                    if (ex.InnerException != null)
+                    {
+                        Console.WriteLine(ex.InnerException.Message);
+                    }
                 }
                 break;
             default:

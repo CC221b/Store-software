@@ -26,25 +26,31 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-            btnShowProducts.Visibility = Visibility.Hidden;
-            btnShowOrders.Visibility = Visibility.Hidden;
+            btnShowProductsAdmin.Visibility = Visibility.Hidden;
+            btnShowOrdersAdmin.Visibility = Visibility.Hidden;
         }
 
         private void btnAdmin_Click(object sender, RoutedEventArgs e)
         {
             btnAdmin.Visibility = Visibility.Hidden;
-            btnShowProducts.Visibility = Visibility.Visible;
-            btnShowOrders.Visibility = Visibility.Visible;
+            btnProducts.Visibility = Visibility.Hidden;
+            btnShowProductsAdmin.Visibility = Visibility.Visible;
+            btnShowOrdersAdmin.Visibility = Visibility.Visible;
         }
 
-        private void btnShowProducts_Click(object sender, RoutedEventArgs e)
+        private void btnShowProductsAdmin_Click(object sender, RoutedEventArgs e)
         {
-            new Product.ProductListWindow(bl).Show();
+            new Product.ProductListWindow(bl, "Admin").Show();
         }
 
-        private void btnShowOrders_Click(object sender, RoutedEventArgs e)
+        private void btnShowOrdersAdmin_Click(object sender, RoutedEventArgs e)
         {
             new Order.OrderListWindow(bl).Show();
+        }
+
+        private void btnProducts_Click(object sender, RoutedEventArgs e)
+        {
+            new Product.ProductListWindow(bl, "User").Show();
         }
     }
 }

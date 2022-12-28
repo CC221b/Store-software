@@ -47,6 +47,7 @@ namespace PL.Order
 
         private void btnUpdateShipDate_Click(object sender, RoutedEventArgs e)
         {
+            btnUpdateShipDate.IsEnabled = false;
             try
             {
                 blp.Order.UpdateOrderShipping(order1.ID);
@@ -68,6 +69,7 @@ namespace PL.Order
 
         private void btnUpdateDeliveryDate_Click(object sender, RoutedEventArgs e)
         {
+            btnUpdateDeliveryDate.IsEnabled = false;
             try
             {
                 blp.Order.UpdateOrderDelivery(order1.ID);

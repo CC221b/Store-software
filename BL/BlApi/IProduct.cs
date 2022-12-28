@@ -33,9 +33,4 @@ public interface IProduct
     /// </summary>
     public void Delete(int id);
     /// <summary>
-    /// Auxiliary function for filtering products by category.
-    /// </summary>
-    /// <param name="category"></param>
-    /// <returns></returns>
-    public IEnumerable<ProductForList> FilterByCategory(Categories category);
 }

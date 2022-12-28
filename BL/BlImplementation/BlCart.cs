@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using System.Security.Cryptography;
 
 namespace BlImplementation;
 
@@ -32,23 +33,25 @@ internal class BlCart : ICart
             throw new BO.ExceptionFromDal(ex);
         }
         bool flag = false;
-        foreach (var item in cart.Items)
+        if (product.InStock > 0)
         {
-            if (item.ProductID == id)
+            foreach (var item in cart.Items)
             {
-                flag = true;
-                if (product.InStock > 0)
+                if (item.ProductID == id)
                 {
+                    flag = true;
+
                     item.Amount += 1;
                     item.TotalPrice += product.Price;
                     cart.TotalPrice += product.Price;
                 }
-                else
-                {
-                    throw new BO.ExceptionOutOfStock();
-                }
             }
         }
+        else
+        {
+            throw new BO.ExceptionOutOfStock();
+        }
+
         if (!flag)
         {
             if (product.InStock > 0)
