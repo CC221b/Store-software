@@ -10,6 +10,6 @@
         <Button Name="btnAdmin" Content="Admin" HorizontalAlignment="Left" Height="37" Margin="81,56,0,0" VerticalAlignment="Top" Width="122" Click="btnAdmin_Click"/>
         <Button Name="btnShowProductsAdmin" Content="ShowProducts" HorizontalAlignment="Left" Height="41" Margin="82,15,0,0" VerticalAlignment="Top" Width="120" Click="btnShowProductsAdmin_Click"/>
         <Button Name="btnShowOrdersAdmin" Content="ShowOrders" HorizontalAlignment="Left" Height="41" Margin="240,15,0,0" VerticalAlignment="Top" Width="120" Click="btnShowOrdersAdmin_Click"/>
-        <Button Name="btnProducts" Content="Products" HorizontalAlignment="Left" Height="37" Margin="240,56,0,0" VerticalAlignment="Top" Width="122" Click="btnProducts_Click"/>
+        <Button Name="btnNewOrder" Content="New Order" HorizontalAlignment="Left" Height="37" Margin="240,56,0,0" VerticalAlignment="Top" Width="122" Click="btnNewOrder_Click"/>
     </Grid>
 </Window>

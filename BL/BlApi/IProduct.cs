@@ -9,9 +9,9 @@ public interface IProduct
     /// </summary>
     public IEnumerable<ProductForList> GetAll(Func<DO.Product, bool>? func = null);
     /// <summary>
-    /// Catalog request (product list) (for buyer's catalog screen).
+    /// Catalog request(product list) (for buyer's catalog screen).
     /// </summary>
-    //public IEnumerable<ProductItem> GetCatalog();
+    public IEnumerable<ProductItem> GetCatalog();
     ///// <summary>
     ///// Product details request.
     ///// </summary>

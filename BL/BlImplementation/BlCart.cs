@@ -35,15 +35,18 @@ internal class BlCart : ICart
         bool flag = false;
         if (product.InStock > 0)
         {
-            foreach (var item in cart.Items)
+            if (cart.Items != null)
             {
-                if (item.ProductID == id)
+                foreach (var item in cart.Items)
                 {
-                    flag = true;
+                    if (item.ProductID == id)
+                    {
+                        flag = true;
 
-                    item.Amount += 1;
-                    item.TotalPrice += product.Price;
-                    cart.TotalPrice += product.Price;
+                        item.Amount += 1;
+                        item.TotalPrice += product.Price;
+                        cart.TotalPrice += product.Price;
+                    }
                 }
             }
         }

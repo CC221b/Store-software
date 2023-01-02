@@ -23,21 +23,23 @@ namespace PL.Product
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        int debily = 0;
         private IBl blp;
-        string type = "";
-        public ProductListWindow(IBl bl, string type1)
+        string status = "";
+        public ProductListWindow(IBl bl, string status1)
         {
             InitializeComponent();
+            status = status1;
             blp = bl;
-            type = type1;
-            if (type == "User")
+            if (status == "Admin")
+            {
+                ProductsListview.ItemsSource = blp.Product.GetAll();
+            }
+            else
             {
                 btnAddProduct.Visibility = Visibility.Hidden;
+                ProductsListview.ItemsSource = blp.Product.GetCatalog();
             }
-            ProductsListview.ItemsSource = blp.Product.GetAll();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Categories));
-            debily = ProductsListview.Items.Count;
         }
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -47,32 +49,54 @@ namespace PL.Product
 
         private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var item = (BO.ProductForList)((sender as ListView).SelectedItem);
             BO.Product product = new BO.Product();
-            try
+            if (status == "Admin")
             {
-                product = blp.Product.Get(item.ID);
+                BO.ProductForList item = (BO.ProductForList)((sender as ListView).SelectedItem);
+                try
+                {
+                    product = blp.Product.Get(item.ID);
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException is null)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    else
+                    {
+                        MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
+                    }
+                }
             }
-            catch (Exception ex)
+            else
             {
-                if (ex.InnerException is null)
+                BO.ProductItem item = (BO.ProductItem)((sender as ListView).SelectedItem);
+                try
                 {
-                    MessageBox.Show(ex.Message);
+                    product = blp.Product.Get(item.ID);
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
+                    if (ex.InnerException is null)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    else
+                    {
+                        MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
+                    }
                 }
             }
-            new Product.ProductWindow(product, blp).Show();
+            new Product.ProductWindow(product, blp, status).Show();
             this.Close();
+
         }
 
         private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
             new Product.ProductWindow(blp).ShowDialog();
             ProductsListview.ItemsSource = blp.Product.GetAll();
-            debily = ProductsListview.Items.Count;
         }
     }
 }

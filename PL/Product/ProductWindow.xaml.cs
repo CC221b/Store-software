@@ -19,11 +19,13 @@ namespace PL.Product
     /// <summary>
     /// Interaction logic for ProductWindow.xaml
     /// </summary>
+
     public partial class ProductWindow : Window
     {
         private IBl blp;
         public BO.Product product = new BO.Product();
-
+        static BO.Cart cart = new();
+        //לאתחל cart!!!!!!!!!!!!!!!!
         public void FillingControlsForProductUpdate(BO.Product product)
         {
             txtID.Text = product.ID.ToString();
@@ -41,10 +43,23 @@ namespace PL.Product
             cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
         }
 
-        public ProductWindow(BO.Product product, IBl bl)
+        public ProductWindow(BO.Product product, IBl bl, string status)
         {
             blp = bl;
             InitializeComponent();
+            if (status == "User")
+            {
+                btnUpdateProduct.Visibility = Visibility.Hidden;
+                txtID.IsEnabled = false;
+                txtName.IsEnabled = false;
+                txtPrice.IsEnabled = false;
+                txtInStock.IsEnabled = false;
+                cboxCategory.IsEnabled = false;
+            }
+            else
+            {
+                btnAddToCart.Visibility = Visibility.Hidden;
+            }
             cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
             FillingControlsForProductUpdate(product);
             btnAddProduct.Visibility = Visibility.Hidden;
@@ -123,6 +138,11 @@ namespace PL.Product
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
                 }
             }
+        }
+
+        private void btnAddToCart_Click(object sender, RoutedEventArgs e)
+        {
+            blp.Cart.AddProduct(cart, product.ID);
         }
     }
 }

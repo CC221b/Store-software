@@ -40,38 +40,38 @@ internal class BlProduct : IProduct
         return ListProductsForList;
     }
 
-    ///// <summary>
-    ///// The function returns a list of productItem type.
-    ///// Brings the list of products from the data layer and creates a list of type productItem.
-    ///// throws errors accordingly.
-    ///// </summary>
-    ///// <returns></returns>
-    ///// <exception cref="BO.ExceptionFromDal"></exception>
-    //public IEnumerable<BO.ProductItem> GetCatalog()
-    //{
-    //    IEnumerable<DO.Product> ListProducts = new List<DO.Product>();
-    //    try
-    //    {
-    //        ListProducts = Dal.Product.GetAll();
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        throw new BO.ExceptionFromDal(ex);
-    //    }
-    //    List<BO.ProductItem> ListProductItem = new List<BO.ProductItem>();
-    //    foreach (var item in ListProducts)
-    //    {
-    //        BO.ProductItem listProductItem = new BO.ProductItem();
-    //        listProductItem.ID = item.ID;
-    //        listProductItem.Name = item.Name;
-    //        listProductItem.Price = item.Price;
-    //        listProductItem.Category = (BO.Categories)item.Category;
-    //        listProductItem.Amount = 0;
-    //        listProductItem.InStock = item.InStock > 0 ? true : false;
-    //        ListProductItem.Add(listProductItem);
-    //    }
-    //    return ListProductItem;
-    //}
+    /// <summary>
+    /// The function returns a list of productItem type.
+    /// Brings the list of products from the data layer and creates a list of type productItem.
+    /// throws errors accordingly.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BO.ExceptionFromDal"></exception>
+    public IEnumerable<BO.ProductItem> GetCatalog()
+    {
+        IEnumerable<DO.Product> ListProducts = new List<DO.Product>();
+        try
+        {
+            ListProducts = Dal.Product.GetAll();
+        }
+        catch (Exception ex)
+        {
+            throw new BO.ExceptionFromDal(ex);
+        }
+        List<BO.ProductItem> ListProductItem = new List<BO.ProductItem>();
+        foreach (var item in ListProducts)
+        {
+            BO.ProductItem listProductItem = new BO.ProductItem();
+            listProductItem.ID = item.ID;
+            listProductItem.Name = item.Name;
+            listProductItem.Price = item.Price;
+            listProductItem.Category = (BO.Categories)item.Category;
+            listProductItem.Amount = 0;
+            listProductItem.InStock = item.InStock > 0 ? true : false;
+            ListProductItem.Add(listProductItem);
+        }
+        return ListProductItem;
+    }
 
     /// <summary>
     /// The function receives an ID,

@@ -32,14 +32,14 @@ namespace PL
         private void btnAdmin_Click(object sender, RoutedEventArgs e)
         {
             btnAdmin.Visibility = Visibility.Hidden;
-            btnProducts.Visibility = Visibility.Hidden;
             btnShowProductsAdmin.Visibility = Visibility.Visible;
             btnShowOrdersAdmin.Visibility = Visibility.Visible;
+            btnNewOrder.Visibility = Visibility.Hidden;
         }
 
         private void btnShowProductsAdmin_Click(object sender, RoutedEventArgs e)
         {
-            new Product.ProductListWindow(bl, "Admin").Show();
+            new Product.ProductListWindow(bl,"Admin").Show();
         }
 
         private void btnShowOrdersAdmin_Click(object sender, RoutedEventArgs e)
@@ -47,7 +47,7 @@ namespace PL
             new Order.OrderListWindow(bl).Show();
         }
 
-        private void btnProducts_Click(object sender, RoutedEventArgs e)
+        private void btnNewOrder_Click(object sender, RoutedEventArgs e)
         {
             new Product.ProductListWindow(bl, "User").Show();
         }

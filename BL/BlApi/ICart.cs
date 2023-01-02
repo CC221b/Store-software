@@ -5,6 +5,7 @@ namespace BlApi;
 
 public interface ICart
 {
+    static BO.Cart cart = new BO.Cart();
     /// <summary>
     /// Adding a product to the shopping cart (for catalog screen, product details screen)
     /// </summary>
