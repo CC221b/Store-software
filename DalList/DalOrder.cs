@@ -26,14 +26,22 @@ internal class DalOrder : IOrder
 
     public int Add(Order o)
     {
-        if (DataSource.s_orderList.Count < 100)
+        try
         {
-            o.ID = DataSource.Config.OrderId;
-            DataSource.s_orderList.Add(o);
+            Get(o.ID);
         }
-        else
-            throw new ExceptionNoRoom();
-        return o.ID;
+        catch (Exception ex)
+        {
+            if (DataSource.s_orderList.Count < 100)
+            {
+                o.ID = DataSource.Config.OrderId;
+                DataSource.s_orderList.Add(o);
+            }
+            else
+                throw new ExceptionNoRoom();
+            return o.ID;
+        }
+        throw new ExceptionExists();
     }
 
     public IEnumerable<Order> GetAll(Func<Order, bool>? func = null)
@@ -52,30 +60,29 @@ internal class DalOrder : IOrder
 
     public void Update(Order o)
     {
-        for (int i = 0; i < DataSource.s_orderList.Count; i++)
+        try
         {
-            if (DataSource.s_orderList[i].ID == o.ID)
-            {
-                DataSource.s_orderList[i] = o;
-                return;
-            }
+            DO.Order order = Get(o.ID);
+            int index = DataSource.s_orderList.IndexOf(order);
+            DataSource.s_orderList[index] = o;
         }
-        throw new ExceptionNotExists();
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.s_orderList.Count; i++)
+        try
         {
-            if (DataSource.s_orderList[i].ID == id)
-            {
-                Order o = new Order();
-                DataSource.s_orderList[i] = DataSource.s_orderList[DataSource.s_orderList.Count];
-                DataSource.s_orderList[DataSource.s_orderList.Count] = o;
-                return;
-            }
+            DO.Order order = Get(id);
+            DataSource.s_orderList.Remove(order);
         }
-        throw new ExceptionNotExists();
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 }
 

@@ -35,6 +35,14 @@ namespace PL.Order
             txtStatus.Text = order.Status.ToString();
             txtTotalPrice.Text = order.TotalPrice.ToString();
             itemsListView.ItemsSource = order.Items;
+            if (order.Status.ToString() == "ProvidedCustomerOrder" || order.Status.ToString() == "SendOrder")
+            {
+                btnUpdateDeliveryDate.IsEnabled = false;
+            }
+            else if (order.Status.ToString() == "SendOrder")
+            {
+                btnUpdateShipDate.IsEnabled = false;
+            }
         }
 
         public OrderWindow(BO.Order order, IBl bl)
@@ -87,6 +95,10 @@ namespace PL.Order
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
                 }
             }
+        }
+        private void itemsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

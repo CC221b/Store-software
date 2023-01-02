@@ -21,7 +21,6 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        int debily = 0;
         IBl bl = BlApi.Factory.Get();
         public MainWindow()
         {

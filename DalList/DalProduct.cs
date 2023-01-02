@@ -10,8 +10,8 @@ internal class DalProduct : IProduct
     public Product Get(int id)
     {
         IEnumerable<Product> product1 = from product in DataSource.s_productList
-                                       where product.ID == id
-                                       select product;
+                                        where product.ID == id
+                                        select product;
         if (product1 != null && product1.Any())
         {
             return product1.First();
@@ -52,30 +52,29 @@ internal class DalProduct : IProduct
 
     public void Update(DO.Product p)
     {
-        for (int i = 0; i < DataSource.s_productList.Count; i++)
+        try
         {
-            if (DataSource.s_productList[i].ID == p.ID)
-            {
-                DataSource.s_productList[i] = p;
-                return;
-            }
+            DO.Product product = Get(p.ID);
+            int index = DataSource.s_productList.IndexOf(product);
+            DataSource.s_productList.Insert(index, product);
         }
-        throw new ExceptionNotExists();
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.s_productList.Count; i++)
+        try
         {
-            if (DataSource.s_productList[i].ID == id)
-            {
-                DO.Product p = new DO.Product();
-                DataSource.s_productList.Remove(DataSource.s_productList[i]);
-                return;
-            }
+            DO.Product product = Get(id);
+            DataSource.s_productList.Remove(product);
         }
-        throw new ExceptionNotExists();
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
-
 }
 

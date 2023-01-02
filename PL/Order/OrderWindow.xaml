@@ -26,7 +26,7 @@
         <TextBox Name="txtDeliveryDate" HorizontalAlignment="Left" Height="30" Margin="176,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
         <TextBox Name="txtStatus" HorizontalAlignment="Left" Height="30" Margin="176,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
         <TextBox Name="txtTotalPrice" HorizontalAlignment="Left" Height="30" Margin="176,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
-        <ListBox Name="itemsListView" HorizontalAlignment="Left" Height="83" Margin="176,325,0,0" VerticalAlignment="Top" Width="150" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+        <ListBox Name="itemsListView" HorizontalAlignment="Left" Height="83" Margin="176,325,0,0" VerticalAlignment="Top" Width="150" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="itemsListView_SelectionChanged"/>
         <Button Name="btnUpdateShipDate" Content="UpdateShipDate" HorizontalAlignment="Left" Height="30" Margin="347,185,0,0" VerticalAlignment="Top" Width="136" Click="btnUpdateShipDate_Click"/>
         <Button Name="btnUpdateDeliveryDate" Content="UpdateDeliveryDate" HorizontalAlignment="Left" Height="30" Margin="347,220,0,0" VerticalAlignment="Top" Width="136" Click="btnUpdateDeliveryDate_Click"/>
     </Grid>

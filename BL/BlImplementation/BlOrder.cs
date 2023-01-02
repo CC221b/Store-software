@@ -30,7 +30,14 @@ internal class BlOrder : IOrder
             BO.OrderForList OrderForList = new BO.OrderForList();
             OrderForList.ID = item.ID;
             OrderForList.CustomerName = item.CustomerName;
-            OrderForList.Status = 0;
+            if (DateTime.Compare(item.ShipDate, DateTime.Now) <= 0)
+            {
+                OrderForList.Status = BO.OrderStatus.SendOrder;
+            }
+            if (DateTime.Compare(item.DeliveryDate, DateTime.Now) <= 0)
+            {
+                OrderForList.Status = BO.OrderStatus.ProvidedCustomerOrder;
+            }
             IEnumerable<DO.OrderItem> orderItems = Dal.OrderItem.GetByOrderID(item.ID);
             OrderForList.AmountOfItems = orderItems.Count();
             double price = 0;
@@ -72,7 +79,14 @@ internal class BlOrder : IOrder
                 orderTypeBO.ShipDate = orderTypeDO.ShipDate;
                 orderTypeBO.OrderDate = orderTypeDO.OrderDate;
                 orderTypeBO.DeliveryDate = orderTypeDO.DeliveryDate;
-                orderTypeBO.Status = 0;
+                if (DateTime.Compare(orderTypeDO.ShipDate, DateTime.Now) <= 0)
+                {
+                    orderTypeBO.Status = BO.OrderStatus.SendOrder;
+                }
+                if (DateTime.Compare(orderTypeDO.DeliveryDate, DateTime.Now) <= 0)
+                {
+                    orderTypeBO.Status = BO.OrderStatus.ProvidedCustomerOrder;
+                }
                 orderTypeBO.Items = orderItem;
                 double sum = 0;
                 foreach (var item in orderItem)

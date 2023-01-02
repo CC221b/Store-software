@@ -70,30 +70,29 @@ internal class DalOrderItem : IOrderItem
 
     public void Update(OrderItem oi)
     {
-        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
+        try
         {
-            if (DataSource.s_orderItemList[i].ID == oi.ID)
-            {
-                DataSource.s_orderItemList[i] = oi;
-                return;
-            }
+            DO.OrderItem orderItem = Get(oi.ID);
+            int index = DataSource.s_orderItemList.IndexOf(orderItem);
+            DataSource.s_orderItemList.Insert(index, orderItem);
         }
-        throw new ExceptionNotExists();
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.s_orderItemList.Count; i++)
+        try
         {
-            if (DataSource.s_orderItemList[i].ID == id)
-            {
-                OrderItem oi = new OrderItem();
-                DataSource.s_orderItemList[i] = DataSource.s_orderItemList[DataSource.s_orderItemList.Count];
-                DataSource.s_orderItemList[DataSource.s_orderItemList.Count] = oi;
-                return;
-            }
+            DO.OrderItem orderItem = Get(id);
+            DataSource.s_orderItemList.Remove(orderItem);
         }
-        throw new ExceptionNotExists();
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 }
 
