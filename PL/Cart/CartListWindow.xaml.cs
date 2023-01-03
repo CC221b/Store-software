@@ -25,6 +25,12 @@ namespace PL.Cart
         int amount = 0;
         string? customerName = "", customerEmail = "", customerAdress = "";
         BO.OrderItem orderItem = new();
+        /// <summary>
+        /// A function to manage the order creation controls,
+        /// because the project is built using the SPA method,
+        /// it is necessary to hide and reveal controls.
+        /// </summary>
+        /// <param name="visibility"></param>
         public void ManagingTheControlViewOfMakeAnOrder(string visibility)
         {
             if (visibility == "Hidden")
@@ -48,7 +54,12 @@ namespace PL.Cart
                 btnConfirmationFillingTheDetails.Visibility = Visibility.Visible;
             }
         }
-
+        /// <summary>
+        /// A function to manage the controls for updating an item in an order.
+        /// Because the project is built using the SPA method,
+        /// it is necessary to hide and reveal controls.
+        /// </summary>
+        /// <param name="visibility"></param>
         public void ManagingControlsForUpdatingAnItemInAnOrder(string visibility)
         {
             if (visibility == "Hidden")
@@ -62,7 +73,12 @@ namespace PL.Cart
                 btnRemoveItem.Visibility = Visibility.Visible;
             }
         }
-
+        /// <summary>
+        /// A function to manage the controls for updating the quantity of an item in an order.
+        /// Because the project is built using the SPA method,
+        /// it is necessary to hide and reveal controls.
+        /// </summary>
+        /// <param name="visibility"></param>
         public void ManagingControlsForUpdatingTheAmountOfAnItemInAnOrder(string visibility)
         {
             if (visibility == "Hidden")
@@ -76,7 +92,11 @@ namespace PL.Cart
                 btnOkChangeAmount.Visibility = Visibility.Visible;
             }
         }
-
+        /// <summary>
+        /// A constructive action, which initializes the list and the totalPrice control.
+        /// and also schedule the management functions of concealment and disclosure according to what is consumed.
+        /// </summary>
+        /// <param name="bl"></param>
         public CartListWindow(IBl bl)
         {
             blp = bl;
@@ -87,24 +107,24 @@ namespace PL.Cart
             cartListView.ItemsSource = MainWindow.cart.Items;
             txtTotalPrice.Text = MainWindow.cart.TotalPrice.ToString();
         }
-
+ 
         private void btnChangeAmount_Click(object sender, RoutedEventArgs e)
         {
             ManagingControlsForUpdatingTheAmountOfAnItemInAnOrder("Visible");
         }
-
+      
         private void txtChangeAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             string? amountBeforeTryParse = this.txtChangeAmount.Text;
             int.TryParse(amountBeforeTryParse, out amount);
         }
-
+  
         private void cartListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             orderItem = (BO.OrderItem)((sender as ListView).SelectedItem);
             ManagingControlsForUpdatingAnItemInAnOrder("Visible");
         }
-
+      
         private void btnOkChangeAmount_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -127,7 +147,7 @@ namespace PL.Cart
                 }
             }
         }
-
+      
         private void btnRemoveItem_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -148,12 +168,12 @@ namespace PL.Cart
                 }
             }
         }
-
+      
         private void txtCustomerName_TextChanged(object sender, TextChangedEventArgs e)
         {
             customerName = txtCustomerName.Text;
         }
-
+     
         private void txtCustomerEmail_TextChanged(object sender, TextChangedEventArgs e)
         {
             customerEmail = txtCustomerEmail.Text;
@@ -163,7 +183,11 @@ namespace PL.Cart
         {
             customerAdress = txtCustomerAdress.Text;
         }
-
+        /// <summary>
+        /// Creates a screen like a new screen for entering user information to place an order.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnMakeOrder_Click(object sender, RoutedEventArgs e)
         {
             ManagingTheControlViewOfMakeAnOrder("Visible");
@@ -174,7 +198,11 @@ namespace PL.Cart
             txtTotalPrice.Visibility = Visibility.Hidden;
             btnMakeOrder.Visibility = Visibility.Hidden;
         }
-
+        /// <summary>
+        /// The function executes the order and resets the cart.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConfirmationFillingTheDetails_Click(object sender, RoutedEventArgs e)
         {
             try
