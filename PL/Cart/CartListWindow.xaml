@@ -9,7 +9,13 @@
     <Grid>
         <Button Name="btnChangeAmount" Content="ChangeAmount" HorizontalAlignment="Left" Height="29" Margin="40,217,0,0" VerticalAlignment="Top" Width="100" Click="btnChangeAmount_Click"/>
         <Button Name="btnRemoveItem" Content="RemoveItem" HorizontalAlignment="Left" Height="29" Margin="155,217,0,0" VerticalAlignment="Top" Width="100"/>
-        <DataGrid Name="cartDataGrid" HorizontalAlignment="Left" Height="167" Margin="40,25,0,0" VerticalAlignment="Top" Width="497" d:ItemsSource="{d:SampleData ItemCount=5}" GotFocus="cartDataGrid_GotFocus"/>
         <TextBox Name="txtChangeAmount" HorizontalAlignment="Left" Height="25" Margin="40,251,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100" TextChanged="txtChangeAmount_TextChanged"/>
+        <ListView Name="cartListView" HorizontalAlignment="Left" Height="169" Margin="34,23,0,0" VerticalAlignment="Top" Width="342" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="cartListView_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

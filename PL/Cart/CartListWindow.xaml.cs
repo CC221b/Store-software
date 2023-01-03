@@ -23,18 +23,13 @@ namespace PL.Cart
     {
         private IBl blp;
         int amount = 0;
-        BO.ProductItem productItem = new();
+        BO.OrderItem orderItem = new();
         public CartListWindow(IBl bl)
         {
             blp = bl;
             InitializeComponent();
             txtChangeAmount.Visibility = Visibility.Hidden;
-            cartDataGrid.ItemsSource = MainWindow.cart.Items;
-        }
-
-        private void cartDataGrid_GotFocus(object sender, RoutedEventArgs e)
-        {
-            //productItem = (BO.ProductItem)((sender as DataGrid).SelectedItem);
+            cartListView.ItemsSource = MainWindow.cart.Items;
         }
 
         private void btnChangeAmount_Click(object sender, RoutedEventArgs e)
@@ -46,6 +41,11 @@ namespace PL.Cart
         {
             string? amountBeforeTryParse = this.txtChangeAmount.Text;
             int.TryParse(amountBeforeTryParse, out amount);
+        }
+
+        private void cartListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            orderItem = (BO.OrderItem)((sender as ListView).SelectedItem);
         }
     }
 }

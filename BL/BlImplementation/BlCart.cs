@@ -62,7 +62,7 @@ internal class BlCart : ICart
                 orderItem.Name = product.Name;
                 orderItem.Price = product.Price;
                 orderItem.Amount = 1;
-                orderItem.TotalPrice += product.Price;
+                orderItem.TotalPrice = product.Price;
                 cart.TotalPrice = cart.TotalPrice + product.Price;
                 cart.Items.Add(orderItem);
             }
