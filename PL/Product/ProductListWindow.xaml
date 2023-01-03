@@ -31,6 +31,7 @@
             </ListView.View>
         </ListView>
         <Button Name="btnAddProduct" Content="AddProduct" HorizontalAlignment="Left" Height="51" Margin="360,26,0,0" Grid.Row="1" VerticalAlignment="Top" Width="152" Click="btnAddProduct_Click"/>
+        <Button Name="btnGoToCart" Content="Go to cart" HorizontalAlignment="Left" Height="46" Margin="633,126,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Click="btnGoToCart_Click"/>
 
     </Grid>
 </Window>

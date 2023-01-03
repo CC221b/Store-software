@@ -22,7 +22,7 @@ internal class BlCart : ICart
     /// <exception cref="BO.ExceptionFromDal"></exception>
     /// <exception cref="BO.ExceptionOutOfStock"></exception>
     public BO.Cart AddProduct(BO.Cart cart, int id)
-    {
+    { 
         DO.Product product = new DO.Product();
         try
         {
@@ -35,18 +35,15 @@ internal class BlCart : ICart
         bool flag = false;
         if (product.InStock > 0)
         {
-            if (cart.Items != null)
+            foreach (var item in cart.Items)
             {
-                foreach (var item in cart.Items)
+                if (item.ProductID == id)
                 {
-                    if (item.ProductID == id)
-                    {
-                        flag = true;
+                    flag = true;
 
-                        item.Amount += 1;
-                        item.TotalPrice += product.Price;
-                        cart.TotalPrice += product.Price;
-                    }
+                    item.Amount += 1;
+                    item.TotalPrice += product.Price;
+                    cart.TotalPrice += product.Price;
                 }
             }
         }
@@ -62,6 +59,7 @@ internal class BlCart : ICart
                 BO.OrderItem orderItem = new BO.OrderItem();
                 orderItem.ID = 0;
                 orderItem.ProductID = id;
+                orderItem.Name = product.Name;
                 orderItem.Price = product.Price;
                 orderItem.Amount = 1;
                 orderItem.TotalPrice += product.Price;

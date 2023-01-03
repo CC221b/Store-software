@@ -24,8 +24,7 @@ namespace PL.Product
     {
         private IBl blp;
         public BO.Product product = new BO.Product();
-        static BO.Cart cart = new();
-        //לאתחל cart!!!!!!!!!!!!!!!!
+
         public void FillingControlsForProductUpdate(BO.Product product)
         {
             txtID.Text = product.ID.ToString();
@@ -33,6 +32,23 @@ namespace PL.Product
             txtPrice.Text = product.Price.ToString();
             txtInStock.Text = product.InStock.ToString();
             cboxCategory.Text = product.Category.ToString();
+            lblAmountInCart.Visibility = Visibility.Hidden;
+            txtAmountInCart.Visibility = Visibility.Hidden;
+        }
+        public void FillingControlsForProductItem(BO.ProductItem productItem)
+        {
+            txtID.Text = productItem.ID.ToString();
+            txtName.Text = productItem.Name;
+            txtPrice.Text = productItem.Price.ToString();
+            txtInStock.Text = productItem.InStock.ToString();
+            cboxCategory.Text = productItem.Category.ToString();
+            txtAmountInCart.Text = productItem.Amount.ToString();
+            txtID.IsEnabled = false;
+            txtName.IsEnabled = false;
+            txtPrice.IsEnabled = false;
+            txtInStock.IsEnabled = false;
+            cboxCategory.IsEnabled = false;
+            txtAmountInCart.IsEnabled = false;
         }
 
         public ProductWindow(IBl bl)
@@ -41,27 +57,28 @@ namespace PL.Product
             InitializeComponent();
             btnUpdateProduct.Visibility = Visibility.Hidden;
             cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
+            lblAmountInCart.Visibility = Visibility.Hidden;
+            txtAmountInCart.Visibility = Visibility.Hidden;
+            btnAddToCart.Visibility = Visibility.Hidden;
         }
 
-        public ProductWindow(BO.Product product, IBl bl, string status)
+        public ProductWindow(BO.Product product, IBl bl)
         {
             blp = bl;
             InitializeComponent();
-            if (status == "User")
-            {
-                btnUpdateProduct.Visibility = Visibility.Hidden;
-                txtID.IsEnabled = false;
-                txtName.IsEnabled = false;
-                txtPrice.IsEnabled = false;
-                txtInStock.IsEnabled = false;
-                cboxCategory.IsEnabled = false;
-            }
-            else
-            {
-                btnAddToCart.Visibility = Visibility.Hidden;
-            }
+            btnAddToCart.Visibility = Visibility.Hidden;
             cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
             FillingControlsForProductUpdate(product);
+            btnAddProduct.Visibility = Visibility.Hidden;
+        }
+
+        public ProductWindow(BO.ProductItem productItem, IBl bl)
+        {
+            blp = bl;
+            InitializeComponent();
+            btnUpdateProduct.Visibility = Visibility.Hidden;
+            cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
+            FillingControlsForProductItem(productItem);
             btnAddProduct.Visibility = Visibility.Hidden;
         }
 
@@ -142,7 +159,7 @@ namespace PL.Product
 
         private void btnAddToCart_Click(object sender, RoutedEventArgs e)
         {
-            blp.Cart.AddProduct(cart, product.ID);
+            blp.Cart.AddProduct(ProductListWindow.cart, product.ID);
         }
     }
 }

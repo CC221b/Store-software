@@ -24,6 +24,7 @@ namespace PL.Product
     public partial class ProductListWindow : Window
     {
         private IBl blp;
+        public static BO.Cart cart = new BO.Cart();
         string status = "";
         public ProductListWindow(IBl bl, string status1)
         {
@@ -36,6 +37,7 @@ namespace PL.Product
             }
             else
             {
+                cart.Items = new();
                 btnAddProduct.Visibility = Visibility.Hidden;
                 ProductsListview.ItemsSource = blp.Product.GetCatalog();
             }
@@ -56,6 +58,8 @@ namespace PL.Product
                 try
                 {
                     product = blp.Product.Get(item.ID);
+                    new Product.ProductWindow(product, blp).Show();
+                    this.Close();
                 }
                 catch (Exception ex)
                 {
@@ -74,7 +78,8 @@ namespace PL.Product
                 BO.ProductItem item = (BO.ProductItem)((sender as ListView).SelectedItem);
                 try
                 {
-                    product = blp.Product.Get(item.ID);
+                    new Product.ProductWindow(item, blp).Show();
+                    this.Close();
                 }
                 catch (Exception ex)
                 {
@@ -88,15 +93,17 @@ namespace PL.Product
                     }
                 }
             }
-            new Product.ProductWindow(product, blp, status).Show();
-            this.Close();
-
         }
 
         private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
             new Product.ProductWindow(blp).ShowDialog();
             ProductsListview.ItemsSource = blp.Product.GetAll();
+        }
+
+        private void btnGoToCart_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
