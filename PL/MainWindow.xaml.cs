@@ -22,9 +22,12 @@ namespace PL
     public partial class MainWindow : Window
     {
         IBl bl = BlApi.Factory.Get();
+        public static BO.Cart cart = new BO.Cart();
+
         public MainWindow()
         {
             InitializeComponent();
+            cart.Items = new();
             btnShowProductsAdmin.Visibility = Visibility.Hidden;
             btnShowOrdersAdmin.Visibility = Visibility.Hidden;
         }

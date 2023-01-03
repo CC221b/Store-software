@@ -159,7 +159,8 @@ namespace PL.Product
 
         private void btnAddToCart_Click(object sender, RoutedEventArgs e)
         {
-            blp.Cart.AddProduct(ProductListWindow.cart, product.ID);
+            blp.Cart.AddProduct(MainWindow.cart, product.ID);
+            this.Close();
         }
     }
 }

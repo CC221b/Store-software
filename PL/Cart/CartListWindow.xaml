@@ -1,4 +1,4 @@
-﻿<Window x:Class="PL.Cart.OrderListWindow"
+﻿<Window x:Class="PL.Cart.CartListWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="OrderListWindow" Height="450" Width="800">
     <Grid>
-        
+        <Button Name="btnChangeAmount" Content="ChangeAmount" HorizontalAlignment="Left" Height="29" Margin="40,217,0,0" VerticalAlignment="Top" Width="100" Click="btnChangeAmount_Click"/>
+        <Button Name="btnRemoveItem" Content="RemoveItem" HorizontalAlignment="Left" Height="29" Margin="155,217,0,0" VerticalAlignment="Top" Width="100"/>
+        <DataGrid Name="cartDataGrid" HorizontalAlignment="Left" Height="167" Margin="40,25,0,0" VerticalAlignment="Top" Width="497" d:ItemsSource="{d:SampleData ItemCount=5}" GotFocus="cartDataGrid_GotFocus"/>
+        <TextBox Name="txtChangeAmount" HorizontalAlignment="Left" Height="25" Margin="40,251,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100" TextChanged="txtChangeAmount_TextChanged"/>
     </Grid>
 </Window>

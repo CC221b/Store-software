@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 namespace PL.Order
 {
     /// <summary>
-    /// Interaction logic for OrderListWindow.xaml
+    /// Interaction logic for CartListWindow.xaml
     /// </summary>
     public partial class OrderListWindow : Window
     {

@@ -24,7 +24,6 @@ namespace PL.Product
     public partial class ProductListWindow : Window
     {
         private IBl blp;
-        public static BO.Cart cart = new BO.Cart();
         string status = "";
         public ProductListWindow(IBl bl, string status1)
         {
@@ -37,7 +36,6 @@ namespace PL.Product
             }
             else
             {
-                cart.Items = new();
                 btnAddProduct.Visibility = Visibility.Hidden;
                 ProductsListview.ItemsSource = blp.Product.GetCatalog();
             }
@@ -59,7 +57,6 @@ namespace PL.Product
                 {
                     product = blp.Product.Get(item.ID);
                     new Product.ProductWindow(product, blp).Show();
-                    this.Close();
                 }
                 catch (Exception ex)
                 {
@@ -79,7 +76,6 @@ namespace PL.Product
                 try
                 {
                     new Product.ProductWindow(item, blp).Show();
-                    this.Close();
                 }
                 catch (Exception ex)
                 {
@@ -103,7 +99,7 @@ namespace PL.Product
 
         private void btnGoToCart_Click(object sender, RoutedEventArgs e)
         {
-
+            new Cart.CartListWindow(blp).ShowDialog();
         }
     }
 }
