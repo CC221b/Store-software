@@ -33,6 +33,7 @@ namespace PL.Product
             if (status == "Admin")
             {
                 ProductsListview.ItemsSource = blp.Product.GetAll();
+                btnGoToCart.Visibility = Visibility.Hidden;
             }
             else
             {

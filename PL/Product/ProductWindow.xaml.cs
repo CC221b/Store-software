@@ -159,8 +159,22 @@ namespace PL.Product
 
         private void btnAddToCart_Click(object sender, RoutedEventArgs e)
         {
-            blp.Cart.AddProduct(MainWindow.cart, product.ID);
-            this.Close();
+            try
+            {
+                blp.Cart.AddProduct(MainWindow.cart, product.ID);
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is null)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
+                }
+            }
         }
     }
 }

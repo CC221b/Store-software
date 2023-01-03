@@ -107,6 +107,7 @@ internal class BlCart : ICart
                         cart.TotalPrice += item.Price * (newAmount - item.Amount);
                         item.Amount = newAmount;
                         item.TotalPrice = newAmount * item.Price;
+                        break;
                     }
                     else
                     {
@@ -118,12 +119,14 @@ internal class BlCart : ICart
                 {
                     cart.TotalPrice -= item.Amount * item.Price;
                     cart.Items.Remove(item);
+                    break;
                 }
                 else
                 {
                     cart.TotalPrice -= product.Price * (item.Amount - newAmount);
                     item.Amount = newAmount;
                     item.TotalPrice = newAmount * item.Price;
+                    break;
                 }
             }
             else
