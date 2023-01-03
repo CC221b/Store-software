@@ -17,9 +17,9 @@ using System.Windows.Shapes;
 namespace PL.Cart
 {
     /// <summary>
-    /// Interaction logic for CartListWindow.xaml
+    /// Interaction logic for CartWindow.xaml
     /// </summary>
-    public partial class CartListWindow : Window
+    public partial class CartWindow : Window
     {
         private IBl blp;
         int amount = 0;
@@ -97,7 +97,7 @@ namespace PL.Cart
         /// and also schedule the management functions of concealment and disclosure according to what is consumed.
         /// </summary>
         /// <param name="bl"></param>
-        public CartListWindow(IBl bl)
+        public CartWindow(IBl bl)
         {
             blp = bl;
             InitializeComponent();

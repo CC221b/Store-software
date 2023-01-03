@@ -100,7 +100,7 @@ namespace PL.Product
 
         private void btnGoToCart_Click(object sender, RoutedEventArgs e)
         {
-            new Cart.CartListWindow(blp).ShowDialog();
+            new Cart.CartWindow(blp).ShowDialog();
         }
     }
 }
