@@ -45,7 +45,7 @@ namespace PL.Product
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.Categories selectedCategory = (BO.Categories)CategorySelector.SelectedItem;
-            ProductsListview.ItemsSource = blp.Product.GetAll(item => (int)item.Category == (int)selectedCategory);
+            ProductsListview.ItemsSource = blp.Product.GetAll(item => (item.Category == null ? null : (int)item.Category) == (int)selectedCategory);
         }
 
         private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
