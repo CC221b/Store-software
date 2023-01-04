@@ -60,7 +60,7 @@ internal class DalProduct : IProduct
         }
         catch (Exception ex)
         {
-            throw ex;
+            throw ex == null ? new ExceptionNullEx() : ex;
         }
     }
 
@@ -73,7 +73,7 @@ internal class DalProduct : IProduct
         }
         catch (Exception ex)
         {
-            throw ex;
+            throw ex == null ? new ExceptionNullEx() : ex;
         }
     }
 }

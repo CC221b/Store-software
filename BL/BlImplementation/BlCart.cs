@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using DalApi;
 using System.Security.Cryptography;
 
 namespace BlImplementation;
@@ -6,7 +7,7 @@ namespace BlImplementation;
 
 internal class BlCart : ICart
 {
-    private static DalApi.IDal Dal = DalApi.Factory.Get();
+    private static DalApi.IDal? Dal = DalApi.Factory.Get();
 
     /// <summary>
     /// A function that adds a product when first of all it uses the GET function and checks if the product exists.
@@ -22,11 +23,11 @@ internal class BlCart : ICart
     /// <exception cref="BO.ExceptionFromDal"></exception>
     /// <exception cref="BO.ExceptionOutOfStock"></exception>
     public BO.Cart AddProduct(BO.Cart cart, int id)
-    { 
+    {
         DO.Product product = new DO.Product();
         try
         {
-            product = Dal.Product.Get(id);
+            product = Dal?.Product.Get(id) != null ? product : throw new BO.ExceptionNull();
         }
         catch (Exception ex)
         {
@@ -35,15 +36,18 @@ internal class BlCart : ICart
         bool flag = false;
         if (product.InStock > 0)
         {
-            foreach (var item in cart.Items)
+            if (cart.Items != null)
             {
-                if (item.ProductID == id)
+                foreach (var item in cart.Items)
                 {
-                    flag = true;
+                    if (item != null && item.ProductID == id)
+                    {
+                        flag = true;
 
-                    item.Amount += 1;
-                    item.TotalPrice += product.Price;
-                    cart.TotalPrice += product.Price;
+                        item.Amount += 1;
+                        item.TotalPrice += product.Price;
+                        cart.TotalPrice += product.Price;
+                    }
                 }
             }
         }
@@ -64,7 +68,14 @@ internal class BlCart : ICart
                 orderItem.Amount = 1;
                 orderItem.TotalPrice = product.Price;
                 cart.TotalPrice = cart.TotalPrice + product.Price;
-                cart.Items.Add(orderItem);
+                if (cart.Items != null)
+                {
+                    cart.Items.Add(orderItem);
+                }
+                else
+                {
+                    throw new BO.ExceptionNull();
+                }
             }
             else
             {
@@ -90,48 +101,51 @@ internal class BlCart : ICart
         DO.Product product = new DO.Product();
         try
         {
-            product = Dal.Product.Get(id);
+            product = Dal?.Product.Get(id) != null ? product : throw new BO.ExceptionNull();
         }
         catch (Exception ex)
         {
             throw new BO.ExceptionFromDal(ex);
         }
-        foreach (var item in cart.Items)
+        if (cart.Items != null)
         {
-            if (item.ProductID == id)
+            foreach (var item in cart.Items)
             {
-                if (item.Amount < newAmount)
+                if (item != null && item.ProductID == id)
                 {
-                    if (product.InStock >= (newAmount - item.Amount))
+                    if (item.Amount < newAmount)
                     {
-                        cart.TotalPrice += item.Price * (newAmount - item.Amount);
-                        item.Amount = newAmount;
-                        item.TotalPrice = newAmount * item.Price;
+                        if (product.InStock >= (newAmount - item.Amount))
+                        {
+                            cart.TotalPrice += item.Price * (newAmount - item.Amount);
+                            item.Amount = newAmount;
+                            item.TotalPrice = newAmount * item.Price;
+                            break;
+                        }
+                        else
+                        {
+                            throw new BO.ExceptionOutOfStock();
+                        }
+
+                    }
+                    else if (newAmount == 0)
+                    {
+                        cart.TotalPrice -= item.Amount * item.Price;
+                        cart.Items.Remove(item);
                         break;
                     }
                     else
                     {
-                        throw new BO.ExceptionOutOfStock();
+                        cart.TotalPrice -= product.Price * (item.Amount - newAmount);
+                        item.Amount = newAmount;
+                        item.TotalPrice = newAmount * item.Price;
+                        break;
                     }
-
-                }
-                else if (newAmount == 0)
-                {
-                    cart.TotalPrice -= item.Amount * item.Price;
-                    cart.Items.Remove(item);
-                    break;
                 }
                 else
                 {
-                    cart.TotalPrice -= product.Price * (item.Amount - newAmount);
-                    item.Amount = newAmount;
-                    item.TotalPrice = newAmount * item.Price;
-                    break;
+                    throw new BO.ExceptionNotExists();
                 }
-            }
-            else
-            {
-                throw new BO.ExceptionNotExists();
             }
         }
         return cart;
@@ -179,54 +193,57 @@ internal class BlCart : ICart
     {
         if (customerName != "" && customerAdress != "" && IsValidEmail(customerEmail))
         {
-            foreach (var item in cart.Items)
+            if (cart.Items != null)
             {
-                DO.Product product = new DO.Product();
-                try
+                foreach (var item in cart.Items)
                 {
-                    product = Dal.Product.Get(item.ProductID);
-                }
-                catch (Exception ex)
-                {
-                    throw new BO.ExceptionFromDal(ex);
-                }
-                if (product.InStock >= item.Amount && item.Amount > 0 && item.Price > 0)
-                {
-                    DO.Order order = new DO.Order();
-                    order.CustomerAdress = customerAdress;
-                    order.CustomerName = customerName;
-                    order.CustomerEmail = customerEmail;
-                    order.OrderDate = DateTime.Now;
-                    order.ShipDate = DateTime.MinValue;
-                    order.DeliveryDate = DateTime.MinValue;
-                    int OrderID;
+                    DO.Product product = new DO.Product();
                     try
                     {
-                        OrderID = Dal.Order.Add(order);
+                        product = Dal?.Product.Get(item != null ? item.ProductID : throw new ExceptionNull()) != null ? product : throw new ExceptionNull();
                     }
                     catch (Exception ex)
                     {
                         throw new BO.ExceptionFromDal(ex);
                     }
-                    DO.OrderItem orderItem = new DO.OrderItem();
-                    orderItem.OrderId = OrderID;
-                    orderItem.ProductId = item.ProductID;
-                    orderItem.Price = item.Price;
-                    orderItem.Amount = item.Amount;
-                    product.InStock -= item.Amount;
-                    try
+                    if (product.InStock >= item.Amount && item.Amount > 0 && item.Price > 0)
                     {
-                        Dal.OrderItem.Add(orderItem);
-                        Dal.Product.Update(product);
+                        DO.Order order = new DO.Order();
+                        order.CustomerAdress = customerAdress;
+                        order.CustomerName = customerName;
+                        order.CustomerEmail = customerEmail;
+                        order.OrderDate = DateTime.Now;
+                        order.ShipDate = DateTime.MinValue;
+                        order.DeliveryDate = DateTime.MinValue;
+                        int OrderID;
+                        try
+                        {
+                            OrderID = Dal.Order.Add(order);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new BO.ExceptionFromDal(ex);
+                        }
+                        DO.OrderItem orderItem = new DO.OrderItem();
+                        orderItem.OrderId = OrderID;
+                        orderItem.ProductId = item.ProductID;
+                        orderItem.Price = item.Price;
+                        orderItem.Amount = item.Amount;
+                        product.InStock -= item.Amount;
+                        try
+                        {
+                            Dal.OrderItem.Add(orderItem);
+                            Dal.Product.Update(product);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new BO.ExceptionFromDal(ex);
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        throw new BO.ExceptionFromDal(ex);
+                        throw new BO.ExceptionInvalidData();
                     }
-                }
-                else
-                {
-                    throw new BO.ExceptionInvalidData();
                 }
             }
         }

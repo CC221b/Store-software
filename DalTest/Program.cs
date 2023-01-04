@@ -2,11 +2,12 @@
 //והמרצה של הקבוצה אינה מרשה לעשות שלישה
 //קיבלתי הנחיה להגיש לבד את הפרויקט.
 using DO;
+using DalApi;
 
 namespace Dal;
 class Program
 {
-    static DalApi.IDal s_IDal = DalApi.Factory.Get();
+    static DalApi.IDal? s_IDal = DalApi.Factory.Get();
     public static void Main(string[] args)
     {
         Console.WriteLine("enter 0 to Exit\n" +
@@ -77,7 +78,7 @@ class Program
                 p.Category = category;
                 try
                 {
-                    s_IDal.Product.Add(p);
+                    s_IDal?.Product.Add(p);
                 }
                 catch (Exception ex)
                 {
@@ -90,7 +91,7 @@ class Program
                 int.TryParse(idBeforeParse, out ID);
                 try
                 {
-                    p = s_IDal.Product.Get(ID);
+                    Product? product = s_IDal?.Product.Get(ID);
                     Console.WriteLine(p);
                 }
                 catch (Exception ex)
@@ -101,10 +102,13 @@ class Program
             case (int)Options.GetAll:
                 try
                 {
-                    IEnumerable<Product> products = s_IDal.Product.GetAll();
-                    foreach (var item in products)
+                    IEnumerable<Product>? products = s_IDal?.Product.GetAll();
+                    if (products != null)
                     {
-                        Console.WriteLine(item);
+                        foreach (var item in products)
+                        {
+                            Console.WriteLine(item);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -119,7 +123,7 @@ class Program
                 Product p1 = new Product();
                 try
                 {
-                    p = s_IDal.Product.Get(ID);
+                    p = s_IDal?.Product.Get(ID) != null ? p : throw new ExceptionNull();
                     Console.WriteLine(p);
                     p1.ID = ID;
                     Console.WriteLine("enter 0 to update name\n" +
@@ -169,7 +173,7 @@ class Program
                     }
                     try
                     {
-                        s_IDal.Product.Update(p1);
+                        s_IDal?.Product.Update(p1);
                     }
                     catch (Exception ex)
                     {
@@ -187,7 +191,7 @@ class Program
                 int.TryParse(idBeforeParse, out ID);
                 try
                 {
-                    s_IDal.Product.Delete(ID);
+                    s_IDal?.Product.Delete(ID);
                 }
                 catch (Exception ex)
                 {
@@ -224,7 +228,7 @@ class Program
                 o.DeliveryDate = deliveryDate;
                 try
                 {
-                    s_IDal.Order.Add(o);
+                    s_IDal?.Order.Add(o);
                 }
                 catch (Exception ex)
                 {
@@ -237,7 +241,7 @@ class Program
                 int.TryParse(idBeforeParse, out ID);
                 try
                 {
-                    o = s_IDal.Order.Get(ID);
+                    o = s_IDal?.Order.Get(ID) != null ? o : throw new ExceptionNull();
                     Console.WriteLine(o);
                 }
                 catch (Exception ex)
@@ -248,10 +252,13 @@ class Program
             case (int)Options.GetAll:
                 try
                 {
-                    IEnumerable<Order> orders = s_IDal.Order.GetAll();
-                    foreach (var item in orders)
+                    IEnumerable<Order>? orders = s_IDal?.Order.GetAll();
+                    if (orders != null)
                     {
-                        Console.WriteLine(o);
+                        foreach (var item in orders)
+                        {
+                            Console.WriteLine(o);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -266,7 +273,7 @@ class Program
                 Order o1 = new Order();
                 try
                 {
-                    o = s_IDal.Order.Get(ID);
+                    o = s_IDal?.Order.Get(ID) != null ? o : throw new ExceptionNull();
                     Console.WriteLine(o);
                     o1.ID = ID;
                     Console.WriteLine("enter 0 to update CustomerName\n" +
@@ -328,7 +335,7 @@ class Program
                     }
                     try
                     {
-                        s_IDal.Order.Add(o);
+                        s_IDal?.Order.Add(o);
                     }
                     catch (Exception ex)
                     {
@@ -346,7 +353,7 @@ class Program
                 int.TryParse(idBeforeParse, out ID);
                 try
                 {
-                    s_IDal.Order.Delete(ID); ;
+                    s_IDal?.Order.Delete(ID); ;
                 }
                 catch (Exception ex)
                 {
@@ -378,7 +385,9 @@ class Program
                 oi.Amount = amount;
                 try
                 {
-                    p = s_IDal.Product.Get(oi.ProductId);
+                    Product? product = new Product();
+                    product = s_IDal?.Product.Get(oi.ProductId);
+                    if (product != null) { p = (Product)product; }
                 }
                 catch (Exception ex)
                 {
@@ -387,7 +396,7 @@ class Program
                 oi.Price = p.Price * oi.Amount;
                 try
                 {
-                    s_IDal.OrderItem.Add(oi);
+                    s_IDal?.OrderItem.Add(oi);
                 }
                 catch (Exception ex)
                 {
@@ -400,7 +409,7 @@ class Program
                 int.TryParse(idBeforeParse, out ID);
                 try
                 {
-                    oi = s_IDal.OrderItem.Get(ID);
+                    oi = s_IDal?.OrderItem.Get(ID) != null ? oi : throw new ExceptionNull();
                     Console.WriteLine(oi);
                 }
                 catch (Exception ex)
@@ -411,10 +420,13 @@ class Program
             case (int)Options.GetAll:
                 try
                 {
-                    IEnumerable<OrderItem> orderItems = s_IDal.OrderItem.GetAll();
-                    foreach (var item in orderItems)
+                    IEnumerable<OrderItem>? orderItems = s_IDal?.OrderItem.GetAll();
+                    if (orderItems != null)
                     {
-                        Console.WriteLine(item);
+                        foreach (var item in orderItems)
+                        {
+                            Console.WriteLine(item);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -429,7 +441,8 @@ class Program
                 OrderItem oi1 = new OrderItem();
                 try
                 {
-                    oi = s_IDal.OrderItem.Get(ID);
+
+                    oi = s_IDal?.OrderItem.Get(ID) != null ? oi : throw new ExceptionNull();
                     double price = oi.Price / oi.Amount;
                     Console.WriteLine(oi);
                     oi1.ID = ID;
@@ -472,7 +485,7 @@ class Program
                     }
                     try
                     {
-                        s_IDal.OrderItem.Update(oi);
+                        s_IDal?.OrderItem.Update(oi);
                     }
                     catch (Exception ex)
                     {
@@ -491,7 +504,7 @@ class Program
                 int.TryParse(idBeforeParse, out ID);
                 try
                 {
-                    s_IDal.OrderItem.Delete(ID);
+                    s_IDal?.OrderItem.Delete(ID);
                 }
                 catch (Exception ex)
                 {
@@ -504,10 +517,13 @@ class Program
                 int.TryParse(idBeforeParse, out ID);
                 try
                 {
-                    List<OrderItem> orderItems = s_IDal.OrderItem.GetByOrderID(ID);
-                    foreach (var item in orderItems)
+                    List<OrderItem>? orderItems = s_IDal?.OrderItem.GetByOrderID(ID);
+                    if (orderItems != null)
                     {
-                        Console.WriteLine(item);
+                        foreach (var item in orderItems)
+                        {
+                            Console.WriteLine(item);
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -523,7 +539,7 @@ class Program
                 int.TryParse(orderIDBeforeParse, out orderID);
                 try
                 {
-                    oi = s_IDal.OrderItem.GetByProductIDAndOrderID(productID, orderID);
+                    oi = s_IDal?.OrderItem.GetByProductIDAndOrderID(productID, orderID) != null ? oi : throw new ExceptionNull();
                     Console.WriteLine(oi);
                 }
                 catch (Exception ex)

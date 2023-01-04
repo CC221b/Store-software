@@ -53,7 +53,7 @@ namespace PL.Product
             BO.Product product = new BO.Product();
             if (status == "Admin")
             {
-                BO.ProductForList item = (BO.ProductForList)((sender as ListView).SelectedItem);
+                BO.ProductForList item = (BO.ProductForList)ProductsListview.SelectedItem;
                 try
                 {
                     product = blp.Product.Get(item.ID);
@@ -73,7 +73,7 @@ namespace PL.Product
             }
             else
             {
-                BO.ProductItem item = (BO.ProductItem)((sender as ListView).SelectedItem);
+                BO.ProductItem item = (BO.ProductItem)ProductsListview.SelectedItem;
                 try
                 {
                     new Product.ProductWindow(item, blp).Show();

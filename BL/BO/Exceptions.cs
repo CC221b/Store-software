@@ -53,3 +53,10 @@ public class ExceptionOrderSent : Exception
     public override string Message => "Error: The order has already been sent and cannot be deleted at this time.";
 }
 
+/// <summary>
+/// An error in case the item is null.
+/// </summary>
+public class ExceptionNull : Exception
+{
+    public override string Message => "Sorry, nullable error.";
+}

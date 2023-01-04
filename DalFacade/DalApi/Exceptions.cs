@@ -24,3 +24,18 @@ public class ExceptionEmpty : Exception
 {
     public override string Message => "Sorry, there is no data to display.";
 }
+/// <summary>
+/// An error in case an exception is caught without a source, i.e. the EX is NULL.
+/// </summary>
+public class ExceptionNullEx : Exception
+{
+    public override string Message => "Sorry, an error popped up, we don't know why.";
+}
+
+/// <summary>
+/// An error in case the item is null.
+/// </summary>
+public class ExceptionNull : Exception
+{
+    public override string Message => "Sorry, nullable error.";
+}

@@ -5,7 +5,7 @@ namespace BlImplementation;
 
 internal class BlOrder : IOrder
 {
-    private static DalApi.IDal Dal = DalApi.Factory.Get();
+    private static DalApi.IDal? Dal = DalApi.Factory.Get();
 
     /// <summary>
     /// The function returns a list of orderForList objects.
@@ -15,39 +15,46 @@ internal class BlOrder : IOrder
     /// <exception cref="BO.ExceptionFromDal"></exception>
     public IEnumerable<BO.OrderForList> GetAll(Func<DO.Order, bool>? func = null)
     {
-        IEnumerable<DO.Order> ListOrders = new List<DO.Order>();
+        IEnumerable<DO.Order>? ListOrders = new List<DO.Order>();
         try
         {
-            ListOrders = Dal.Order.GetAll(func);
+            ListOrders = Dal?.Order.GetAll(func);
         }
         catch (Exception ex)
         {
             throw new BO.ExceptionFromDal(ex);
         }
         List<BO.OrderForList> ListOrderForList = new List<BO.OrderForList>();
-        foreach (var item in ListOrders)
+        if (ListOrders != null)
         {
-            BO.OrderForList OrderForList = new BO.OrderForList();
-            OrderForList.ID = item.ID;
-            OrderForList.CustomerName = item.CustomerName;
-            if (DateTime.Compare(item.ShipDate, DateTime.Now) <= 0)
+            foreach (var item in ListOrders)
             {
-                OrderForList.Status = BO.OrderStatus.SendOrder;
+                BO.OrderForList OrderForList = new BO.OrderForList();
+                OrderForList.ID = item.ID;
+                OrderForList.CustomerName = item.CustomerName;
+                if (DateTime.Compare(item.ShipDate, DateTime.Now) <= 0)
+                {
+                    OrderForList.Status = BO.OrderStatus.SendOrder;
+                }
+                if (DateTime.Compare(item.DeliveryDate, DateTime.Now) <= 0)
+                {
+                    OrderForList.Status = BO.OrderStatus.ProvidedCustomerOrder;
+                }
+                IEnumerable<DO.OrderItem>? orderItems = Dal?.OrderItem.GetByOrderID(item.ID);
+                OrderForList.AmountOfItems = orderItems != null ? orderItems.Count() : 0;
+                double price = 0;
+                if (orderItems != null)
+                {
+                    foreach (var item1 in orderItems)
+                    {
+                        price += item1.Price;
+                    }
+                }
+                OrderForList.TotalPrice = price;
+                ListOrderForList.Add(OrderForList);
             }
-            if (DateTime.Compare(item.DeliveryDate, DateTime.Now) <= 0)
-            {
-                OrderForList.Status = BO.OrderStatus.ProvidedCustomerOrder;
-            }
-            IEnumerable<DO.OrderItem> orderItems = Dal.OrderItem.GetByOrderID(item.ID);
-            OrderForList.AmountOfItems = orderItems.Count();
-            double price = 0;
-            foreach (var item1 in orderItems)
-            {
-                price += item1.Price;
-            }
-            OrderForList.TotalPrice = price;
-            ListOrderForList.Add(OrderForList);
         }
+
         return ListOrderForList;
     }
 
@@ -69,7 +76,7 @@ internal class BlOrder : IOrder
             {
                 DO.Order orderTypeDO = new DO.Order();
                 BO.Order orderTypeBO = new BO.Order();
-                orderTypeDO = Dal.Order.Get(id);
+                orderTypeDO = Dal?.Order.Get(id) != null ? orderTypeDO : throw new BO.ExceptionNull();
                 List<DO.OrderItem> orderItem = new List<DO.OrderItem>();
                 orderItem = Dal.OrderItem.GetByOrderID(orderTypeDO.ID);
                 orderTypeBO.ID = orderTypeDO.ID;
@@ -118,7 +125,7 @@ internal class BlOrder : IOrder
         try
         {
             DO.Order orderTypeDO = new DO.Order();
-            orderTypeDO = Dal.Order.Get(id);
+            orderTypeDO = Dal?.Order.Get(id) != null ? orderTypeDO : throw new BO.ExceptionNull();
             if (DateTime.Compare(orderTypeDO.ShipDate, DateTime.Now) > 0)
             {
                 BO.Order orderTypeBO = new BO.Order();
@@ -149,7 +156,7 @@ internal class BlOrder : IOrder
         try
         {
             DO.Order orderTypeDO = new DO.Order();
-            orderTypeDO = Dal.Order.Get(id);
+            orderTypeDO = Dal?.Order.Get(id) != null ? orderTypeDO : throw new BO.ExceptionNull();
             if (DateTime.Compare(orderTypeDO.DeliveryDate, DateTime.Now) > 0)
             {
                 BO.Order orderTypeBO = new BO.Order();
@@ -224,7 +231,8 @@ internal class BlOrder : IOrder
                     orderItem.Amount = amount;
                     try
                     {
-                        DO.Product product = Dal.Product.Get(orderItem.ProductId);
+                        DO.Product product = new DO.Product();
+                        product = Dal?.Order.Get(orderItem.ProductId) != null ? product : throw new BO.ExceptionNull();
                         if (product.InStock <= orderItem.Amount)
                         {
                             throw new BO.ExceptionOutOfStock();
@@ -244,7 +252,8 @@ internal class BlOrder : IOrder
                     int.TryParse(orderIDBeforeParse, out orderID);
                     try
                     {
-                        DO.OrderItem orderItem1 = Dal.OrderItem.GetByProductIDAndOrderID(productID, orderID);
+                        DO.OrderItem orderItem1 = new DO.OrderItem();
+                        orderItem1 = Dal?.OrderItem.GetByProductIDAndOrderID(productID, orderID) != null ? orderItem1 : throw new BO.ExceptionNull();
                         BO.Order checkOrderStatus = Get(orderID);
                         if (checkOrderStatus.Status == 0)
                         {
@@ -270,7 +279,8 @@ internal class BlOrder : IOrder
                     int.TryParse(newAmountBeforeParse, out int newAmount);
                     try
                     {
-                        DO.Product product = Dal.Product.Get(productID);
+                        DO.Product product = new DO.Product();
+                        product = Dal?.Product.Get(productID) != null ? product : throw new BO.ExceptionNull();
                         DO.OrderItem orderItem1 = Dal.OrderItem.GetByProductIDAndOrderID(productID, orderID);
                         if (product.InStock >= (newAmount > orderItem1.Amount ? newAmount - orderItem1.Amount : orderItem1.Amount - newAmount))
                         {

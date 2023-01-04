@@ -30,7 +30,7 @@ internal class DalOrder : IOrder
         {
             Get(o.ID);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             if (DataSource.s_orderList.Count < 100)
             {
@@ -68,7 +68,7 @@ internal class DalOrder : IOrder
         }
         catch (Exception ex)
         {
-            throw ex;
+            throw ex == null ? new ExceptionNullEx() : ex;
         }
     }
 
@@ -81,7 +81,7 @@ internal class DalOrder : IOrder
         }
         catch (Exception ex)
         {
-            throw ex;
+            throw ex == null ? new ExceptionNullEx() : ex;
         }
     }
 }

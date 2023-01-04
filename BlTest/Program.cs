@@ -13,7 +13,7 @@ class Program
     public static void Main(string[] args)
     {
         Cart cart = new Cart();
-        cart.Items = new List<OrderItem>();
+        cart.Items = new List<OrderItem?>();
         Console.WriteLine("enter 0 to Exit\n" +
                           "enter 1 to Product\n" +
                           "enter 2 to Order\n" +
@@ -392,7 +392,7 @@ class Program
                 string? customerAdress = Console.ReadLine();
                 try
                 {
-                    s_IBl.Cart.MakeAnOrder(cart, customerName, customerEmail, customerAdress);
+                    s_IBl.Cart.MakeAnOrder(cart, customerName == null ? "" : customerName, customerEmail == null ? "" : customerEmail, customerAdress == null ? "" : customerAdress);
                 }
                 catch (Exception ex)
                 {
