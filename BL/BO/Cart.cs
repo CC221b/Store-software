@@ -11,7 +11,7 @@ public class Cart
     public override string ToString()
     {
         string toString = "customerName:" + CustomerName + "\ncustomerEmail:" + CustomerEmail + "\ncustomerAdress:" + CustomerAdress + "\nlistOrderItems:";
-        for (int i = 0; i < Items.Count; i++)
+        for (int i = 0; i < Items?.Count; i++)
         {
             toString += "\nItem" + (i + 1) + ": " + Items[i] + "\n";
         }

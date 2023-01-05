@@ -31,7 +31,7 @@ namespace PL.Order
 
         private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var item = (BO.OrderForList)((sender as ListView).SelectedItem);
+            var item = (BO.OrderForList)(OrderListview.SelectedItem);
             BO.Order order = new BO.Order();
             try
             {

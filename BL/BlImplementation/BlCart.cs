@@ -27,7 +27,7 @@ internal class BlCart : ICart
         DO.Product product = new DO.Product();
         try
         {
-            product = Dal?.Product.Get(id) != null ? product : throw new BO.ExceptionNull();
+            product = Dal?.Product.Get(id) ?? throw new BO.ExceptionNull();
         }
         catch (Exception ex)
         {
@@ -43,7 +43,6 @@ internal class BlCart : ICart
                     if (item != null && item.ProductID == id)
                     {
                         flag = true;
-
                         item.Amount += 1;
                         item.TotalPrice += product.Price;
                         cart.TotalPrice += product.Price;
@@ -101,7 +100,7 @@ internal class BlCart : ICart
         DO.Product product = new DO.Product();
         try
         {
-            product = Dal?.Product.Get(id) != null ? product : throw new BO.ExceptionNull();
+            product = Dal?.Product.Get(id) ?? throw new BO.ExceptionNull();
         }
         catch (Exception ex)
         {
@@ -200,7 +199,7 @@ internal class BlCart : ICart
                     DO.Product product = new DO.Product();
                     try
                     {
-                        product = Dal?.Product.Get(item != null ? item.ProductID : throw new ExceptionNull()) != null ? product : throw new ExceptionNull();
+                        product = Dal?.Product.Get(item != null ? item.ProductID : throw new ExceptionNull()) ?? throw new ExceptionNull();
                     }
                     catch (Exception ex)
                     {

@@ -76,7 +76,7 @@ internal class BlOrder : IOrder
             {
                 DO.Order orderTypeDO = new DO.Order();
                 BO.Order orderTypeBO = new BO.Order();
-                orderTypeDO = Dal?.Order.Get(id) != null ? orderTypeDO : throw new BO.ExceptionNull();
+                orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
                 List<DO.OrderItem> orderItem = new List<DO.OrderItem>();
                 orderItem = Dal.OrderItem.GetByOrderID(orderTypeDO.ID);
                 orderTypeBO.ID = orderTypeDO.ID;
@@ -125,7 +125,7 @@ internal class BlOrder : IOrder
         try
         {
             DO.Order orderTypeDO = new DO.Order();
-            orderTypeDO = Dal?.Order.Get(id) != null ? orderTypeDO : throw new BO.ExceptionNull();
+            orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
             if (DateTime.Compare(orderTypeDO.ShipDate, DateTime.Now) > 0)
             {
                 BO.Order orderTypeBO = new BO.Order();
@@ -156,7 +156,7 @@ internal class BlOrder : IOrder
         try
         {
             DO.Order orderTypeDO = new DO.Order();
-            orderTypeDO = Dal?.Order.Get(id) != null ? orderTypeDO : throw new BO.ExceptionNull();
+            orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
             if (DateTime.Compare(orderTypeDO.DeliveryDate, DateTime.Now) > 0)
             {
                 BO.Order orderTypeBO = new BO.Order();
@@ -184,10 +184,10 @@ internal class BlOrder : IOrder
         {
             throw new BO.ExceptionFromDal(ex);
         }
-        if (order.Status > BO.OrderStatus.ConfirmedOrder) orderTracking.DateAndStatus.Add(order.OrderDate, "ConfirmedOrder");
-        if (order.Status > BO.OrderStatus.SendOrder) orderTracking.DateAndStatus.Add(order.ShipDate, "SendOrder");
-        if (order.Status > BO.OrderStatus.ProvidedCustomerOrder) orderTracking.DateAndStatus.Add(order.DeliveryDate, "ProvidedCustomerOrder");
-        return orderTracking;
+        if (order.Status > BO.OrderStatus.ConfirmedOrder) orderTracking?.DateAndStatus?.Add(order.OrderDate, "ConfirmedOrder");
+        if (order.Status > BO.OrderStatus.SendOrder) orderTracking?.DateAndStatus?.Add(order.ShipDate, "SendOrder");
+        if (order.Status > BO.OrderStatus.ProvidedCustomerOrder) orderTracking?.DateAndStatus?.Add(order.DeliveryDate, "ProvidedCustomerOrder");
+        return orderTracking ?? throw new BO.ExceptionNull();
     }
 
     /// <summary>
@@ -232,7 +232,7 @@ internal class BlOrder : IOrder
                     try
                     {
                         DO.Product product = new DO.Product();
-                        product = Dal?.Order.Get(orderItem.ProductId) != null ? product : throw new BO.ExceptionNull();
+                        product = Dal?.Product.Get(orderItem.ProductId) ?? throw new BO.ExceptionNull();
                         if (product.InStock <= orderItem.Amount)
                         {
                             throw new BO.ExceptionOutOfStock();
@@ -242,7 +242,7 @@ internal class BlOrder : IOrder
                     {
                         throw new BO.ExceptionFromDal(ex);
                     }
-                    order1.Items.Add(orderItem);
+                    order1?.Items?.Add(orderItem);
                     break;
                 case 1:
                     Console.WriteLine("enter productID and orderID to delete:");
@@ -253,11 +253,11 @@ internal class BlOrder : IOrder
                     try
                     {
                         DO.OrderItem orderItem1 = new DO.OrderItem();
-                        orderItem1 = Dal?.OrderItem.GetByProductIDAndOrderID(productID, orderID) != null ? orderItem1 : throw new BO.ExceptionNull();
+                        orderItem1 = Dal?.OrderItem.GetByProductIDAndOrderID(productID, orderID) ?? throw new BO.ExceptionNull();
                         BO.Order checkOrderStatus = Get(orderID);
                         if (checkOrderStatus.Status == 0)
                         {
-                            order1.Items.Remove(orderItem1);
+                            order1?.Items?.Remove(orderItem1);
                         }
                         else
                         {
@@ -280,11 +280,11 @@ internal class BlOrder : IOrder
                     try
                     {
                         DO.Product product = new DO.Product();
-                        product = Dal?.Product.Get(productID) != null ? product : throw new BO.ExceptionNull();
+                        product = Dal?.Product.Get(productID) ?? throw new BO.ExceptionNull();
                         DO.OrderItem orderItem1 = Dal.OrderItem.GetByProductIDAndOrderID(productID, orderID);
                         if (product.InStock >= (newAmount > orderItem1.Amount ? newAmount - orderItem1.Amount : orderItem1.Amount - newAmount))
                         {
-                            DO.OrderItem updateOrderItem = order1.Items.Find(item => item.ID == orderItem1.ID);
+                            DO.OrderItem updateOrderItem = order1.Items != null ? order1.Items.Find(item => item.ID == orderItem1.ID) : throw new BO.ExceptionNull();
                             order1.Items.Remove(orderItem1);
                             updateOrderItem.Amount = newAmount;
                             updateOrderItem.Price = product.Price * newAmount;

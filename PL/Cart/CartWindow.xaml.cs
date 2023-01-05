@@ -121,7 +121,7 @@ namespace PL.Cart
   
         private void cartListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            orderItem = (BO.OrderItem)((sender as ListView).SelectedItem);
+            orderItem = (BO.OrderItem)(cartListView.SelectedItem);
             ManagingControlsForUpdatingAnItemInAnOrder("Visible");
         }
       
@@ -207,7 +207,7 @@ namespace PL.Cart
         {
             try
             {
-                blp.Cart.MakeAnOrder(MainWindow.cart, customerName, customerEmail, customerAdress);
+                blp.Cart.MakeAnOrder(MainWindow.cart, customerName ?? throw new BO.ExceptionNull(), customerEmail ?? throw new BO.ExceptionNull(), customerAdress ?? throw new BO.ExceptionNull());
                 MainWindow.cart = new();
                 MainWindow.cart.Items = new();
                 cartListView.ItemsSource = null;

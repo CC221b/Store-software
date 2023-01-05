@@ -1,9 +1,6 @@
 ﻿using BlApi;
 using BO;
-using DO;
-
 namespace BlImplementation;
-
 
 internal class BlProduct : IProduct
 {
@@ -36,7 +33,7 @@ internal class BlProduct : IProduct
                 productForList.ID = item.ID;
                 productForList.Name = item.Name;
                 productForList.Price = item.Price;
-                productForList.Category = (BO.Categories)item.Category;
+                productForList.Category = item.Category != null ? (BO.Categories)item.Category : null;
                 ListProductsForList.Add(productForList);
             }
         }
@@ -120,13 +117,13 @@ internal class BlProduct : IProduct
         {
             try
             {
-                DO.Product product = Dal.Product.Get(id);
+                DO.Product product = Dal?.Product.Get(id) ?? throw new ExceptionNull();
                 productItem.ID = product.ID;
                 productItem.Name = product.Name;
                 productItem.Price = product.Price;
                 productItem.Category = product.Category != null ? (BO.Categories)product.Category : null;
-                cart.Items.Where(item => item.ID == product.ID)
-                    .Select(item => productItem.Amount = item.Amount);
+                cart?.Items?.Where(item => item?.ID == product.ID)
+                    .Select(item => productItem.Amount = item?.Amount ?? throw new ExceptionNull());
                 productItem.InStock = product.InStock > 0 ? true : false;
                 return productItem;
             }
@@ -158,10 +155,10 @@ internal class BlProduct : IProduct
             product1.Name = product.Name;
             product1.Price = product.Price;
             product1.InStock = product.InStock;
-            product1.Category = (DO.Categories)product.Category;
+            product1.Category = product.Category != null ? (DO.Categories)product.Category : null;
             try
             {
-                Dal.Product.Add(product1);
+                Dal?.Product.Add(product1);
             }
             catch (Exception ex)
             {
@@ -186,7 +183,7 @@ internal class BlProduct : IProduct
     /// <exception cref="BO.ExceptionFromDal"></exception>
     public void Delete(int id)
     {
-        IEnumerable<DO.OrderItem> orderItems = Dal.OrderItem.GetAll();
+        IEnumerable<DO.OrderItem> orderItems = Dal?.OrderItem.GetAll() ?? throw new ExceptionNull();
         var quary = orderItems.Where(orderItem => orderItem.ProductId == id);
         if (quary != null)
         {
@@ -220,11 +217,11 @@ internal class BlProduct : IProduct
                 try
                 {
                     DO.Product product1 = new DO.Product();
-                    product1 = Dal.Product.Get(product.ID);
+                    product1 = Dal?.Product.Get(product.ID) ?? throw new ExceptionNull();
                     product1.Name = product.Name;
                     product1.Price = product.Price;
                     product1.InStock = product.InStock;
-                    product1.Category = (DO.Categories)product.Category;
+                    product1.Category = product.Category != null ? (DO.Categories)product.Category : null;
                     Dal.Product.Update(product1);
                 }
                 catch (Exception ex)
