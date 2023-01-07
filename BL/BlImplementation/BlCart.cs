@@ -48,14 +48,14 @@ internal class BlCart : ICart
                         cart.TotalPrice += product.Price;
                     }
                 });
-                flag = cart.Items.Where(item => item != null && item.ProductID == id)
-                    .All(item =>
-                          {
-                              item.Amount += 1;
-                              item.TotalPrice += product.Price;
-                              cart.TotalPrice += product.Price;
-                              return true;
-                          });
+                //flag = cart.Items.Where(item => item != null && item.ProductID == id)
+                //    .All(item =>
+                //          {
+                //              item.Amount += 1;
+                //              item.TotalPrice += product.Price;
+                //              cart.TotalPrice += product.Price;
+                //              return true;
+                //          });
             }
         }
         else
