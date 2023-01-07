@@ -45,12 +45,17 @@ namespace PL.Order
             }
         }
 
-        public OrderWindow(BO.Order order, IBl bl)
+        public OrderWindow(BO.Order order, IBl bl, string status = "")
         {
             InitializeComponent();
             blp = bl;
             order1 = order;
             FillingControlsForOrderUpdate(order);
+            if (status == "User")
+            {
+                btnUpdateDeliveryDate.Visibility = Visibility.Hidden;
+                btnUpdateShipDate.Visibility = Visibility.Hidden;
+            }
         }
 
         private void btnUpdateShipDate_Click(object sender, RoutedEventArgs e)
@@ -95,10 +100,6 @@ namespace PL.Order
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
                 }
             }
-        }
-        private void itemsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

@@ -38,7 +38,7 @@ internal class BlCart : ICart
         {
             if (cart.Items != null)
             {
-                foreach (var item in cart.Items)
+                cart.Items.ForEach(item =>
                 {
                     if (item != null && item.ProductID == id)
                     {
@@ -47,7 +47,15 @@ internal class BlCart : ICart
                         item.TotalPrice += product.Price;
                         cart.TotalPrice += product.Price;
                     }
-                }
+                });
+                flag = cart.Items.Where(item => item != null && item.ProductID == id)
+                    .All(item =>
+                          {
+                              item.Amount += 1;
+                              item.TotalPrice += product.Price;
+                              cart.TotalPrice += product.Price;
+                              return true;
+                          });
             }
         }
         else

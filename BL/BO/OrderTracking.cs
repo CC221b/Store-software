@@ -8,6 +8,6 @@ public class OrderTracking
 
     public override string ToString() => $@"
     ID:{ID}
-    stateOrder: {Status} 
+    OrderStatus: {Status} 
     dateAndStatus: {DateAndStatus}";
 }

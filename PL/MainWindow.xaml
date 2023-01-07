@@ -12,5 +12,6 @@
         <Button Name="btnShowOrdersAdmin" Content="ShowOrders" HorizontalAlignment="Left" Height="41" Margin="240,15,0,0" VerticalAlignment="Top" Width="120" Click="btnShowOrdersAdmin_Click"/>
         <Button Name="btnNewOrder" Content="New Order" HorizontalAlignment="Left" Height="37" Margin="240,56,0,0" VerticalAlignment="Top" Width="122" Click="btnNewOrder_Click"/>
         <Button Name="btnOrderTracking" Content="OrderTracking" HorizontalAlignment="Left" Height="37" Margin="399,56,0,0" VerticalAlignment="Top" Width="122" Click="btnOrderTracking_Click"/>
+        <TextBox Name="txtOrderTracking" HorizontalAlignment="Left" Height="30" Margin="399,100,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="122" TextChanged="txtOrderTracking_TextChanged"/>
     </Grid>
 </Window>

@@ -87,13 +87,11 @@ internal class BlOrder : IOrder
                 orderTypeBO.OrderDate = orderTypeDO.OrderDate;
                 orderTypeBO.DeliveryDate = orderTypeDO.DeliveryDate;
                 if (DateTime.Compare(orderTypeDO.ShipDate, DateTime.Now) <= 0)
-                {
                     orderTypeBO.Status = BO.OrderStatus.SendOrder;
-                }
-                if (DateTime.Compare(orderTypeDO.DeliveryDate, DateTime.Now) <= 0)
-                {
+                else if (DateTime.Compare(orderTypeDO.DeliveryDate, DateTime.Now) <= 0)
                     orderTypeBO.Status = BO.OrderStatus.ProvidedCustomerOrder;
-                }
+                else
+                    orderTypeBO.Status = BO.OrderStatus.ConfirmedOrder;
                 orderTypeBO.Items = orderItem;
                 double sum = 0;
                 foreach (var item in orderItem)
@@ -176,6 +174,7 @@ internal class BlOrder : IOrder
     {
         BO.Order order = new BO.Order();
         BO.OrderTracking orderTracking = new BO.OrderTracking();
+        orderTracking.DateAndStatus = new();
         try
         {
             order = Get(id);
@@ -184,9 +183,11 @@ internal class BlOrder : IOrder
         {
             throw new BO.ExceptionFromDal(ex);
         }
-        if (order.Status > BO.OrderStatus.ConfirmedOrder) orderTracking?.DateAndStatus?.Add(order.OrderDate, "ConfirmedOrder");
-        if (order.Status > BO.OrderStatus.SendOrder) orderTracking?.DateAndStatus?.Add(order.ShipDate, "SendOrder");
-        if (order.Status > BO.OrderStatus.ProvidedCustomerOrder) orderTracking?.DateAndStatus?.Add(order.DeliveryDate, "ProvidedCustomerOrder");
+        orderTracking.ID= id;
+        orderTracking.Status = order.Status;
+        if (order.Status >= BO.OrderStatus.ConfirmedOrder) orderTracking?.DateAndStatus?.Add(order.OrderDate, "ConfirmedOrder");
+        if (order.Status >= BO.OrderStatus.SendOrder) orderTracking?.DateAndStatus?.Add(order.ShipDate, "SendOrder");
+        if (order.Status >= BO.OrderStatus.ProvidedCustomerOrder) orderTracking?.DateAndStatus?.Add(order.DeliveryDate, "ProvidedCustomerOrder");
         return orderTracking ?? throw new BO.ExceptionNull();
     }
 

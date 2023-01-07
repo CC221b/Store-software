@@ -23,6 +23,7 @@ namespace PL
     {
         IBl bl = BlApi.Factory.Get();
         public static BO.Cart cart = new BO.Cart();
+        int orderId = 0;
 
         public MainWindow()
         {
@@ -38,11 +39,13 @@ namespace PL
             btnShowProductsAdmin.Visibility = Visibility.Visible;
             btnShowOrdersAdmin.Visibility = Visibility.Visible;
             btnNewOrder.Visibility = Visibility.Hidden;
+            btnOrderTracking.Visibility = Visibility.Hidden;
+            txtOrderTracking.Visibility = Visibility.Hidden;
         }
 
         private void btnShowProductsAdmin_Click(object sender, RoutedEventArgs e)
         {
-            new Product.ProductListWindow(bl,"Admin").Show();
+            new Product.ProductListWindow(bl, "Admin").Show();
         }
 
         private void btnShowOrdersAdmin_Click(object sender, RoutedEventArgs e)
@@ -57,7 +60,21 @@ namespace PL
 
         private void btnOrderTracking_Click(object sender, RoutedEventArgs e)
         {
+            if (orderId != 0)
+            {
+                new Order.OrderTrackingWindow(bl, orderId).Show();
+                txtOrderTracking.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Sorry, please enter an order number Thank you!");
+            }
+        }
 
+        private void txtOrderTracking_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string? orderIdBeforeParse = this.txtOrderTracking.Text;
+            int.TryParse(orderIdBeforeParse, out orderId);
         }
     }
 }
