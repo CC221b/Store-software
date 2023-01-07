@@ -11,6 +11,7 @@ internal class BlProduct : IProduct
     /// fetches the list of products from the data layer and creates a list of type productForList.
     /// throws errors accordingly.
     /// </summary>
+    /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="BO.ExceptionFromDal"></exception>
     public IEnumerable<BO.ProductForList> GetAll(Func<DO.Product, bool>? func = null)
@@ -45,14 +46,15 @@ internal class BlProduct : IProduct
     /// Brings the list of products from the data layer and creates a list of type productItem.
     /// throws errors accordingly.
     /// </summary>
+    /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="BO.ExceptionFromDal"></exception>
-    public IEnumerable<BO.ProductItem> GetCatalog()
+    public IEnumerable<BO.ProductItem> GetCatalog(Func<DO.Product, bool>? func = null)
     {
         IEnumerable<DO.Product>? ListProducts = new List<DO.Product>();
         try
         {
-            ListProducts = Dal?.Product.GetAll();
+            ListProducts = Dal?.Product.GetAll(func);
         }
         catch (Exception ex)
         {

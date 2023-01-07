@@ -11,7 +11,7 @@ public interface IProduct
     /// <summary>
     /// Catalog request(product list) (for buyer's catalog screen).
     /// </summary>
-    public IEnumerable<ProductItem> GetCatalog();
+    public IEnumerable<ProductItem> GetCatalog(Func<DO.Product, bool>? func = null);
     ///// <summary>
     ///// Product details request.
     ///// </summary>
