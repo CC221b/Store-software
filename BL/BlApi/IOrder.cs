@@ -30,5 +30,5 @@ public interface IOrder
     /// will allow adding / downloading / changing the quantity of a product ordered by the manager
     /// </summary>
     /// <param name="order"></param>
-    public void Update(Order order);
+    public void Update(BO.Order order, string action, DO.OrderItem? orderItem = null, int newAmount = 0);
 }

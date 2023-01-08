@@ -33,28 +33,17 @@ internal class BlOrder : IOrder
                 OrderForList.ID = item.ID;
                 OrderForList.CustomerName = item.CustomerName;
                 if (DateTime.Compare(item.ShipDate, DateTime.Now) <= 0)
-                {
                     OrderForList.Status = BO.OrderStatus.SendOrder;
-                }
                 if (DateTime.Compare(item.DeliveryDate, DateTime.Now) <= 0)
-                {
                     OrderForList.Status = BO.OrderStatus.ProvidedCustomerOrder;
-                }
                 IEnumerable<DO.OrderItem>? orderItems = Dal?.OrderItem.GetByOrderID(item.ID);
-                OrderForList.AmountOfItems = orderItems != null ? orderItems.Count() : 0;
+                OrderForList.AmountOfItems = orderItems != null ? orderItems.Count() : throw new BO.ExceptionNull();
                 double price = 0;
-                if (orderItems != null)
-                {
-                    foreach (var item1 in orderItems)
-                    {
-                        price += item1.Price;
-                    }
-                }
+                price = orderItems != null ? orderItems.Sum(item => item.Price) : throw new BO.ExceptionNull();
                 OrderForList.TotalPrice = price;
                 ListOrderForList.Add(OrderForList);
             }
         }
-
         return ListOrderForList;
     }
 
@@ -94,10 +83,7 @@ internal class BlOrder : IOrder
                     orderTypeBO.Status = BO.OrderStatus.ConfirmedOrder;
                 orderTypeBO.Items = orderItem;
                 double sum = 0;
-                foreach (var item in orderItem)
-                {
-                    sum += item.Price;
-                }
+                sum = orderItem.Sum(item => item.Price);
                 orderTypeBO.TotalPrice = sum;
                 return orderTypeBO;
             }
@@ -183,7 +169,7 @@ internal class BlOrder : IOrder
         {
             throw new BO.ExceptionFromDal(ex);
         }
-        orderTracking.ID= id;
+        orderTracking.ID = id;
         orderTracking.Status = order.Status;
         if (order.Status >= BO.OrderStatus.ConfirmedOrder) orderTracking?.DateAndStatus?.Add(order.OrderDate, "ConfirmedOrder");
         if (order.Status >= BO.OrderStatus.SendOrder) orderTracking?.DateAndStatus?.Add(order.ShipDate, "SendOrder");
@@ -202,111 +188,72 @@ internal class BlOrder : IOrder
     /// <exception cref="BO.ExceptionFromDal"></exception>
     /// <exception cref="BO.ExceptionNotExists"></exception>
     /// <exception cref="Exception"></exception>
-    public void Update(BO.Order order)
+    public void Update(BO.Order order, string action, DO.OrderItem? orderItem = null, int newAmount = 0)
     {
-        try
+        BO.Order order1 = Get(order.ID);
+        if (action == "Add")
         {
-            BO.Order order1 = Get(order.ID);
-            Console.WriteLine("enter 0 to addProduct" +
-                "\nenter 1 to deleteProduct" +
-                "\nenter 2 to UpdateAmountOfProduct");
-            string? chooseBeforeParse = Console.ReadLine();
-            int.TryParse(chooseBeforeParse, out int choose);
-            int productID, orderID;
-            switch (choose)
+            try
             {
-                case 0:
-                    DO.OrderItem orderItem = new DO.OrderItem();
-                    Console.WriteLine("Write ProductId, OrderId, Price, Amount");
-                    string? ProductIDBeforeParse = Console.ReadLine();
-                    int.TryParse(ProductIDBeforeParse, out productID);
-                    string? orderIDBeforeParse = Console.ReadLine();
-                    int.TryParse(orderIDBeforeParse, out orderID);
-                    string? priceBeforeParse = Console.ReadLine();
-                    int.TryParse(priceBeforeParse, out int price);
-                    string? amountBeforeParse = Console.ReadLine();
-                    int.TryParse(amountBeforeParse, out int amount);
-                    orderItem.ProductId = productID;
-                    orderItem.OrderId = orderID;
-                    orderItem.Price = price;
-                    orderItem.Amount = amount;
-                    try
-                    {
-                        DO.Product product = new DO.Product();
-                        product = Dal?.Product.Get(orderItem.ProductId) ?? throw new BO.ExceptionNull();
-                        if (product.InStock <= orderItem.Amount)
-                        {
-                            throw new BO.ExceptionOutOfStock();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new BO.ExceptionFromDal(ex);
-                    }
-                    order1?.Items?.Add(orderItem);
-                    break;
-                case 1:
-                    Console.WriteLine("enter productID and orderID to delete:");
-                    ProductIDBeforeParse = Console.ReadLine();
-                    int.TryParse(ProductIDBeforeParse, out productID);
-                    orderIDBeforeParse = Console.ReadLine();
-                    int.TryParse(orderIDBeforeParse, out orderID);
-                    try
-                    {
-                        DO.OrderItem orderItem1 = new DO.OrderItem();
-                        orderItem1 = Dal?.OrderItem.GetByProductIDAndOrderID(productID, orderID) ?? throw new BO.ExceptionNull();
-                        BO.Order checkOrderStatus = Get(orderID);
-                        if (checkOrderStatus.Status == 0)
-                        {
-                            order1?.Items?.Remove(orderItem1);
-                        }
-                        else
-                        {
-                            throw new BO.ExceptionOrderSent();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new BO.ExceptionFromDal(ex);
-                    }
-                    break;
-                case 2:
-                    Console.WriteLine("enter productID and orderID and newAmount to update:");
-                    ProductIDBeforeParse = Console.ReadLine();
-                    int.TryParse(ProductIDBeforeParse, out productID);
-                    orderIDBeforeParse = Console.ReadLine();
-                    int.TryParse(orderIDBeforeParse, out orderID);
-                    string? newAmountBeforeParse = Console.ReadLine();
-                    int.TryParse(newAmountBeforeParse, out int newAmount);
-                    try
-                    {
-                        DO.Product product = new DO.Product();
-                        product = Dal?.Product.Get(productID) ?? throw new BO.ExceptionNull();
-                        DO.OrderItem orderItem1 = Dal.OrderItem.GetByProductIDAndOrderID(productID, orderID);
-                        if (product.InStock >= (newAmount > orderItem1.Amount ? newAmount - orderItem1.Amount : orderItem1.Amount - newAmount))
-                        {
-                            DO.OrderItem updateOrderItem = order1.Items != null ? order1.Items.Find(item => item.ID == orderItem1.ID) : throw new BO.ExceptionNull();
-                            order1.Items.Remove(orderItem1);
-                            updateOrderItem.Amount = newAmount;
-                            updateOrderItem.Price = product.Price * newAmount;
-                        }
-                        else
-                        {
-                            throw new BO.ExceptionOutOfStock();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new BO.ExceptionFromDal(ex);
-                    }
-                    break;
-                default:
-                    break;
+                DO.Product product = new DO.Product();
+                product = Dal?.Product.Get(orderItem?.ProductId ?? throw new BO.ExceptionNull()) ?? throw new BO.ExceptionNull();
+                if (product.InStock <= orderItem?.Amount)
+                {
+                    throw new BO.ExceptionOutOfStock();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BO.ExceptionFromDal(ex);
+            }
+            if (orderItem != null)
+                order1?.Items?.Add((DO.OrderItem)orderItem);
+            else
+                throw new BO.ExceptionNull();
+        }
+        else if (action == "Delete")
+        {
+            try
+            {
+                DO.OrderItem orderItem1 = new DO.OrderItem();
+                orderItem1 = Dal?.OrderItem.GetByProductIDAndOrderID(Convert.ToInt32(orderItem?.ProductId), order1.ID) ?? throw new BO.ExceptionNull();
+                if (order1.Status == BO.OrderStatus.ProvidedCustomerOrder)
+                {
+                    order1?.Items?.Remove(orderItem1);
+                }
+                else
+                {
+                    throw new BO.ExceptionOrderSent();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BO.ExceptionFromDal(ex);
             }
         }
-        catch (Exception)
+        else
         {
-            throw new Exception();
+            try
+            {
+                DO.Product product = new DO.Product();
+                product = Dal?.Product.Get(Convert.ToInt32(orderItem?.ProductId)) ?? throw new BO.ExceptionNull();
+                DO.OrderItem orderItem1 = Dal.OrderItem.GetByProductIDAndOrderID(Convert.ToInt32(orderItem?.ProductId), order1.ID);
+                if (product.InStock >= (newAmount > orderItem1.Amount ? newAmount - orderItem1.Amount : orderItem1.Amount - newAmount))
+                {
+                    DO.OrderItem updateOrderItem = order1.Items != null ? order1.Items.Find(item => item.ID == orderItem1.ID) : throw new BO.ExceptionNull();
+                    order1.Items.Remove(orderItem1);
+                    updateOrderItem.Amount = newAmount;
+                    updateOrderItem.Price = product.Price * newAmount;
+                }
+                else
+                {
+                    throw new BO.ExceptionOutOfStock();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BO.ExceptionFromDal(ex);
+            }
         }
     }
 }

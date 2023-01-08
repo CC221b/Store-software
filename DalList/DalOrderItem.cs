@@ -8,12 +8,18 @@ internal class DalOrderItem : IOrderItem
 {
     public OrderItem Get(int id)
     {
-        IEnumerable<OrderItem> orderItem1 = from orderItem in DataSource.s_orderItemList
-                                            where orderItem.ID == id
-                                            select orderItem;
-        if (orderItem1 != null && orderItem1.Any())
+        OrderItem? orderItem1 = (from orderItem in DataSource.s_orderItemList
+                                 where orderItem.ID == id
+                                 select new OrderItem
+                                 {
+                                     ID = orderItem.ID,
+                                     OrderId = orderItem.OrderId,
+                                     ProductId = orderItem.ProductId,
+                                     Amount = orderItem.Amount
+                                 }).FirstOrDefault();
+        if (orderItem1 != null)
         {
-            return orderItem1.First();
+            return (OrderItem)orderItem1;
         }
         throw new ExceptionNotExists();
     }
@@ -65,7 +71,7 @@ internal class DalOrderItem : IOrderItem
         {
             throw new ExceptionEmpty();
         }
-        return (func == null) ? DataSource.s_orderItemList : DataSource.s_orderItemList.Where(func);
+        return (func == null) ? DataSource.s_orderItemList.OrderBy(item => item.OrderId) : DataSource.s_orderItemList.Where(func).OrderBy(item => item.OrderId);
     }
 
     public void Update(OrderItem oi)
@@ -74,7 +80,7 @@ internal class DalOrderItem : IOrderItem
         {
             DO.OrderItem orderItem = Get(oi.ID);
             int index = DataSource.s_orderItemList.IndexOf(orderItem);
-            DataSource.s_orderItemList.Insert(index, orderItem);
+            DataSource.s_orderItemList[index] = oi;
         }
         catch (Exception ex)
         {

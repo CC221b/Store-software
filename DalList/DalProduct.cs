@@ -9,12 +9,19 @@ internal class DalProduct : IProduct
 {
     public Product Get(int id)
     {
-        IEnumerable<Product> product1 = from product in DataSource.s_productList
-                                        where product.ID == id
-                                        select product;
-        if (product1 != null && product1.Any())
+        Product? product1 = (from product in DataSource.s_productList
+                             where product.ID == id
+                             select new Product
+                             {
+                                 ID = product.ID,
+                                 Name = product.Name,
+                                 InStock = product.InStock,
+                                 Price = product.Price,
+                                 Category = product.Category
+                             }).FirstOrDefault();
+        if (product1 != null)
         {
-            return product1.First();
+            return (Product)product1;
         }
         throw new ExceptionNotExists();
     }
@@ -47,7 +54,7 @@ internal class DalProduct : IProduct
         {
             throw new ExceptionEmpty();
         }
-        return (func == null) ? DataSource.s_productList : DataSource.s_productList.Where(func);
+        return (func == null) ? DataSource.s_productList.OrderBy(item => item.Name) : DataSource.s_productList.Where(func).OrderBy(item => item.Name);
     }
 
     public void Update(DO.Product p)
@@ -56,7 +63,7 @@ internal class DalProduct : IProduct
         {
             DO.Product product = Get(p.ID);
             int index = DataSource.s_productList.IndexOf(product);
-            DataSource.s_productList.Insert(index, product);
+            DataSource.s_productList[index] = p;
         }
         catch (Exception ex)
         {

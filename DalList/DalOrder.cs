@@ -9,12 +9,21 @@ internal class DalOrder : IOrder
 {
     public Order Get(int id)
     {
-        IEnumerable<DO.Order> order1 = from order in DataSource.s_orderList
-                                       where order.ID == id
-                                       select order;
-        if (order1 != null && order1.Any())
+        Order? order1 = (from order in DataSource.s_orderList
+                         where order.ID == id
+                         select new Order
+                         {
+                             ID = order.ID,
+                             CustomerAdress = order.CustomerAdress,
+                             CustomerName = order.CustomerName,
+                             CustomerEmail = order.CustomerEmail,
+                             ShipDate = order.ShipDate,
+                             DeliveryDate = order.DeliveryDate,
+                             OrderDate = order.OrderDate
+                         }).FirstOrDefault();
+        if (order1 != null)
         {
-            return order1.First();
+            return (Order)order1;
         }
         throw new ExceptionNotExists();
     }
@@ -50,7 +59,7 @@ internal class DalOrder : IOrder
         {
             throw new ExceptionEmpty();
         }
-        return (func == null) ? DataSource.s_orderList : DataSource.s_orderList.Where(func);
+        return (func == null) ? DataSource.s_orderList.OrderBy(item => item.ID) : DataSource.s_orderList.Where(func).OrderBy(item => item.ID);
     }
     private List<string> getAll(Func<string, bool>? func = null)
     {

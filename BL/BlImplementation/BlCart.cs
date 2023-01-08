@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using DalApi;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace BlImplementation;
@@ -38,24 +39,14 @@ internal class BlCart : ICart
         {
             if (cart.Items != null)
             {
-                cart.Items.ForEach(item =>
+                var item = cart.Items.Where(item => item != null && item.ProductID == id).FirstOrDefault();
+                if (item != null)
                 {
-                    if (item != null && item.ProductID == id)
-                    {
-                        flag = true;
-                        item.Amount += 1;
-                        item.TotalPrice += product.Price;
-                        cart.TotalPrice += product.Price;
-                    }
-                });
-                //flag = cart.Items.Where(item => item != null && item.ProductID == id)
-                //    .All(item =>
-                //          {
-                //              item.Amount += 1;
-                //              item.TotalPrice += product.Price;
-                //              cart.TotalPrice += product.Price;
-                //              return true;
-                //          });
+                    item.Amount += 1;
+                    item.TotalPrice += product.Price;
+                    cart.TotalPrice += product.Price;
+                    flag = true;
+                }
             }
         }
         else
@@ -116,43 +107,37 @@ internal class BlCart : ICart
         }
         if (cart.Items != null)
         {
-            foreach (var item in cart.Items)
+            var item = cart.Items.Where(item => item != null && item.ProductID == id).FirstOrDefault();
+            if (item != null)
             {
-                if (item != null && item.ProductID == id)
+                if (item.Amount < newAmount)
                 {
-                    if (item.Amount < newAmount)
+                    if (product.InStock >= (newAmount - item.Amount))
                     {
-                        if (product.InStock >= (newAmount - item.Amount))
-                        {
-                            cart.TotalPrice += item.Price * (newAmount - item.Amount);
-                            item.Amount = newAmount;
-                            item.TotalPrice = newAmount * item.Price;
-                            break;
-                        }
-                        else
-                        {
-                            throw new BO.ExceptionOutOfStock();
-                        }
-
-                    }
-                    else if (newAmount == 0)
-                    {
-                        cart.TotalPrice -= item.Amount * item.Price;
-                        cart.Items.Remove(item);
-                        break;
+                        cart.TotalPrice += item.Price * (newAmount - item.Amount);
+                        item.Amount = newAmount;
+                        item.TotalPrice = newAmount * item.Price;
                     }
                     else
                     {
-                        cart.TotalPrice -= product.Price * (item.Amount - newAmount);
-                        item.Amount = newAmount;
-                        item.TotalPrice = newAmount * item.Price;
-                        break;
+                        throw new BO.ExceptionOutOfStock();
                     }
+                }
+                else if (newAmount == 0)
+                {
+                    cart.TotalPrice -= item.Amount * item.Price;
+                    cart.Items.Remove(item);
                 }
                 else
                 {
-                    throw new BO.ExceptionNotExists();
+                    cart.TotalPrice -= product.Price * (item.Amount - newAmount);
+                    item.Amount = newAmount;
+                    item.TotalPrice = newAmount * item.Price;
                 }
+            }
+            else
+            {
+                throw new BO.ExceptionNotExists();
             }
         }
         return cart;

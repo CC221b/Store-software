@@ -186,8 +186,11 @@ internal class BlProduct : IProduct
     public void Delete(int id)
     {
         IEnumerable<DO.OrderItem> orderItems = Dal?.OrderItem.GetAll() ?? throw new ExceptionNull();
-        var quary = orderItems.Where(orderItem => orderItem.ProductId == id);
-        if (quary != null)
+        var orderItems1 = from orderItem in orderItems
+                          let ProductId = orderItem.ProductId
+                          where ProductId == id
+                          select orderItem;
+        if (orderItems1 != null)
         {
             throw new BO.ExceptionExists();
         }
