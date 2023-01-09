@@ -9,21 +9,12 @@ internal class DalOrder : IOrder
 {
     public Order Get(int id)
     {
-        Order? order1 = (from order in DataSource.s_orderList
-                         where order.ID == id
-                         select new Order
-                         {
-                             ID = order.ID,
-                             CustomerAdress = order.CustomerAdress,
-                             CustomerName = order.CustomerName,
-                             CustomerEmail = order.CustomerEmail,
-                             ShipDate = order.ShipDate,
-                             DeliveryDate = order.DeliveryDate,
-                             OrderDate = order.OrderDate
-                         }).FirstOrDefault();
-        if (order1 != null)
+        Order order1 = (from order in DataSource.s_orderList
+                        where order.ID == id
+                        select order).FirstOrDefault();
+        if (order1.ID != 0)
         {
-            return (Order)order1;
+            return order1;
         }
         throw new ExceptionNotExists();
     }

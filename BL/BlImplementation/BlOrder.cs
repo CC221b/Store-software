@@ -32,9 +32,9 @@ internal class BlOrder : IOrder
                 BO.OrderForList OrderForList = new BO.OrderForList();
                 OrderForList.ID = item.ID;
                 OrderForList.CustomerName = item.CustomerName;
-                if (DateTime.Compare(item.ShipDate, DateTime.Now) <= 0)
+                if (DateTime.Compare(item.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now) <= 0)
                     OrderForList.Status = BO.OrderStatus.SendOrder;
-                if (DateTime.Compare(item.DeliveryDate, DateTime.Now) <= 0)
+                if (DateTime.Compare(item.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now) <= 0)
                     OrderForList.Status = BO.OrderStatus.ProvidedCustomerOrder;
                 IEnumerable<DO.OrderItem>? orderItems = Dal?.OrderItem.GetByOrderID(item.ID);
                 OrderForList.AmountOfItems = orderItems != null ? orderItems.Count() : throw new BO.ExceptionNull();
@@ -72,12 +72,12 @@ internal class BlOrder : IOrder
                 orderTypeBO.CustomerName = orderTypeDO.CustomerName;
                 orderTypeBO.CustomerAdress = orderTypeDO.CustomerAdress;
                 orderTypeBO.CustomerEmail = orderTypeDO.CustomerEmail;
-                orderTypeBO.ShipDate = orderTypeDO.ShipDate;
-                orderTypeBO.OrderDate = orderTypeDO.OrderDate;
-                orderTypeBO.DeliveryDate = orderTypeDO.DeliveryDate;
-                if (DateTime.Compare(orderTypeDO.ShipDate, DateTime.Now) <= 0)
+                orderTypeBO.ShipDate = orderTypeDO.ShipDate ?? throw new BO.ExceptionNull();
+                orderTypeBO.OrderDate = orderTypeDO.OrderDate ?? throw new BO.ExceptionNull();
+                orderTypeBO.DeliveryDate = orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull();
+                if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now) <= 0)
                     orderTypeBO.Status = BO.OrderStatus.SendOrder;
-                else if (DateTime.Compare(orderTypeDO.DeliveryDate, DateTime.Now) <= 0)
+                else if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now) <= 0)
                     orderTypeBO.Status = BO.OrderStatus.ProvidedCustomerOrder;
                 else
                     orderTypeBO.Status = BO.OrderStatus.ConfirmedOrder;
@@ -110,7 +110,7 @@ internal class BlOrder : IOrder
         {
             DO.Order orderTypeDO = new DO.Order();
             orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
-            if (DateTime.Compare(orderTypeDO.ShipDate, DateTime.Now) > 0)
+            if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now) > 0)
             {
                 BO.Order orderTypeBO = new BO.Order();
                 orderTypeDO.ShipDate = DateTime.Now;
@@ -141,7 +141,7 @@ internal class BlOrder : IOrder
         {
             DO.Order orderTypeDO = new DO.Order();
             orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
-            if (DateTime.Compare(orderTypeDO.DeliveryDate, DateTime.Now) > 0)
+            if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now) > 0)
             {
                 BO.Order orderTypeBO = new BO.Order();
                 orderTypeDO.DeliveryDate = DateTime.Now;

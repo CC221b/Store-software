@@ -9,19 +9,12 @@ internal class DalProduct : IProduct
 {
     public Product Get(int id)
     {
-        Product? product1 = (from product in DataSource.s_productList
-                             where product.ID == id
-                             select new Product
-                             {
-                                 ID = product.ID,
-                                 Name = product.Name,
-                                 InStock = product.InStock,
-                                 Price = product.Price,
-                                 Category = product.Category
-                             }).FirstOrDefault();
-        if (product1 != null)
+        Product product1 = (from product in DataSource.s_productList
+                            where product.ID == id
+                            select product).FirstOrDefault();
+        if (product1.ID != 0)
         {
-            return (Product)product1;
+            return product1;
         }
         throw new ExceptionNotExists();
     }

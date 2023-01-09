@@ -8,18 +8,12 @@ internal class DalOrderItem : IOrderItem
 {
     public OrderItem Get(int id)
     {
-        OrderItem? orderItem1 = (from orderItem in DataSource.s_orderItemList
-                                 where orderItem.ID == id
-                                 select new OrderItem
-                                 {
-                                     ID = orderItem.ID,
-                                     OrderId = orderItem.OrderId,
-                                     ProductId = orderItem.ProductId,
-                                     Amount = orderItem.Amount
-                                 }).FirstOrDefault();
-        if (orderItem1 != null)
+        OrderItem orderItem1 = (from orderItem in DataSource.s_orderItemList
+                                where orderItem.ID == id
+                                select orderItem).FirstOrDefault();
+        if (orderItem1.ID != 0)
         {
-            return (OrderItem)orderItem1;
+            return orderItem1;
         }
         throw new ExceptionNotExists();
     }

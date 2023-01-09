@@ -46,9 +46,9 @@ namespace PL.Product
         {
             BO.Categories selectedCategory = (BO.Categories)CategorySelector.SelectedItem;
             if (status == "Admin")
-                ProductsListview.ItemsSource = 
+                ProductsListview.ItemsSource =
                     blp.Product.GetAll(item => (item.Category == null ? null : (int)item.Category) == (int)selectedCategory);
-            ProductsListview.ItemsSource = 
+            ProductsListview.ItemsSource =
                 blp.Product.GetCatalog(item => (item.Category == null ? null : (int)item.Category) == (int)selectedCategory);
         }
 

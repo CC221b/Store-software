@@ -205,8 +205,8 @@ internal class BlCart : ICart
                         order.CustomerName = customerName;
                         order.CustomerEmail = customerEmail;
                         order.OrderDate = DateTime.Now;
-                        order.ShipDate = DateTime.MinValue;
-                        order.DeliveryDate = DateTime.MinValue;
+                        order.ShipDate = null;
+                        order.DeliveryDate = null;
                         int OrderID;
                         try
                         {

@@ -94,9 +94,9 @@ static internal class DataSource
             o.CustomerAdress = customersArr[i].Item3;
             o.OrderDate = DateTime.Now;
             TimeSpan t = new TimeSpan((int)Rand.NextInt64(1, 3), 0, 0, 0);
-            o.ShipDate = (randomIndex % 20) % 5 != 0 ? o.OrderDate.Add(t) : DateTime.MinValue;
+            o.ShipDate = (randomIndex % 20) % 5 != 0 ? o.OrderDate?.Add(t) : null;
             t = new TimeSpan((int)Rand.NextInt64(3, 7), 0, 0, 0);
-            o.DeliveryDate = (randomIndex % 20) % 3 != 0 ? o.ShipDate.Add(t) : DateTime.MinValue;
+            o.DeliveryDate = (randomIndex % 20) % 3 != 0 ? o.ShipDate?.Add(t) : null;
             AddOrder(o);
         }
 
