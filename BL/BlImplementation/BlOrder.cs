@@ -15,36 +15,28 @@ internal class BlOrder : IOrder
     /// <exception cref="BO.ExceptionFromDal"></exception>
     public IEnumerable<BO.OrderForList> GetAll(Func<DO.Order, bool>? func = null)
     {
-        IEnumerable<DO.Order>? ListOrders = new List<DO.Order>();
         try
         {
-            ListOrders = Dal?.Order.GetAll(func);
+            return (from item in Dal?.Order.GetAll(func)
+                    let orderItems = Dal?.OrderItem.GetByOrderID(item.ID)
+                    let resultCompareShipDate = DateTime.Compare(item.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now)
+                    let resultCompareDeliveryDate = DateTime.Compare(item.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now)
+                    select new BO.OrderForList()
+                    {
+                        ID = item.ID,
+                        CustomerName = item.CustomerName,
+                        Status =
+                         resultCompareShipDate <= 0 ? BO.OrderStatus.SendOrder :
+                         resultCompareDeliveryDate <= 0 ? BO.OrderStatus.ProvidedCustomerOrder :
+                         BO.OrderStatus.ConfirmedOrder,
+                        AmountOfItems = orderItems != null ? orderItems.Count() : throw new BO.ExceptionNull(),
+                        TotalPrice = orderItems != null ? orderItems.Sum(item => item.Price) : throw new BO.ExceptionNull()
+                    });
         }
         catch (Exception ex)
         {
             throw new BO.ExceptionFromDal(ex);
         }
-        List<BO.OrderForList> ListOrderForList = new List<BO.OrderForList>();
-        if (ListOrders != null)
-        {
-            foreach (var item in ListOrders)
-            {
-                BO.OrderForList OrderForList = new BO.OrderForList();
-                OrderForList.ID = item.ID;
-                OrderForList.CustomerName = item.CustomerName;
-                if (DateTime.Compare(item.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now) <= 0)
-                    OrderForList.Status = BO.OrderStatus.SendOrder;
-                if (DateTime.Compare(item.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now) <= 0)
-                    OrderForList.Status = BO.OrderStatus.ProvidedCustomerOrder;
-                IEnumerable<DO.OrderItem>? orderItems = Dal?.OrderItem.GetByOrderID(item.ID);
-                OrderForList.AmountOfItems = orderItems != null ? orderItems.Count() : throw new BO.ExceptionNull();
-                double price = 0;
-                price = orderItems != null ? orderItems.Sum(item => item.Price) : throw new BO.ExceptionNull();
-                OrderForList.TotalPrice = price;
-                ListOrderForList.Add(OrderForList);
-            }
-        }
-        return ListOrderForList;
     }
 
     /// <summary>

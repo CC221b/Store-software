@@ -16,29 +16,21 @@ internal class BlProduct : IProduct
     /// <exception cref="BO.ExceptionFromDal"></exception>
     public IEnumerable<BO.ProductForList> GetAll(Func<DO.Product, bool>? func = null)
     {
-        IEnumerable<DO.Product>? ListProducts = new List<DO.Product>();
         try
         {
-            ListProducts = Dal?.Product.GetAll(func);
+            return (from item in Dal?.Product.GetAll(func)
+                    select new BO.ProductForList()
+                    {
+                        ID = item.ID,
+                        Name = item.Name,
+                        Price = item.Price,
+                        Category = item.Category != null ? (BO.Categories)item.Category : null
+                    });
         }
         catch (Exception ex)
         {
             throw new BO.ExceptionFromDal(ex);
         }
-        List<BO.ProductForList> ListProductsForList = new List<BO.ProductForList>();
-        if (ListProducts != null)
-        {
-            foreach (var item in ListProducts)
-            {
-                BO.ProductForList productForList = new BO.ProductForList();
-                productForList.ID = item.ID;
-                productForList.Name = item.Name;
-                productForList.Price = item.Price;
-                productForList.Category = item.Category != null ? (BO.Categories)item.Category : null;
-                ListProductsForList.Add(productForList);
-            }
-        }
-        return ListProductsForList;
     }
 
     /// <summary>
@@ -51,31 +43,23 @@ internal class BlProduct : IProduct
     /// <exception cref="BO.ExceptionFromDal"></exception>
     public IEnumerable<BO.ProductItem> GetCatalog(Func<DO.Product, bool>? func = null)
     {
-        IEnumerable<DO.Product>? ListProducts = new List<DO.Product>();
         try
         {
-            ListProducts = Dal?.Product.GetAll(func);
+            return (from item in Dal?.Product.GetAll(func)
+                    select new BO.ProductItem()
+                    {
+                        ID = item.ID,
+                        Name = item.Name,
+                        Price = item.Price,
+                        Category = item.Category != null ? (BO.Categories)item.Category : null,
+                        Amount = 0,
+                        InStock = item.InStock > 0 ? true : false
+                    });
         }
         catch (Exception ex)
         {
             throw new BO.ExceptionFromDal(ex);
         }
-        List<BO.ProductItem> ListProductItem = new List<BO.ProductItem>();
-        if (ListProducts != null)
-        {
-            foreach (var item in ListProducts)
-            {
-                BO.ProductItem listProductItem = new BO.ProductItem();
-                listProductItem.ID = item.ID;
-                listProductItem.Name = item.Name;
-                listProductItem.Price = item.Price;
-                listProductItem.Category = item.Category != null ? (BO.Categories)item.Category : null;
-                listProductItem.Amount = 0;
-                listProductItem.InStock = item.InStock > 0 ? true : false;
-                ListProductItem.Add(listProductItem);
-            }
-        }
-        return ListProductItem;
     }
 
     /// <summary>
