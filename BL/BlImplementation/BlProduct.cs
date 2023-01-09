@@ -80,7 +80,7 @@ internal class BlProduct : IProduct
             try
             {
                 DO.Product productTypeDO = new DO.Product();
-                productTypeDO = Dal?.Product.Get(id) != null ? productTypeDO : throw new BO.ExceptionNull();
+                productTypeDO = Dal?.Product.Get(id) ?? throw new BO.ExceptionNull();
                 productTypeBO.ID = productTypeDO.ID;
                 productTypeBO.Name = productTypeDO.Name;
                 productTypeBO.Price = productTypeDO.Price;
