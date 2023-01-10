@@ -24,40 +24,38 @@ namespace PL.Product
     {
         private IBl blp;
         public BO.Product product = new BO.Product();
-        public void ManagingUserControls()
-        {
-            lblAmountInCart.Visibility = Visibility.Hidden;
-            txtAmountInCart.Visibility = Visibility.Hidden;
-            btnAddToCart.Visibility = Visibility.Hidden;
-        }
+        public bool isEnabledForUserProductWindow { get; set; } = true;
+        public string isVisibleForUserProductWindow { get; set; } = "Hidden";
+        public string isVisibleForAdminAddProductWindow { get; set; } = "Visible";
+        public string isVisibleForAdminUpdateProductWindow { get; set; } = "Visible";
         public ProductWindow(IBl bl)
         {
-            blp = bl;
             InitializeComponent();
-            this.DataContext = product;
+            isVisibleForAdminUpdateProductWindow = "Hidden";
             cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
-            btnUpdateProduct.Visibility = Visibility.Hidden;
-            ManagingUserControls();
+            DataContext = product;
+            blp = bl;
         }
 
         public ProductWindow(BO.Product product, IBl bl)
         {
-            blp = bl;
             InitializeComponent();
-            ManagingUserControls();
+            isVisibleForAdminAddProductWindow = "Hidden";
             cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
-            this.DataContext = product;
-            btnAddProduct.Visibility = Visibility.Hidden;
+            DataContext = product;
+            blp = bl;
         }
 
         public ProductWindow(BO.ProductItem productItem, IBl bl)
         {
-            blp = bl;
             InitializeComponent();
-            btnUpdateProduct.Visibility = Visibility.Hidden;
+            isVisibleForUserProductWindow = "Visible";
+            isEnabledForUserProductWindow = false;
+            isVisibleForAdminUpdateProductWindow = "Hidden";
+            isVisibleForAdminAddProductWindow = "Hidden";
             cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
-            this.DataContext = productItem;
-            btnAddProduct.Visibility = Visibility.Hidden;
+            DataContext = productItem;
+            blp = bl;
         }
 
         private void btnAddProduct_Click(object sender, RoutedEventArgs e)
@@ -71,13 +69,9 @@ namespace PL.Product
             catch (Exception ex)
             {
                 if (ex.InnerException is null)
-                {
                     MessageBox.Show(ex.Message);
-                }
                 else
-                {
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                }
             }
         }
 
@@ -92,13 +86,9 @@ namespace PL.Product
             catch (Exception ex)
             {
                 if (ex.InnerException is null)
-                {
                     MessageBox.Show(ex.Message);
-                }
                 else
-                {
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                }
             }
         }
 
@@ -107,18 +97,14 @@ namespace PL.Product
             try
             {
                 blp.Cart.AddProduct(MainWindow.cart, product.ID);
-                this.Close();
+                Close();
             }
             catch (Exception ex)
             {
                 if (ex.InnerException is null)
-                {
                     MessageBox.Show(ex.Message);
-                }
                 else
-                {
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                }
             }
         }
     }

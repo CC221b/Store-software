@@ -54,25 +54,20 @@ namespace PL.Product
 
         private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            BO.Product product = new BO.Product();
             if (status == "Admin")
             {
                 BO.ProductForList item = (BO.ProductForList)ProductsListview.SelectedItem;
                 try
                 {
-                    product = blp.Product.Get(item.ID);
-                    new Product.ProductWindow(product, blp).Show();
+                    BO.Product product = blp.Product.Get(item.ID);
+                    new ProductWindow(product, blp).Show();
                 }
                 catch (Exception ex)
                 {
                     if (ex.InnerException is null)
-                    {
                         MessageBox.Show(ex.Message);
-                    }
                     else
-                    {
                         MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                    }
                 }
             }
             else
@@ -80,26 +75,21 @@ namespace PL.Product
                 BO.ProductItem item = (BO.ProductItem)ProductsListview.SelectedItem;
                 try
                 {
-                    new Product.ProductWindow(item, blp).Show();
+                    new ProductWindow(item, blp).Show();
                 }
                 catch (Exception ex)
                 {
                     if (ex.InnerException is null)
-                    {
                         MessageBox.Show(ex.Message);
-                    }
                     else
-                    {
                         MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                    }
                 }
             }
         }
 
         private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
-            new Product.ProductWindow(blp).ShowDialog();
-            ProductsListview.ItemsSource = blp.Product.GetAll();
+            new ProductWindow(blp).ShowDialog();
         }
 
         private void btnGoToCart_Click(object sender, RoutedEventArgs e)
