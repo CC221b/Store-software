@@ -17,16 +17,16 @@
         <Label Name="lblStatus" Content="Status" HorizontalAlignment="Left" Height="32" Margin="30,255,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Name="lblTotalPrice" Content="TotalPrice" HorizontalAlignment="Left" Height="32" Margin="30,290,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Name="lblItems" Content="Items" HorizontalAlignment="Left" Height="32" Margin="30,325,0,0" VerticalAlignment="Top" Width="100"/>
-        <TextBox Name="txtID" HorizontalAlignment="Left" Height="30" Margin="176,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
-        <TextBox Name="txtCustomerName" HorizontalAlignment="Left" Height="30" Margin="176,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
-        <TextBox Name="txtCustomerEmail" HorizontalAlignment="Left" Height="30" Margin="176,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
-        <TextBox Name="txtCustomerAdress" HorizontalAlignment="Left" Height="30" Margin="176,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
-        <TextBox Name="txtOrderDate" HorizontalAlignment="Left" Height="30" Margin="176,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
-        <TextBox Name="txtShipDate" HorizontalAlignment="Left" Height="30" Margin="176,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
-        <TextBox Name="txtDeliveryDate" HorizontalAlignment="Left" Height="30" Margin="176,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
-        <TextBox Name="txtStatus" HorizontalAlignment="Left" Height="30" Margin="176,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
-        <TextBox Name="txtTotalPrice" HorizontalAlignment="Left" Height="30" Margin="176,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
-        <ListBox Name="itemsListView" HorizontalAlignment="Left" Height="83" Margin="176,325,0,0" VerticalAlignment="Top" Width="150" d:ItemsSource="{d:SampleData ItemCount=5}" IsEnabled="False"/>
+        <TextBox Name="txtID" Text="{Binding Path=ID}" HorizontalAlignment="Left" Height="30" Margin="176,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+        <TextBox Name="txtCustomerName" Text="{Binding Path=CustomerName}" HorizontalAlignment="Left" Height="30" Margin="176,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+        <TextBox Name="txtCustomerEmail" Text="{Binding Path=CustomerEmail}" HorizontalAlignment="Left" Height="30" Margin="176,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+        <TextBox Name="txtCustomerAdress" Text="{Binding Path=CustomerAdress}" HorizontalAlignment="Left" Height="30" Margin="176,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+        <TextBox Name="txtOrderDate" Text="{Binding Path=OrderDate}" HorizontalAlignment="Left" Height="30" Margin="176,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+        <TextBox Name="txtShipDate" Text="{Binding Path=ShipDate}" HorizontalAlignment="Left" Height="30" Margin="176,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+        <TextBox Name="txtDeliveryDate" Text="{Binding Path=DeliveryDate}" HorizontalAlignment="Left" Height="30" Margin="176,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+        <TextBox Name="txtStatus" Text="{Binding Path=Status}" HorizontalAlignment="Left" Height="30" Margin="176,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+        <TextBox Name="txtTotalPrice" Text="{Binding Path=TotalPrice}" HorizontalAlignment="Left" Height="30" Margin="176,290,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" IsEnabled="False"/>
+        <ListBox Name="itemsListView" HorizontalAlignment="Left" Height="83" Margin="176,325,0,0" VerticalAlignment="Top" Width="150" d:ItemsSource="{Binding Path=Items}" IsEnabled="False"/>
         <Button Name="btnUpdateShipDate" Content="UpdateShipDate" HorizontalAlignment="Left" Height="30" Margin="347,185,0,0" VerticalAlignment="Top" Width="136" Click="btnUpdateShipDate_Click"/>
         <Button Name="btnUpdateDeliveryDate" Content="UpdateDeliveryDate" HorizontalAlignment="Left" Height="30" Margin="347,220,0,0" VerticalAlignment="Top" Width="136" Click="btnUpdateDeliveryDate_Click"/>
     </Grid>

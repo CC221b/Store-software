@@ -23,34 +23,13 @@ namespace PL.Order
     {
         private IBl blp;
         BO.Order order1;
-        public void FillingControlsForOrderUpdate(BO.Order order)
-        {
-            txtID.Text = order.ID.ToString();
-            txtCustomerName.Text = order.CustomerName;
-            txtCustomerEmail.Text = order.CustomerEmail;
-            txtCustomerAdress.Text = order.CustomerAdress;
-            txtOrderDate.Text = order.OrderDate.ToString();
-            txtShipDate.Text = order.ShipDate.ToString();
-            txtDeliveryDate.Text = order.DeliveryDate.ToString();
-            txtStatus.Text = order.Status.ToString();
-            txtTotalPrice.Text = order.TotalPrice.ToString();
-            itemsListView.ItemsSource = order.Items;
-            if (order.Status.ToString() == "ProvidedCustomerOrder" || order.Status.ToString() == "SendOrder")
-            {
-                btnUpdateDeliveryDate.IsEnabled = false;
-            }
-            else if (order.Status.ToString() == "SendOrder")
-            {
-                btnUpdateShipDate.IsEnabled = false;
-            }
-        }
 
         public OrderWindow(BO.Order order, IBl bl, string status = "")
         {
             InitializeComponent();
             blp = bl;
             order1 = order;
-            FillingControlsForOrderUpdate(order);
+            DataContext = order1;
             if (status == "User")
             {
                 btnUpdateDeliveryDate.Visibility = Visibility.Hidden;
@@ -64,19 +43,13 @@ namespace PL.Order
             try
             {
                 blp.Order.UpdateOrderShipping(order1.ID);
-                order1 = blp.Order.Get(order1.ID);
-                FillingControlsForOrderUpdate(order1);
             }
             catch (Exception ex)
             {
                 if (ex.InnerException is null)
-                {
                     MessageBox.Show(ex.Message);
-                }
                 else
-                {
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                }
             }
         }
 
@@ -86,19 +59,13 @@ namespace PL.Order
             try
             {
                 blp.Order.UpdateOrderDelivery(order1.ID);
-                order1 = blp.Order.Get(order1.ID);
-                FillingControlsForOrderUpdate(order1);
             }
             catch (Exception ex)
             {
                 if (ex.InnerException is null)
-                {
                     MessageBox.Show(ex.Message);
-                }
                 else
-                {
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                }
             }
         }
     }
