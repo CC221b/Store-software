@@ -1,0 +1,18 @@
+﻿<Window x:Class="PL.Cart.UserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Cart"
+        mc:Ignorable="d"
+        Title="UserWindow" Height="450" Width="800">
+    <Grid>
+        <Label Name="lblCustomerName" Content="CustomerName:" HorizontalAlignment="Left" Height="27" Margin="223,60,0,0" VerticalAlignment="Top" Width="119" FontSize="14" FontWeight="Bold"/>
+        <Label Name="lblCustomerEmail" Content="CustomerEmail:" HorizontalAlignment="Left" Height="27" Margin="223,100,0,0" VerticalAlignment="Top" Width="119" FontSize="14" FontWeight="Bold"/>
+        <Label Name="lblCustomerAdress" Content="CustomerAdress:" HorizontalAlignment="Left" Height="27" Margin="223,140,0,0" VerticalAlignment="Top" Width="119" FontSize="14" FontWeight="Bold"/>
+        <TextBox Name="txtCustomerName" HorizontalAlignment="Left" Height="27" Margin="361,60,0,0" TextWrapping="Wrap" Text="{Binding Path=customerName, Mode=TwoWay}" VerticalAlignment="Top" Width="108"/>
+        <TextBox Name="txtCustomerEmail" HorizontalAlignment="Left" Height="27" Margin="361,100,0,0" TextWrapping="Wrap" Text="{Binding Path=customerEmail, Mode=TwoWay}" VerticalAlignment="Top" Width="108"/>
+        <TextBox Name="txtCustomerAdress" HorizontalAlignment="Left" Height="27" Margin="361,140,0,0" TextWrapping="Wrap" Text="{Binding Path=customerAdress, Mode=TwoWay}" VerticalAlignment="Top" Width="108"/>
+        <Button Name="btnConfirmationFillingTheDetails" Content="OK" HorizontalAlignment="Left" Height="27" Margin="361,193,0,0" VerticalAlignment="Top" Width="108" Click="btnConfirmationFillingTheDetails_Click"/>
+    </Grid>
+</Window>

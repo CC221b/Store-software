@@ -187,7 +187,25 @@ internal class BlCart : ICart
         {
             if (cart.Items != null)
             {
-                foreach (var item in cart.Items)
+                int OrderID;
+                DO.Order order = new DO.Order()
+                {
+                    CustomerAdress = customerAdress,
+                    CustomerName = customerName,
+                    CustomerEmail = customerEmail,
+                    OrderDate = DateTime.Now,
+                    ShipDate = DateTime.MinValue,
+                    DeliveryDate = DateTime.MinValue
+                };
+                try
+                {
+                    OrderID = Dal?.Order.Add(order) ?? throw new BO.ExceptionNull();
+                }
+                catch (Exception ex)
+                {
+                    throw new BO.ExceptionFromDal(ex);
+                }
+                cart.Items.ForEach(item =>
                 {
                     DO.Product product = new DO.Product();
                     try
@@ -200,27 +218,13 @@ internal class BlCart : ICart
                     }
                     if (product.InStock >= item.Amount && item.Amount > 0 && item.Price > 0)
                     {
-                        DO.Order order = new DO.Order();
-                        order.CustomerAdress = customerAdress;
-                        order.CustomerName = customerName;
-                        order.CustomerEmail = customerEmail;
-                        order.OrderDate = DateTime.Now;
-                        order.ShipDate = null;
-                        order.DeliveryDate = null;
-                        int OrderID;
-                        try
+                        DO.OrderItem orderItem = new DO.OrderItem()
                         {
-                            OrderID = Dal.Order.Add(order);
-                        }
-                        catch (Exception ex)
-                        {
-                            throw new BO.ExceptionFromDal(ex);
-                        }
-                        DO.OrderItem orderItem = new DO.OrderItem();
-                        orderItem.OrderId = OrderID;
-                        orderItem.ProductId = item.ProductID;
-                        orderItem.Price = item.Price;
-                        orderItem.Amount = item.Amount;
+                            OrderId = OrderID,
+                            ProductId = item.ProductID,
+                            Price = item.Price,
+                            Amount = item.Amount
+                        };
                         product.InStock -= item.Amount;
                         try
                         {
@@ -236,7 +240,7 @@ internal class BlCart : ICart
                     {
                         throw new BO.ExceptionInvalidData();
                     }
-                }
+                });
             }
         }
         else

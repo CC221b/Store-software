@@ -3,6 +3,7 @@ using BlImplementation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,9 +25,8 @@ namespace PL.Cart
     {
         private IBl blp;
         int amount = 0;
-        string? customerName = "", customerEmail = "", customerAdress = "";
+        double totalPrice = 0;
         BO.OrderItem orderItem = new();
-        public string isVisibleForMakeOrderWindow { get; set; } = "Hidden";
         public string isVisibleForUpdatingAnItemInAnOrder { get; set; } = "Hidden";
         public string isVisibleForUpdatingTheAmountOfAnItemInAnOrder { get; set; } = "Hidden";
 
@@ -49,7 +49,8 @@ namespace PL.Cart
             InitializeComponent();
             _orderItemCollection = new ObservableCollection<BO.OrderItem>(MainWindow.cart.Items);
             cartListView.DataContext = _orderItemCollection;
-            txtTotalPrice.Text = MainWindow.cart.TotalPrice.ToString();
+            totalPrice = MainWindow.cart.TotalPrice;
+            txtTotalPrice.DataContext = totalPrice;
         }
 
         private void btnChangeAmount_Click(object sender, RoutedEventArgs e)
@@ -59,7 +60,7 @@ namespace PL.Cart
 
         private void txtChangeAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string? amountBeforeTryParse = this.txtChangeAmount.Text;
+            string? amountBeforeTryParse = txtChangeAmount.Text;
             int.TryParse(amountBeforeTryParse, out amount);
         }
 
@@ -83,13 +84,9 @@ namespace PL.Cart
             catch (Exception ex)
             {
                 if (ex.InnerException is null)
-                {
                     MessageBox.Show(ex.Message);
-                }
                 else
-                {
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                }
             }
         }
 
@@ -104,29 +101,10 @@ namespace PL.Cart
             catch (Exception ex)
             {
                 if (ex.InnerException is null)
-                {
                     MessageBox.Show(ex.Message);
-                }
                 else
-                {
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                }
             }
-        }
-
-        private void txtCustomerName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            customerName = txtCustomerName.Text;
-        }
-
-        private void txtCustomerEmail_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            customerEmail = txtCustomerEmail.Text;
-        }
-
-        private void txtCustomerAdress_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            customerAdress = txtCustomerAdress.Text;
         }
         /// <summary>
         /// Creates a screen like a new screen for entering user information to place an order.
@@ -135,40 +113,8 @@ namespace PL.Cart
         /// <param name="e"></param>
         private void btnMakeOrder_Click(object sender, RoutedEventArgs e)
         {
-            isVisibleForMakeOrderWindow = "Visible";
-            isVisibleForUpdatingAnItemInAnOrder = "Hidden";
-            isVisibleForUpdatingTheAmountOfAnItemInAnOrder = "Hidden";
-            cartListView.Visibility = Visibility.Hidden;
-            lblTotalPrice.Visibility = Visibility.Hidden;
-            txtTotalPrice.Visibility = Visibility.Hidden;
-            btnMakeOrder.Visibility = Visibility.Hidden;
-        }
-        /// <summary>
-        /// The function executes the order and resets the cart.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnConfirmationFillingTheDetails_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                blp.Cart.MakeAnOrder(MainWindow.cart, customerName ?? throw new BO.ExceptionNull(), customerEmail ?? throw new BO.ExceptionNull(), customerAdress ?? throw new BO.ExceptionNull());
-                MainWindow.cart = new();
-                MainWindow.cart.Items = new();
-                cartListView.ItemsSource = null;
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                if (ex.InnerException is null)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                else
-                {
-                    MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                }
-            }
+            new UserWindow(blp).ShowDialog();
+            Close();
         }
     }
 }

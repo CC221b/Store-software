@@ -123,6 +123,8 @@ namespace PL.Product
         private void btnGoToCart_Click(object sender, RoutedEventArgs e)
         {
             new Cart.CartWindow(blp).ShowDialog();
+            MainWindow.cart = new();
+            MainWindow.cart.Items = new();
         }
     }
 }
