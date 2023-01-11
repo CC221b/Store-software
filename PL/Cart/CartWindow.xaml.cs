@@ -2,6 +2,7 @@
 using BlImplementation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,73 +26,18 @@ namespace PL.Cart
         int amount = 0;
         string? customerName = "", customerEmail = "", customerAdress = "";
         BO.OrderItem orderItem = new();
-        /// <summary>
-        /// A function to manage the order creation controls,
-        /// because the project is built using the SPA method,
-        /// it is necessary to hide and reveal controls.
-        /// </summary>
-        /// <param name="visibility"></param>
-        public void ManagingTheControlViewOfMakeAnOrder(string visibility)
+        public string isVisibleForMakeOrderWindow { get; set; } = "Hidden";
+        public string isVisibleForUpdatingAnItemInAnOrder { get; set; } = "Hidden";
+        public string isVisibleForUpdatingTheAmountOfAnItemInAnOrder { get; set; } = "Hidden";
+
+        private ObservableCollection<BO.OrderItem> _orderItemCollection = new();
+
+        public ObservableCollection<BO.OrderItem> orderItemCollection
         {
-            if (visibility == "Hidden")
-            {
-                lblCustomerAdress.Visibility = Visibility.Hidden;
-                lblCustomerName.Visibility = Visibility.Hidden;
-                lblCustomerEmail.Visibility = Visibility.Hidden;
-                txtCustomerAdress.Visibility = Visibility.Hidden;
-                txtCustomerEmail.Visibility = Visibility.Hidden;
-                txtCustomerName.Visibility = Visibility.Hidden;
-                btnConfirmationFillingTheDetails.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                lblCustomerAdress.Visibility = Visibility.Visible;
-                lblCustomerName.Visibility = Visibility.Visible;
-                lblCustomerEmail.Visibility = Visibility.Visible;
-                txtCustomerAdress.Visibility = Visibility.Visible;
-                txtCustomerEmail.Visibility = Visibility.Visible;
-                txtCustomerName.Visibility = Visibility.Visible;
-                btnConfirmationFillingTheDetails.Visibility = Visibility.Visible;
-            }
+            get { return _orderItemCollection; }
+            set { _orderItemCollection = value; }
         }
-        /// <summary>
-        /// A function to manage the controls for updating an item in an order.
-        /// Because the project is built using the SPA method,
-        /// it is necessary to hide and reveal controls.
-        /// </summary>
-        /// <param name="visibility"></param>
-        public void ManagingControlsForUpdatingAnItemInAnOrder(string visibility)
-        {
-            if (visibility == "Hidden")
-            {
-                btnChangeAmount.Visibility = Visibility.Hidden;
-                btnRemoveItem.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                btnChangeAmount.Visibility = Visibility.Visible;
-                btnRemoveItem.Visibility = Visibility.Visible;
-            }
-        }
-        /// <summary>
-        /// A function to manage the controls for updating the quantity of an item in an order.
-        /// Because the project is built using the SPA method,
-        /// it is necessary to hide and reveal controls.
-        /// </summary>
-        /// <param name="visibility"></param>
-        public void ManagingControlsForUpdatingTheAmountOfAnItemInAnOrder(string visibility)
-        {
-            if (visibility == "Hidden")
-            {
-                txtChangeAmount.Visibility = Visibility.Hidden;
-                btnOkChangeAmount.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                txtChangeAmount.Visibility = Visibility.Visible;
-                btnOkChangeAmount.Visibility = Visibility.Visible;
-            }
-        }
+
         /// <summary>
         /// A constructive action, which initializes the list and the totalPrice control.
         /// and also schedule the management functions of concealment and disclosure according to what is consumed.
@@ -101,38 +47,37 @@ namespace PL.Cart
         {
             blp = bl;
             InitializeComponent();
-            ManagingTheControlViewOfMakeAnOrder("Hidden");
-            ManagingControlsForUpdatingAnItemInAnOrder("Hidden");
-            ManagingControlsForUpdatingTheAmountOfAnItemInAnOrder("Hidden");
-            cartListView.ItemsSource = MainWindow.cart.Items;
+            _orderItemCollection = new ObservableCollection<BO.OrderItem>(MainWindow.cart.Items);
+            cartListView.DataContext = _orderItemCollection;
             txtTotalPrice.Text = MainWindow.cart.TotalPrice.ToString();
         }
- 
+
         private void btnChangeAmount_Click(object sender, RoutedEventArgs e)
         {
-            ManagingControlsForUpdatingTheAmountOfAnItemInAnOrder("Visible");
+            isVisibleForUpdatingTheAmountOfAnItemInAnOrder = "Visible";
         }
-      
+
         private void txtChangeAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             string? amountBeforeTryParse = this.txtChangeAmount.Text;
             int.TryParse(amountBeforeTryParse, out amount);
         }
-  
+
         private void cartListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            orderItem = (BO.OrderItem)(cartListView.SelectedItem);
-            ManagingControlsForUpdatingAnItemInAnOrder("Visible");
+            orderItem = (BO.OrderItem)cartListView.SelectedItem;
+            isVisibleForUpdatingAnItemInAnOrder = "Visible";
         }
-      
+
         private void btnOkChangeAmount_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 blp.Cart.UpdateAmountOfProduct(MainWindow.cart, orderItem.ProductID, amount);
                 txtChangeAmount.Text = "";
-                ManagingControlsForUpdatingTheAmountOfAnItemInAnOrder("Hidden");
-                cartListView.ItemsSource = MainWindow.cart.Items;
+                isVisibleForUpdatingTheAmountOfAnItemInAnOrder = "Hidden";
+                _orderItemCollection = new ObservableCollection<BO.OrderItem>(MainWindow.cart.Items);
+                cartListView.DataContext = _orderItemCollection;
                 txtTotalPrice.Text = MainWindow.cart.TotalPrice.ToString();
             }
             catch (Exception ex)
@@ -147,7 +92,7 @@ namespace PL.Cart
                 }
             }
         }
-      
+
         private void btnRemoveItem_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -168,12 +113,12 @@ namespace PL.Cart
                 }
             }
         }
-      
+
         private void txtCustomerName_TextChanged(object sender, TextChangedEventArgs e)
         {
             customerName = txtCustomerName.Text;
         }
-     
+
         private void txtCustomerEmail_TextChanged(object sender, TextChangedEventArgs e)
         {
             customerEmail = txtCustomerEmail.Text;
@@ -190,9 +135,9 @@ namespace PL.Cart
         /// <param name="e"></param>
         private void btnMakeOrder_Click(object sender, RoutedEventArgs e)
         {
-            ManagingTheControlViewOfMakeAnOrder("Visible");
-            ManagingControlsForUpdatingAnItemInAnOrder("Hidden");
-            ManagingControlsForUpdatingTheAmountOfAnItemInAnOrder("Hidden");
+            isVisibleForMakeOrderWindow = "Visible";
+            isVisibleForUpdatingAnItemInAnOrder = "Hidden";
+            isVisibleForUpdatingTheAmountOfAnItemInAnOrder = "Hidden";
             cartListView.Visibility = Visibility.Hidden;
             lblTotalPrice.Visibility = Visibility.Hidden;
             txtTotalPrice.Visibility = Visibility.Hidden;

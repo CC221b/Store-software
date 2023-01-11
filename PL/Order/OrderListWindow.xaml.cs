@@ -26,12 +26,12 @@ namespace PL.Order
         {
             InitializeComponent();
             blp = bl;
-            OrderListview.ItemsSource = blp.Order.GetAll();
+            OrderListview.DataContext = blp.Order.GetAll();
         }
 
         private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var item = (BO.OrderForList)(OrderListview.SelectedItem);
+            var item = (BO.OrderForList)OrderListview.SelectedItem;
             BO.Order order = new BO.Order();
             try
             {
@@ -48,8 +48,9 @@ namespace PL.Order
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
                 }
             }
-            new Order.OrderWindow(order, blp).Show();
-            this.Close();
+            new OrderWindow(order, blp).Show();
+            OrderListview.DataContext = blp.Order.GetAll();
+            Close();
         }
     }
 }
