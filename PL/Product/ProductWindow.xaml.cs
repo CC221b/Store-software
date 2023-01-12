@@ -72,9 +72,16 @@ namespace PL.Product
             catch (Exception ex)
             {
                 if (ex.InnerException is null)
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("Sorry, incorrect information was entered Please enter correct information Thank you!");
                 else
-                    MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
+                    if (ex.InnerException.Message == "Error: Item does not exist.")
+                {
+                    MessageBox.Show("Sorry, item does not exist. Please enter a valid ID.");
+                }
+                else
+                {
+                    MessageBox.Show("Sorry, there is no place to introduce a new product, please contact the appropriate authorities.");
+                }
             }
         }
 
