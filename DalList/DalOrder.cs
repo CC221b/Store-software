@@ -68,7 +68,7 @@ internal class DalOrder : IOrder
         }
         catch (Exception ex)
         {
-            throw ex == null ? new ExceptionNullEx() : ex;
+            throw ex == null ? new ExceptionNull() : ex;
         }
     }
 
@@ -81,7 +81,7 @@ internal class DalOrder : IOrder
         }
         catch (Exception ex)
         {
-            throw ex == null ? new ExceptionNullEx() : ex;
+            throw ex == null ? new ExceptionNull() : ex;
         }
     }
 }

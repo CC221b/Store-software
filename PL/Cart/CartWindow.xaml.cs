@@ -49,8 +49,8 @@ namespace PL.Cart
             InitializeComponent();
             _orderItemCollection = new ObservableCollection<BO.OrderItem>(MainWindow.cart.Items);
             cartListView.DataContext = _orderItemCollection;
-            totalPrice = MainWindow.cart.TotalPrice;
             txtTotalPrice.DataContext = totalPrice;
+            totalPrice = MainWindow.cart.TotalPrice;
         }
 
         private void btnChangeAmount_Click(object sender, RoutedEventArgs e)

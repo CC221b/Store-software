@@ -517,7 +517,7 @@ class Program
                 int.TryParse(idBeforeParse, out ID);
                 try
                 {
-                    List<OrderItem>? orderItems = s_IDal?.OrderItem.GetByOrderID(ID);
+                    List<OrderItem>? orderItems = s_IDal?.OrderItem.GetByOrderID(ID).ToList();
                     if (orderItems != null)
                     {
                         foreach (var item in orderItems)

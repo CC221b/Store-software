@@ -6,21 +6,21 @@
 public class ExceptionFromDal : Exception
 {
     public ExceptionFromDal(Exception ex) : base("Exception in Dal.", ex) { }
-    public override string Message => "Exception in Dal.";
+    public override string Message => "An error was caught in the data layer The error is:";
 }
 /// <summary>
 /// Invalid information errors.
 /// </summary>
 public class ExceptionInvalidData : Exception
 {
-    public override string Message => "Error: There is invalid data, please enter valid data.";
+    public override string Message => "Sorry, incorrect information was entered, please enter correct information. Thanks!";
 }
 /// <summary>
 /// Errors Item already exists.
 /// </summary>
 public class ExceptionExists : Exception
 {
-    public override string Message => "Error: Item already exists.";
+    public override string Message => "Sorry, this item already exists in the system, Please enter a different item ID. Thanks!";
 }
 /// <summary>
 /// ID errors are incorrect (although there is an error of incorrect items,
@@ -28,21 +28,21 @@ public class ExceptionExists : Exception
 /// </summary>
 public class ExceptionInvalidID : Exception
 {
-    public override string Message => "Error: Please enter a valid ID number.";
+    public override string Message => "Sorry, an invalid ID number was entered, please enter a valid ID number. Thanks!";
 }
 /// <summary>
 /// Errors Item does not exist.
 /// </summary>
 public class ExceptionNotExists : Exception
 {
-    public override string Message => "Error: Item does not exist.";
+    public override string Message => "Sorry, this item does not exist. Please enter a valid item ID. Thanks!";
 }
 /// <summary>
 /// Error out of stock.
 /// </summary>
 public class ExceptionOutOfStock : Exception
 {
-    public override string Message => "Error: The product is out of stock, sorry.";
+    public override string Message => "Sorry, the product is out of stock.";
 }
 
 /// <summary>
@@ -50,7 +50,7 @@ public class ExceptionOutOfStock : Exception
 /// </summary>
 public class ExceptionOrderSent : Exception
 {
-    public override string Message => "Error: The order has already been sent and cannot be deleted at this time.";
+    public override string Message => "Sorry, the order has already been sent, it is not possible to delete it.";
 }
 
 /// <summary>
