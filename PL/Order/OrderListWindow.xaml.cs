@@ -2,6 +2,7 @@
 using BlImplementation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,11 +23,19 @@ namespace PL.Order
     public partial class OrderListWindow : Window
     {
         private IBl blp;
+        private ObservableCollection<BO.OrderForList> _orderForListCollection = new();
+
+        public ObservableCollection<BO.OrderForList> orderForListCollection
+        {
+            get { return _orderForListCollection; }
+            set { _orderForListCollection = value; }
+        }
         public OrderListWindow(IBl bl)
         {
             InitializeComponent();
             blp = bl;
-            OrderListview.DataContext = blp.Order.GetAll();
+            _orderForListCollection = new ObservableCollection<BO.OrderForList>(blp.Order.GetAll());
+            OrderListview.DataContext = _orderForListCollection;
         }
 
         private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -49,7 +58,8 @@ namespace PL.Order
                 }
             }
             new OrderWindow(order, blp).Show();
-            OrderListview.DataContext = blp.Order.GetAll();
+            _orderForListCollection = new ObservableCollection<BO.OrderForList>(blp.Order.GetAll());
+            OrderListview.DataContext = _orderForListCollection;
             Close();
         }
     }

@@ -23,19 +23,19 @@
             <Label Name="lblCategorySelector" Grid.Column="1" Content="Choose a category:" HorizontalAlignment="Left" Height="36" Margin="32,68,0,0" VerticalAlignment="Top" Width="139"/>
             <Label Name="lblProductList" Content="ProductList" HorizontalAlignment="Center" Height="44" Margin="0,76,0,0" VerticalAlignment="Top" Width="152" FontWeight="Bold" FontSize="18"/>
         </Grid>
-        <ListView x:Name="ProductForListListview" ItemsSource="{Binding}" Margin="10,26,390,36" Grid.Row="1" Grid.RowSpan="2" MouseDoubleClick="ProductsListview_MouseDoubleClick" Width="370">
+        <ListView x:Name="ProductForListListview" ItemsSource="{Binding}" Margin="10,26,297,36" Grid.Row="1" Grid.RowSpan="2" MouseDoubleClick="ProductsListview_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="70" DisplayMemberBinding="{Binding ID}" />
-                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
                     <GridViewColumn Header="Price" Width="100" DisplayMemberBinding="{Binding Price}" />
                     <GridViewColumn Header="Category" Width="100" DisplayMemberBinding="{Binding Category}" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="btnAddProduct" Content="AddProduct" HorizontalAlignment="Left" Height="51" Margin="429,26,0,0" Grid.Row="1" VerticalAlignment="Top" Width="152" Click="btnAddProduct_Click"/>
+        <Button Name="btnAddProduct" Content="AddProduct" HorizontalAlignment="Left" Height="51" Margin="528,26,0,0" Grid.Row="1" VerticalAlignment="Top" Width="152" Click="btnAddProduct_Click"/>
         <Button Name="btnGoToCart" Content="Go to cart" HorizontalAlignment="Left" Height="46" Margin="633,126,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Click="btnGoToCart_Click"/>
-        <ListView x:Name="ProductItemsListview" ItemsSource="{Binding}" Margin="10,26,200,36" Grid.Row="1" Grid.RowSpan="2" MouseDoubleClick="ProductsListview_MouseDoubleClick">
+        <ListView x:Name="ProductItemsListview" ItemsSource="{Binding}" Margin="10,26,540,36" Grid.Row="1" Grid.RowSpan="2" MouseDoubleClick="ProductsListview_MouseDoubleClick">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="70" DisplayMemberBinding="{Binding ID}" />

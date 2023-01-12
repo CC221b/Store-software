@@ -58,7 +58,7 @@ internal class BlOrder : IOrder
                 DO.Order orderTypeDO = new DO.Order();
                 BO.Order orderTypeBO = new BO.Order();
                 orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
-                List<DO.OrderItem> orderItem = new List<DO.OrderItem>();
+                IEnumerable<DO.OrderItem> orderItem = new List<DO.OrderItem>();
                 orderItem = Dal.OrderItem.GetByOrderID(orderTypeDO.ID);
                 orderTypeBO.ID = orderTypeDO.ID;
                 orderTypeBO.CustomerName = orderTypeDO.CustomerName;
@@ -73,7 +73,7 @@ internal class BlOrder : IOrder
                     orderTypeBO.Status = BO.OrderStatus.ProvidedCustomerOrder;
                 else
                     orderTypeBO.Status = BO.OrderStatus.ConfirmedOrder;
-                orderTypeBO.Items = orderItem;
+                orderTypeBO.Items = orderItem.ToList();
                 double sum = 0;
                 sum = orderItem.Sum(item => item.Price);
                 orderTypeBO.TotalPrice = sum;

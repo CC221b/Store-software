@@ -35,14 +35,14 @@ internal class DalOrderItem : IOrderItem
         throw new ExceptionNotExists();
     }
 
-    public List<OrderItem> GetByOrderID(int id)
+    public IEnumerable<OrderItem> GetByOrderID(int id)
     {
         IEnumerable<OrderItem> orderItem1 = from orderItem in DataSource.s_orderItemList
                                             where orderItem.OrderId == id
                                             select orderItem;
         if (orderItem1 != null && orderItem1.Any())
         {
-            return orderItem1.ToList();
+            return orderItem1;
         }
         throw new ExceptionNotExists();
     }
