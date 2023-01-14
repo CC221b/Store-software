@@ -29,6 +29,7 @@ namespace PL.Cart
         }
         UserDetails userDetails = new();
         private IBl blp;
+
         public UserWindow(IBl bl)
         {
             blp = bl;

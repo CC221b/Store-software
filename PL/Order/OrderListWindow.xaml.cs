@@ -25,16 +25,11 @@ namespace PL.Order
         private IBl blp;
         private ObservableCollection<BO.OrderForList> _orderForListCollection = new();
 
-        public ObservableCollection<BO.OrderForList> orderForListCollection
-        {
-            get { return _orderForListCollection; }
-            set { _orderForListCollection = value; }
-        }
         public OrderListWindow(IBl bl)
         {
             InitializeComponent();
             blp = bl;
-            _orderForListCollection = new ObservableCollection<BO.OrderForList>(blp.Order.GetAll());
+            blp.Order.GetAll().ToList().ForEach(order => _orderForListCollection.Add(order));
             OrderListview.DataContext = _orderForListCollection;
         }
 
@@ -49,17 +44,13 @@ namespace PL.Order
             catch (Exception ex)
             {
                 if (ex.InnerException is null)
-                {
                     MessageBox.Show(ex.Message);
-                }
                 else
-                {
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                }
             }
             new OrderWindow(order, blp).Show();
-            _orderForListCollection = new ObservableCollection<BO.OrderForList>(blp.Order.GetAll());
-            OrderListview.DataContext = _orderForListCollection;
+            _orderForListCollection.Clear();
+            blp.Order.GetAll().ToList().ForEach(order => _orderForListCollection.Add(order));
             Close();
         }
     }

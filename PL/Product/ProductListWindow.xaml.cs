@@ -27,21 +27,7 @@ namespace PL.Product
         private IBl blp;
         string status = "";
         private ObservableCollection<BO.ProductForList> _productForListCollection = new();
-
-        public ObservableCollection<BO.ProductForList> productForListCollection
-        {
-            get { return _productForListCollection; }
-            set { _productForListCollection = value; }
-        }
-
         private ObservableCollection<BO.ProductItem> _productItemCollection = new();
-
-        public ObservableCollection<BO.ProductItem> productItemCollection
-        {
-            get { return _productItemCollection; }
-            set { _productItemCollection = value; }
-        }
-
 
         public ProductListWindow(IBl bl, string status1)
         {
@@ -51,40 +37,46 @@ namespace PL.Product
             if (status == "Admin")
             {
                 ProductItemsListview.Visibility = Visibility.Hidden;
-                _productForListCollection = new ObservableCollection<BO.ProductForList>(blp.Product.GetAll());
-                btnGoToCart.Visibility = Visibility.Hidden;
+                blp.Product.GetAll().ToList().ForEach(product => _productForListCollection.Add(product));
                 ProductForListListview.DataContext = _productForListCollection;
             }
             else
             {
                 ProductForListListview.Visibility = Visibility.Hidden;
-                btnAddProduct.Visibility = Visibility.Hidden;
-                _productItemCollection = new ObservableCollection<BO.ProductItem>(blp.Product.GetCatalog());
+                blp.Product.GetCatalog().ToList().ForEach(product => _productItemCollection.Add(product));
                 ProductItemsListview.DataContext = _productItemCollection;
             }
             CategorySelector.DataContext = Enum.GetValues(typeof(BO.Categories));
         }
+
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.Categories selectedCategory = (BO.Categories)CategorySelector.SelectedItem;
             if (status == "Admin")
-                ProductForListListview.ItemsSource =
-                    blp.Product.GetAll(item => (item.Category == null ? null : (int)item.Category) == Convert.ToInt32(selectedCategory));
-            ProductItemsListview.ItemsSource =
-                blp.Product.GetCatalog(item => (item.Category == null ? null : (int)item.Category) == Convert.ToInt32(selectedCategory));
+            {
+                _productForListCollection.Clear();
+                blp.Product.GetAll(item => (item.Category == null ? null : (int)item.Category) == Convert.ToInt32(selectedCategory))
+                    .ToList().ForEach(product => _productForListCollection.Add(product));
+            }
+            else
+            {
+                _productItemCollection.Clear();
+                blp.Product.GetCatalog(item => (item.Category == null ? null : (int)item.Category) == Convert.ToInt32(selectedCategory))
+                    .ToList().ForEach(product => _productItemCollection.Add(product));
+            }
         }
 
         private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (status == "Admin")
             {
-                BO.ProductForList item = (BO.ProductForList)ProductForListListview.SelectedItem;
                 try
                 {
+                    BO.ProductForList item = (BO.ProductForList)ProductForListListview.SelectedItem;
                     BO.Product product = blp.Product.Get(item.ID);
                     new ProductWindow(product, blp).ShowDialog();
-                    _productForListCollection = new ObservableCollection<BO.ProductForList>(blp.Product.GetAll());
-                    ProductForListListview.DataContext = _productForListCollection;
+                    _productForListCollection.Clear();
+                    blp.Product.GetAll().ToList().ForEach(product => _productForListCollection.Add(product));
                 }
                 catch (Exception ex)
                 {
@@ -96,12 +88,12 @@ namespace PL.Product
             }
             else
             {
-                BO.ProductItem item = (BO.ProductItem)ProductItemsListview.SelectedItem;
                 try
                 {
+                    BO.ProductItem item = (BO.ProductItem)ProductItemsListview.SelectedItem;
                     new ProductWindow(item, blp).ShowDialog();
-                    _productItemCollection = new ObservableCollection<BO.ProductItem>(blp.Product.GetCatalog());
-                    ProductItemsListview.DataContext = _productItemCollection;
+                    _productItemCollection.Clear();
+                    blp.Product.GetCatalog().ToList().ForEach(product => _productItemCollection.Add(product));
                 }
                 catch (Exception ex)
                 {
@@ -116,8 +108,8 @@ namespace PL.Product
         private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
             new ProductWindow(blp).ShowDialog();
-            _productForListCollection = new ObservableCollection<BO.ProductForList>(blp.Product.GetAll());
-            DataContext = _productForListCollection;
+            _productForListCollection.Clear();
+            blp.Product.GetAll().ToList().ForEach(product => _productForListCollection.Add(product));
         }
 
         private void btnGoToCart_Click(object sender, RoutedEventArgs e)

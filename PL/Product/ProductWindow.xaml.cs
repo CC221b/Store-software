@@ -29,21 +29,22 @@ namespace PL.Product
         public string isVisibleForUserProductWindow { get; set; } = "Hidden";
         public string isVisibleForAdminAddProductWindow { get; set; } = "Visible";
         public string isVisibleForAdminUpdateProductWindow { get; set; } = "Visible";
+
         public ProductWindow(IBl bl)
         {
             InitializeComponent();
-            isVisibleForAdminUpdateProductWindow = "Hidden";
-            cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
             blp = bl;
+            isVisibleForAdminUpdateProductWindow = "Hidden";
+            cboxCategory.DataContext = Enum.GetValues(typeof(BO.Categories));
             DataContext = product;
         }
 
         public ProductWindow(BO.Product product1, IBl bl)
         {
             InitializeComponent();
-            isVisibleForAdminAddProductWindow = "Hidden";
-            cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
             blp = bl;
+            isVisibleForAdminAddProductWindow = "Hidden";
+            cboxCategory.DataContext = Enum.GetValues(typeof(BO.Categories));
             product = product1;
             DataContext = product;
         }
@@ -51,12 +52,12 @@ namespace PL.Product
         public ProductWindow(BO.ProductItem productItem1, IBl bl)
         {
             InitializeComponent();
+            blp = bl;
             isVisibleForUserProductWindow = "Visible";
             isEnabledForUserProductWindow = false;
             isVisibleForAdminUpdateProductWindow = "Hidden";
             isVisibleForAdminAddProductWindow = "Hidden";
-            cboxCategory.ItemsSource = Enum.GetValues(typeof(BO.Categories));
-            blp = bl;
+            cboxCategory.DataContext = Enum.GetValues(typeof(BO.Categories));
             productItem = productItem1;
             DataContext = productItem;
         }

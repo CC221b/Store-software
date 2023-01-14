@@ -21,38 +21,34 @@ namespace PL.Order
     /// </summary>
     public partial class OrderTrackingWindow : Window
     {
-        int orderId = 0;
         private IBl blp;
         BO.OrderTracking orderTracking = new();
+        public string isVisibleForErrorInOrderTrackingWindow { get; set; } = "Visible";
+
         public OrderTrackingWindow(IBl bl, int orderId1)
         {
             InitializeComponent();
-            orderId = orderId1;
             blp = bl;
+            orderTracking.ID = orderId1;
             try
             {
-                orderTracking = bl.Order.GetOrderTracking(orderId);
-                orderTrackingDataGrid.ItemsSource = orderTracking.DateAndStatus;
-                txtOrderID.Text = orderTracking.ID.ToString();
-                txtOrderStatus.Text = orderTracking.Status.ToString();
+                orderTracking = bl.Order.GetOrderTracking(orderTracking.ID);
                 lblErrorMessage.Visibility = Visibility.Hidden;
             }
             catch (Exception)
             {
                 btnOrderData.Visibility = Visibility.Hidden;
-                txtOrderID.Text = orderId1.ToString();
                 lblErrorMessage.Content = "Sorry, no order found.";
-                lblOrderStatus.Visibility = Visibility.Hidden;
-                txtOrderStatus.Visibility = Visibility.Hidden;
-                orderTrackingDataGrid.Visibility = Visibility.Hidden;
+                isVisibleForErrorInOrderTrackingWindow = "Hidden";
             }
+            DataContext = orderTracking;
         }
 
         private void btnOrderData_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                BO.Order order = blp.Order.Get(orderId);
+                BO.Order order = blp.Order.Get(orderTracking.ID);
                 new OrderWindow(order, blp, "User").Show();
                 this.Close();
             }
