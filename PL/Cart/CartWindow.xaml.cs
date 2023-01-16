@@ -29,6 +29,7 @@ namespace PL.Cart
         BO.OrderItem orderItem = new();
         public string isVisibleForUpdatingAnItemInAnOrder { get; set; } = "Hidden";
         public string isVisibleForUpdatingTheAmountOfAnItemInAnOrder { get; set; } = "Hidden";
+
         private ObservableCollection<BO.OrderItem> _orderItemCollection = new();
 
         public CartWindow(IBl bl)

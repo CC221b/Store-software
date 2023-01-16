@@ -30,6 +30,7 @@ internal class Product : IProduct
     }
     public IEnumerable<DO.Product> GetAll(Func<DO.Product, bool>? func = null)
     {
+        XElement xElement = XElement.Load(@"../xml/Products.xml");
         IEnumerable<DO.Product> p = new List<DO.Product>();
         return p;
     }
