@@ -1,0 +1,13 @@
+﻿<Window x:Class="PL.Cart.UpdateItemInCartWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Cart"
+        mc:Ignorable="d"
+        Title="UpdateItemInCartWindow" Height="200" Width="400">
+    <Grid>
+        <TextBox Name="txtUpdateAmount" HorizontalAlignment="Left" Height="40" Margin="40,52,0,0" TextWrapping="Wrap" Text="{Binding newAmount, Mode=OneWayToSource, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}"  VerticalAlignment="Top" Width="137"/>
+        <Button Name="btnUpdateAmount" Content="UpdateAmount" HorizontalAlignment="Left" Height="40" Margin="196,52,0,0" VerticalAlignment="Top" Width="137" Click="btnUpdateAmount_Click"/>
+    </Grid>
+</Window>

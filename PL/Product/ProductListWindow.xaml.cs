@@ -29,6 +29,18 @@ namespace PL.Product
         private ObservableCollection<BO.ProductForList> _productForListCollection = new();
         private ObservableCollection<BO.ProductItem> _productItemCollection = new();
 
+        public void WindowProductForListRefresh(Func<DO.Product, bool>? func = null)
+        {
+            _productForListCollection.Clear();
+            blp.Product.GetAll(func).ToList().ForEach(product => _productForListCollection.Add(product));
+        }
+
+        public void WindowProductItemsRefresh(Func<DO.Product, bool>? func = null)
+        {
+            _productItemCollection.Clear();
+            blp.Product.GetCatalog(func).ToList().ForEach(product => _productItemCollection.Add(product));
+        }
+
         public ProductListWindow(IBl bl, string status1)
         {
             InitializeComponent();
@@ -37,13 +49,13 @@ namespace PL.Product
             if (status == "Admin")
             {
                 ProductItemsListview.Visibility = Visibility.Hidden;
-                blp.Product.GetAll().ToList().ForEach(product => _productForListCollection.Add(product));
+                WindowProductForListRefresh();
                 ProductForListListview.DataContext = _productForListCollection;
             }
             else
             {
                 ProductForListListview.Visibility = Visibility.Hidden;
-                blp.Product.GetCatalog().ToList().ForEach(product => _productItemCollection.Add(product));
+                WindowProductItemsRefresh();
                 ProductItemsListview.DataContext = _productItemCollection;
             }
             CategorySelector.DataContext = Enum.GetValues(typeof(BO.Categories));
@@ -53,17 +65,9 @@ namespace PL.Product
         {
             BO.Categories selectedCategory = (BO.Categories)CategorySelector.SelectedItem;
             if (status == "Admin")
-            {
-                _productForListCollection.Clear();
-                blp.Product.GetAll(item => (item.Category == null ? null : (int)item.Category) == Convert.ToInt32(selectedCategory))
-                    .ToList().ForEach(product => _productForListCollection.Add(product));
-            }
+                WindowProductForListRefresh(item => (item.Category == null ? null : (int)item.Category) == Convert.ToInt32(selectedCategory));
             else
-            {
-                _productItemCollection.Clear();
-                blp.Product.GetCatalog(item => (item.Category == null ? null : (int)item.Category) == Convert.ToInt32(selectedCategory))
-                    .ToList().ForEach(product => _productItemCollection.Add(product));
-            }
+                WindowProductItemsRefresh(item => (item.Category == null ? null : (int)item.Category) == Convert.ToInt32(selectedCategory));
         }
 
         private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -75,8 +79,7 @@ namespace PL.Product
                     BO.ProductForList item = (BO.ProductForList)ProductForListListview.SelectedItem;
                     BO.Product product = blp.Product.Get(item.ID);
                     new ProductWindow(product, blp).ShowDialog();
-                    _productForListCollection.Clear();
-                    blp.Product.GetAll().ToList().ForEach(product => _productForListCollection.Add(product));
+                    WindowProductForListRefresh();
                 }
                 catch (Exception ex)
                 {
@@ -92,8 +95,7 @@ namespace PL.Product
                 {
                     BO.ProductItem item = (BO.ProductItem)ProductItemsListview.SelectedItem;
                     new ProductWindow(item, blp).ShowDialog();
-                    _productItemCollection.Clear();
-                    blp.Product.GetCatalog().ToList().ForEach(product => _productItemCollection.Add(product));
+                    WindowProductItemsRefresh();
                 }
                 catch (Exception ex)
                 {
@@ -108,8 +110,7 @@ namespace PL.Product
         private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
             new ProductWindow(blp).ShowDialog();
-            _productForListCollection.Clear();
-            blp.Product.GetAll().ToList().ForEach(product => _productForListCollection.Add(product));
+            WindowProductForListRefresh();
         }
 
         private void btnGoToCart_Click(object sender, RoutedEventArgs e)

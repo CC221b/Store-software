@@ -50,18 +50,14 @@ namespace PL.Order
             {
                 BO.Order order = blp.Order.Get(orderTracking.ID);
                 new OrderWindow(order, blp, "User").Show();
-                this.Close();
+                Close();
             }
             catch (Exception ex)
             {
                 if (ex.InnerException is null)
-                {
                     MessageBox.Show(ex.Message);
-                }
                 else
-                {
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-                }
             }
         }
     }

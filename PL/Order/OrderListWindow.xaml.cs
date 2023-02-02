@@ -25,11 +25,17 @@ namespace PL.Order
         private IBl blp;
         private ObservableCollection<BO.OrderForList> _orderForListCollection = new();
 
+        public void WindowRefresh()
+        {
+            _orderForListCollection.Clear();
+            blp.Order.GetAll().ToList().ForEach(order => _orderForListCollection.Add(order));
+        }
+
         public OrderListWindow(IBl bl)
         {
             InitializeComponent();
             blp = bl;
-            blp.Order.GetAll().ToList().ForEach(order => _orderForListCollection.Add(order));
+            WindowRefresh();
             OrderListview.DataContext = _orderForListCollection;
         }
 
@@ -49,8 +55,7 @@ namespace PL.Order
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
             }
             new OrderWindow(order, blp).Show();
-            _orderForListCollection.Clear();
-            blp.Order.GetAll().ToList().ForEach(order => _orderForListCollection.Add(order));
+            WindowRefresh(); 
             Close();
         }
     }

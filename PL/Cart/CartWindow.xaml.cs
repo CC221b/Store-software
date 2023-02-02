@@ -17,6 +17,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static System.Windows.Forms.AxHost;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Window = System.Windows.Window;
 
 namespace PL.Cart;
 
@@ -26,85 +28,37 @@ namespace PL.Cart;
 public partial class CartWindow : Window
 {
     private IBl blp;
-    int amount = 0;
-    double totalPrice = 0;
+    public double totalPrice { get; set; } = 0;
     BO.OrderItem orderItem = new();
     public string stateUpdatingItemInOrder { get; set; } = "Hidden";
-    public string stateUpdatingAmountOfItemInOrder { get; set; } = "Hidden";
 
     private ObservableCollection<BO.OrderItem> _orderItemCollection = new();
+
+    public void WindowRefresh()
+    {
+        _orderItemCollection.Clear();
+        MainWindow.cart?.Items?.ToList().ForEach(item => _orderItemCollection.Add(item ?? new BO.OrderItem()));
+        totalPrice = MainWindow.cart != null ? MainWindow.cart.TotalPrice : 0;
+        DataContext = new
+        {
+            StateUpdatingItemInOrder = stateUpdatingItemInOrder,
+            CartListView = _orderItemCollection,
+            TotalPrice = totalPrice
+        };
+    }
 
     public CartWindow(IBl bl)
     {
         InitializeComponent();
         blp = bl;
-        MainWindow.cart?.Items?.ToList().ForEach(item => _orderItemCollection.Add(item ?? new BO.OrderItem()));
-        //cartListView.DataContext = _orderItemCollection;
-        //txtTotalPrice.DataContext = totalPrice;
-        //txtChangeAmount.DataContext = amount;
-        totalPrice = MainWindow.cart != null ? MainWindow.cart.TotalPrice : 0;
-        DataContext = new
-        {
-            StateUpdatingItemInOrder = stateUpdatingItemInOrder,
-            StateUpdatingAmountOfItemInOrder = stateUpdatingAmountOfItemInOrder,
-            cartListView = _orderItemCollection,
-            txtChangeAmount = amount
-        };
-    }
-
-    private void btnChangeAmount_Click(object sender, RoutedEventArgs e)
-    {
-        stateUpdatingAmountOfItemInOrder = "Visible";
+        WindowRefresh();
     }
 
     private void cartListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        orderItem = (BO.OrderItem)cartListView.SelectedItem;
-        DataContext = new
-        {
-            StateUpdatingItemInOrder = "Visible",
-            StateUpdatingAmountOfItemInOrder = stateUpdatingAmountOfItemInOrder,
-            cartListView = _orderItemCollection,
-            txtChangeAmount = amount
-        };
-      
-    }
-
-    private void btnOkChangeAmount_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            blp.Cart.UpdateAmountOfProduct(MainWindow.cart, orderItem.ProductID, amount);
-            txtChangeAmount.Text = "";
-            stateUpdatingAmountOfItemInOrder = "Hidden";
-            _orderItemCollection.Clear();
-            MainWindow.cart?.Items?.ToList().ForEach(item => _orderItemCollection.Add(item ?? new BO.OrderItem()));
-        }
-        catch (Exception ex)
-        {
-            if (ex.InnerException is null)
-                MessageBox.Show(ex.Message);
-            else
-                MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-        }
-    }
-
-    private void btnRemoveItem_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            blp.Cart.UpdateAmountOfProduct(MainWindow.cart, orderItem.ProductID, 0);
-            MessageBox.Show("The item remove from the cart successfully!!");
-            _orderItemCollection.Clear();
-            MainWindow.cart?.Items?.ToList().ForEach(item => _orderItemCollection.Add(item ?? new BO.OrderItem()));
-        }
-        catch (Exception ex)
-        {
-            if (ex.InnerException is null)
-                MessageBox.Show(ex.Message);
-            else
-                MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
-        }
+        orderItem = (BO.OrderItem)CartListView.SelectedItem;
+        stateUpdatingItemInOrder = "Visible";
+        WindowRefresh();
     }
 
     private void btnMakeOrder_Click(object sender, RoutedEventArgs e)
@@ -112,6 +66,35 @@ public partial class CartWindow : Window
         new UserWindow(blp).ShowDialog();
         Close();
     }
+
+    private void cboxUpdateItemInCart_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (cboxUpdateItemInCart.SelectedValue.ToString() == "DeleteItemFromCart")
+        {
+            try
+            {
+                blp.Cart.UpdateAmountOfProduct(MainWindow.cart, orderItem.ProductID, 0);
+                MessageBox.Show("The item remove from the cart successfully!!");
+                stateUpdatingItemInOrder = "Hidden";
+                WindowRefresh();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException is null)
+                    MessageBox.Show(ex.Message);
+                else
+                    MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
+            }
+        }
+        else if (cboxUpdateItemInCart.SelectedValue.ToString() == "UpdateAmountOfItem")
+        {
+            new UpdateItemInCartWindow(blp, orderItem.ProductID).ShowDialog();
+            stateUpdatingItemInOrder = "Hidden";
+            WindowRefresh();
+        }
+        cboxUpdateItemInCart.SelectedItem = ClearTheSelect;
+    }
+
 }
 
 public class IsVisibleForUpdatingItemInOrder : IValueConverter
@@ -120,13 +103,9 @@ public class IsVisibleForUpdatingItemInOrder : IValueConverter
     {
         string StringValue = (string)value;
         if (StringValue == "Hidden")
-        {
             return Visibility.Hidden;
-        }
         else
-        {
             return Visibility.Visible;
-        }
     }
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -134,22 +113,3 @@ public class IsVisibleForUpdatingItemInOrder : IValueConverter
     }
 }
 
-public class IsVisibleForUpdatingAmountOfItemInOrder : IValueConverter
-{
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        string StringValue = (string)value;
-        if (StringValue == "Hidden")
-        {
-            return Visibility.Hidden;
-        }
-        else
-        {
-            return Visibility.Visible;
-        }
-    }
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
