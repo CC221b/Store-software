@@ -10,8 +10,22 @@ internal class Product : IProduct
 {
     public int Add(DO.Product product)
     {
-        XElement xElement = XElement.Load(@"../xml/Products.xml");
-        xElement.Add(product);
+        //IEnumerable<XmlElement> doc = XElement.Load(@"../xml/Products.xml");
+        //XmlElement? root = doc.DocumentElement;
+        //XmlElement Product = doc.CreateElement("Product");
+        //XmlElement Name = doc.CreateElement("Name");
+        //XmlElement Price = doc.CreateElement("Price");
+        //XmlElement ID = doc.CreateElement("ID");
+        //XmlElement InStock = doc.CreateElement("InStock");
+        //ID.InnerText = product.ID.ToString();
+        //Name.InnerText = product.Name;
+        //Price.InnerText = product.Price.ToString();
+        //InStock.InnerText = product.InStock.ToString();
+        //Product.AppendChild(Name);
+        //Product.AppendChild(ID);
+        //Product.AppendChild(Price);
+        //Product.AppendChild(InStock);
+        //root.AppendChild(Product);
         return product.ID;
     }
 
