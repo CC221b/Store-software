@@ -56,7 +56,10 @@ namespace PL.Product
             {
                 ProductForListListview.Visibility = Visibility.Hidden;
                 WindowProductItemsRefresh();
-                ProductItemsListview.DataContext = _productItemCollection;
+                ProductItemsListview.ItemsSource = _productItemCollection;
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(ProductItemsListview.ItemsSource);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+                view.GroupDescriptions.Add(groupDescription);
             }
             CategorySelector.DataContext = Enum.GetValues(typeof(BO.Categories));
         }
