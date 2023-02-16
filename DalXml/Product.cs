@@ -37,16 +37,22 @@ internal class Product : IProduct
 
     public int Add(DO.Product product)
     {
-        DO.Categories? c = product.Category;
-        string a = c.ToString() ?? "";
-        XElement id = new XElement("ID", product.ID);
-        XElement name = new XElement("Name", product.Name);
-        XElement price = new XElement("Price", product.Price);
-        XElement category = new XElement("Category", product.Category.ToString());
-        XElement inStock = new XElement("InStock", product.InStock);
-        productsRoot?.Add(new XElement("Product", id, name, price, category, inStock));
-        productsRoot?.Save(productsPath);
-        return product.ID;
+        try
+        {
+            Get(product.ID);
+        }
+        catch (Exception)
+        {
+            XElement id = new XElement("ID", product.ID);
+            XElement name = new XElement("Name", product.Name);
+            XElement price = new XElement("Price", product.Price);
+            XElement category = new XElement("Category", product.Category.ToString());
+            XElement inStock = new XElement("InStock", product.InStock);
+            productsRoot?.Add(new XElement("Product", id, name, price, category, inStock));
+            productsRoot?.Save(productsPath);
+            return product.ID;
+        }
+        throw new ExceptionExists();
     }
 
     public void Delete(int id)
@@ -69,15 +75,8 @@ internal class Product : IProduct
 
     public void Update(DO.Product product)
     {
-        XElement productElement = (from p in productsRoot?.Elements()
-                                   where Convert.ToInt32(p.Element("ID")?.Value) == product.ID
-                                   select p).FirstOrDefault() ?? throw new Exception();
-        productElement.Element("Name").Value = product.Name;
-        productElement.Element("Price").Value = product.Price.ToString();
-        productElement.Element("InStock").Value = product.InStock.ToString();
-        productElement.Element("category").Value = Convert.ToString(product.Category);
-        productsRoot?.Save(productsPath);
-
+        Delete(product.ID);
+        Add(product);
     }
 
     public DO.Product Get(int ID)

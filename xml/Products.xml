@@ -84,4 +84,11 @@
     <Category></Category>
     <InStock>123</InStock>
   </Product>
+  <Product>
+    <ID>66666</ID>
+    <Name>yhyhy</Name>
+    <Price>6666</Price>
+    <Category>Percussion</Category>
+    <InStock>88</InStock>
+  </Product>
 </Products>
