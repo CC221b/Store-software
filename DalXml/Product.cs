@@ -8,39 +8,82 @@ using static System.Net.Mime.MediaTypeNames;
 
 internal class Product : IProduct
 {
-    public class XmlElement
-    {
-        public XElement? productRoot { get; set; }
-        public string Path { get; set; } = @"../xml/Products.xml";
-    }
+    XElement? productsRoot;
+    string productsPath = @"../xml/Products.xml";
 
-    public XmlElement? xmlElement { get; set; }
+    public Product()
+    {
+        if (!File.Exists(productsPath))
+            CreateFiles();
+        else
+            LoadData();
+    }
+    private void CreateFiles()
+    {
+        productsRoot = new XElement("Products");
+        productsRoot.Save(productsPath);
+    }
+    private void LoadData()
+    {
+        try
+        {
+            productsRoot = XElement.Load(productsPath);
+        }
+        catch
+        {
+            Console.WriteLine("File upload problem");
+        }
+    }
 
     public int Add(DO.Product product)
     {
+        DO.Categories? c = product.Category;
+        string a = c.ToString() ?? "";
         XElement id = new XElement("ID", product.ID);
         XElement name = new XElement("Name", product.Name);
         XElement price = new XElement("Price", product.Price);
-        XElement inStock = new XElement("name", product.InStock);
-        XElement student = new XElement("student", id, name, price, inStock);
-        xmlElement?.productRoot?.Add(student);
-        xmlElement?.productRoot?.Save(xmlElement.Path);
+        XElement category = new XElement("Category", product.Category.ToString());
+        XElement inStock = new XElement("InStock", product.InStock);
+        productsRoot?.Add(new XElement("Product", id, name, price, category, inStock));
+        productsRoot?.Save(productsPath);
         return product.ID;
     }
 
     public void Delete(int id)
     {
+        XElement? productElement;
+        try
+        {
+            productElement = (from p in productsRoot?.Elements()
+                              where Convert.ToInt32(p.Element("ID")?.Value) == id
+                              select p).FirstOrDefault();
+            productElement?.Remove();
+            productsRoot?.Save(productsPath);
+        }
+        catch
+        {
+            throw new Exception();
+        }
 
     }
 
     public void Update(DO.Product product)
     {
+        XElement productElement = (from p in productsRoot?.Elements()
+                                   where Convert.ToInt32(p.Element("ID")?.Value) == product.ID
+                                   select p).FirstOrDefault() ?? throw new Exception();
+        productElement.Element("Name").Value = product.Name;
+        productElement.Element("Price").Value = product.Price.ToString();
+        productElement.Element("InStock").Value = product.InStock.ToString();
+        productElement.Element("category").Value = Convert.ToString(product.Category);
+        productsRoot?.Save(productsPath);
 
     }
 
     public DO.Product Get(int ID)
     {
-        XElement? product = XElement.Load(@"../xml/Products.xml").Descendants("Product")
+        LoadData();
+        XElement? product = productsRoot?.Elements()
             .Where(product => Convert.ToInt32(product?.Element("ID")?.Value) == ID).FirstOrDefault();
         if (product != null)
         {
@@ -64,11 +107,12 @@ internal class Product : IProduct
 
     public IEnumerable<DO.Product> GetAll(Func<DO.Product, bool>? func = null)
     {
-        if (XElement.Load(@"../xml/Products.xml").Descendants("Product").Count() == 0)
+        LoadData();
+        if (productsRoot?.Elements().Count() == 0)
         {
             throw new ExceptionEmpty();
         }
-        IEnumerable<DO.Product> products = from product in XElement.Load(@"../xml/Products.xml").Descendants("Product")
+        IEnumerable<DO.Product> products = from product in productsRoot?.Elements()
                                            let category = DO.Categories.TryParse(product?.Element("Category")?.Value, out DO.Categories category) ? (DO.Categories)category : 0
                                            select new DO.Product()
                                            {
