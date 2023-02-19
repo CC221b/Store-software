@@ -287,11 +287,4 @@
     <Price>1200</Price>
     <Amount>2</Amount>
   </OrderItem>
-  <OrderItem>
-    <ID>0</ID>
-    <ProductId>575423</ProductId>
-    <OrderId>0</OrderId>
-    <Price>400</Price>
-    <Amount>1</Amount>
-  </OrderItem>
 </ArrayOfOrderItem>

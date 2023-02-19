@@ -1,6 +1,8 @@
 ﻿namespace Dal;
 using DalApi;
+using DO;
 using System;
+using System.Xml.Linq;
 
 internal class OrderItem : IOrderItem
 {
@@ -9,6 +11,13 @@ internal class OrderItem : IOrderItem
         var listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>("OrderItems");
         if (listOrderItems.Exists(oi => oi.ID == orderItem.ID))
             throw new ExceptionExists();
+        XElement? element = XElement.Load(@"../xml/Config.xml")?.Element("OrderItemID");
+        orderItem.ID = Convert.ToInt32(element?.Value) + 1;
+        if (element != null)
+        {
+            element.Value = orderItem.ID.ToString();
+            element.Save(@"../xml/Config.xml");
+        }
         listOrderItems.Add(orderItem);
         XMLTools.SaveListToXMLSerializer(listOrderItems, "OrderItems");
         return orderItem.ID;

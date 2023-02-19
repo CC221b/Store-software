@@ -180,13 +180,4 @@
     <ShipDate>2023-02-17T17:48:28.9778331+02:00</ShipDate>
     <DeliveryDate>2023-02-22T17:48:28.9778331+02:00</DeliveryDate>
   </Order>
-  <Order>
-    <ID>0</ID>
-    <CustomerName>chnhhd</CustomerName>
-    <CustomerEmail>vcbcc@gmail.com</CustomerEmail>
-    <CustomerAdress>ccccc</CustomerAdress>
-    <OrderDate>2023-02-16T18:18:02.3520943+02:00</OrderDate>
-    <ShipDate>0001-01-01T00:00:00</ShipDate>
-    <DeliveryDate>0001-01-01T00:00:00</DeliveryDate>
-  </Order>
 </ArrayOfOrder>
