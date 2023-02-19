@@ -1,8 +1,4 @@
 ﻿<config>
-	<name>OrderID
-		<ID>222247</ID>
-	</name>
-	<name>OrderItemID
-		<ID>123497</ID>
-	</name>
+	<OrderID>222249</OrderID>
+	<OrderItemID>123498</OrderItemID>
 </config>

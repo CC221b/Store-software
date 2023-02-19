@@ -50,20 +50,6 @@
     <InStock>88</InStock>
   </Product>
   <Product>
-    <ID>575416</ID>
-    <Name>Pocket_Trumpet</Name>
-    <Price>3700</Price>
-    <Category>Stringed</Category>
-    <InStock>19</InStock>
-  </Product>
-  <Product>
-    <ID>575418</ID>
-    <Name>Contra_alto_Clarinet</Name>
-    <Price>620</Price>
-    <Category>Wind</Category>
-    <InStock>89</InStock>
-  </Product>
-  <Product>
     <ID>575422</ID>
     <Name>Semi_Acoustic_Violin</Name>
     <Price>3000</Price>
@@ -71,24 +57,38 @@
     <InStock>26</InStock>
   </Product>
   <Product>
-    <ID>575415</ID>
-    <Name>Piccolo_Trumpet</Name>
-    <Price>8700</Price>
-    <Category>Wind</Category>
-    <InStock>51</InStock>
-  </Product>
-  <Product>
     <ID>575414</ID>
     <Name>Electro_acoustic_Guitar</Name>
     <Price>900</Price>
     <Category>Stringed</Category>
-    <InStock>72</InStock>
+    <InStock>71</InStock>
+  </Product>
+  <Product>
+    <ID>575415</ID>
+    <Name>Piccolo_Trumpet</Name>
+    <Price>8700</Price>
+    <Category>Wind</Category>
+    <InStock>50</InStock>
+  </Product>
+  <Product>
+    <ID>575416</ID>
+    <Name>Pocket_Trumpet</Name>
+    <Price>3700</Price>
+    <Category>Stringed</Category>
+    <InStock>18</InStock>
+  </Product>
+  <Product>
+    <ID>575418</ID>
+    <Name>Contra_alto_Clarinet</Name>
+    <Price>620</Price>
+    <Category>Wind</Category>
+    <InStock>88</InStock>
   </Product>
   <Product>
     <ID>575423</ID>
     <Name>Five_string_Violin</Name>
     <Price>400</Price>
     <Category>Stringed</Category>
-    <InStock>43</InStock>
+    <InStock>41</InStock>
   </Product>
 </Products>

@@ -11,12 +11,14 @@ internal class OrderItem : IOrderItem
         var listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>("OrderItems");
         if (listOrderItems.Exists(oi => oi.ID == orderItem.ID))
             throw new ExceptionExists();
-        XElement? element = XElement.Load(@"../xml/Config.xml")?.Elements()
-            .Where(e => e.Element("name")?.Value.ToString() == "OrderItemID").FirstOrDefault();
-        orderItem.ID = Convert.ToInt32(element?.Element("ID")?.Value) + 1;
+        var element = XElement.Load(@"../xml/Config.xml").Elements()
+           .Where(e => e.Name == "OrderItemID").FirstOrDefault();
+        orderItem.ID = Convert.ToInt32(element?.Value) + 1;
         if (element != null)
         {
-            element.Value = orderItem.ID.ToString();
+            element.Remove();
+            XElement orderItemID = new XElement("OrderItemID", orderItem.ID);
+            element.Add(orderItemID);
             element.Save(@"../xml/Config.xml");
         }
         listOrderItems.Add(orderItem);

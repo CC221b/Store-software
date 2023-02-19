@@ -352,22 +352,15 @@
   </OrderItem>
   <OrderItem>
     <ID>1</ID>
-    <ProductId>575414</ProductId>
-    <OrderId>222247</OrderId>
-    <Price>900</Price>
+    <ProductId>575418</ProductId>
+    <OrderId>222250</OrderId>
+    <Price>620</Price>
     <Amount>1</Amount>
   </OrderItem>
   <OrderItem>
     <ID>1</ID>
     <ProductId>575423</ProductId>
-    <OrderId>222248</OrderId>
-    <Price>400</Price>
-    <Amount>1</Amount>
-  </OrderItem>
-  <OrderItem>
-    <ID>1</ID>
-    <ProductId>575423</ProductId>
-    <OrderId>222248</OrderId>
+    <OrderId>222250</OrderId>
     <Price>400</Price>
     <Amount>1</Amount>
   </OrderItem>
