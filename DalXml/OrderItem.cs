@@ -11,8 +11,8 @@ internal class OrderItem : IOrderItem
         var listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>("OrderItems");
         if (listOrderItems.Exists(oi => oi.ID == orderItem.ID))
             throw new ExceptionExists();
-        XElement? element = XElement.Load(@"../xml/ConfigOrderItemID.xml")?.Element("OrderItemID");
-        orderItem.ID = Convert.ToInt32(element?.Value) + 1;
+        XElement? element = XElement.Load(@"../xml/Config.xml")?.Elements().FirstOrDefault();
+        orderItem.ID = Convert.ToInt32(element?.Element("OrderItemID")?.Value) + 1;
         if (element != null)
         {
             element.Value = orderItem.ID.ToString();
