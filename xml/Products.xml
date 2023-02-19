@@ -50,25 +50,11 @@
     <InStock>97</InStock>
   </Product>
   <Product>
-    <ID>575415</ID>
-    <Name>Piccolo_Trumpet</Name>
-    <Price>8700</Price>
-    <Category>Wind</Category>
-    <InStock>55</InStock>
-  </Product>
-  <Product>
     <ID>575416</ID>
     <Name>Pocket_Trumpet</Name>
     <Price>3700</Price>
     <Category>Stringed</Category>
     <InStock>20</InStock>
-  </Product>
-  <Product>
-    <ID>575422</ID>
-    <Name>Semi_Acoustic_Violin</Name>
-    <Price>3000</Price>
-    <Category>Stringed</Category>
-    <InStock>29</InStock>
   </Product>
   <Product>
     <ID>575421</ID>
@@ -90,5 +76,19 @@
     <Price>6666</Price>
     <Category>Percussion</Category>
     <InStock>88</InStock>
+  </Product>
+  <Product>
+    <ID>575422</ID>
+    <Name>Semi_Acoustic_Violin</Name>
+    <Price>3000</Price>
+    <Category>Stringed</Category>
+    <InStock>28</InStock>
+  </Product>
+  <Product>
+    <ID>575415</ID>
+    <Name>Piccolo_Trumpet</Name>
+    <Price>8700</Price>
+    <Category>Wind</Category>
+    <InStock>54</InStock>
   </Product>
 </Products>
