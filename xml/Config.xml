@@ -1,2 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<config-IDs>222246</config-IDs>
+﻿<config>
+	<name>OrderID
+		<ID>222247</ID>
+	</name>
+	<name>OrderItemID
+		<ID>123497</ID>
+	</name>
+</config>

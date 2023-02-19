@@ -57,25 +57,11 @@
     <InStock>19</InStock>
   </Product>
   <Product>
-    <ID>575423</ID>
-    <Name>Five_string_Violin</Name>
-    <Price>400</Price>
-    <Category>Stringed</Category>
-    <InStock>45</InStock>
-  </Product>
-  <Product>
     <ID>575418</ID>
     <Name>Contra_alto_Clarinet</Name>
     <Price>620</Price>
     <Category>Wind</Category>
     <InStock>89</InStock>
-  </Product>
-  <Product>
-    <ID>575414</ID>
-    <Name>Electro_acoustic_Guitar</Name>
-    <Price>900</Price>
-    <Category>Stringed</Category>
-    <InStock>73</InStock>
   </Product>
   <Product>
     <ID>575422</ID>
@@ -90,5 +76,19 @@
     <Price>8700</Price>
     <Category>Wind</Category>
     <InStock>51</InStock>
+  </Product>
+  <Product>
+    <ID>575414</ID>
+    <Name>Electro_acoustic_Guitar</Name>
+    <Price>900</Price>
+    <Category>Stringed</Category>
+    <InStock>72</InStock>
+  </Product>
+  <Product>
+    <ID>575423</ID>
+    <Name>Five_string_Violin</Name>
+    <Price>400</Price>
+    <Category>Stringed</Category>
+    <InStock>43</InStock>
   </Product>
 </Products>

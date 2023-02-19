@@ -10,8 +10,9 @@ internal class Order : IOrder
         var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>("Orders");
         if (listOrders.Exists(oi => oi.ID == order.ID))
             throw new ExceptionExists();
-        XElement? element = XElement.Load(@"../xml/Config.xml")?.Elements().FirstOrDefault();
-        order.ID = Convert.ToInt32(element?.Element("OrderID")?.Value) + 1;
+        XElement? element = XElement.Load(@"../xml/Config.xml")?.Elements()
+            .Where(e => e.Element("name")?.Value.ToString() == "OrderID").FirstOrDefault();
+        order.ID = Convert.ToInt32(element?.Element("ID")?.Value) + 1;
         if (element != null)
         {
             element.Value = order.ID.ToString();
