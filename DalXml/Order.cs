@@ -10,12 +10,12 @@ internal class Order : IOrder
         var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>("Orders");
         if (listOrders.Exists(oi => oi.ID == order.ID))
             throw new ExceptionExists();
-        XElement? element = XElement.Load(@"../xml/Config.xml")?.Element("OrderID");
+        XElement? element = XElement.Load(@"../xml/ConfigOrderID.xml")?.Element("OrderID");
         order.ID = Convert.ToInt32(element?.Value) + 1;
         if (element != null)
         {
             element.Value = order.ID.ToString();
-            element.Save(@"../xml/Config.xml");
+            element.Save(@"../xml/ConfigOrderID.xml");
         }
         listOrders.Add(order);
         XMLTools.SaveListToXMLSerializer(listOrders, "Orders");
