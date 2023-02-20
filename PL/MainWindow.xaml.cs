@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BlApi;
+using SimulatorLib;
 
 namespace PL
 {
@@ -22,6 +23,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         IBl bl = BlApi.Factory.Get();
+        readonly Simulator? simulator;
         public static BO.Cart cart = new BO.Cart();
         int orderId = 0;
 

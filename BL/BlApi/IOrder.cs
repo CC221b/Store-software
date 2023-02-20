@@ -31,4 +31,9 @@ public interface IOrder
     /// </summary>
     /// <param name="order"></param>
     public void Update(BO.Order order, string action, DO.OrderItem? orderItem = null, int newAmount = 0);
+    /// <summary>
+    /// This function is intended to tell the Threads which order to update
+    /// in order to create a simulator of the system's behavior.
+    /// </summary>
+    public BO.OrderForList? GetOrderToSimulator();
 }

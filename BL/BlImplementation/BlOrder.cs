@@ -148,6 +148,7 @@ internal class BlOrder : IOrder
         }
         throw new BO.ExceptionNotExists();
     }
+
     public BO.OrderTracking GetOrderTracking(int id)
     {
         BO.Order order = new BO.Order();
@@ -247,5 +248,17 @@ internal class BlOrder : IOrder
                 throw new BO.ExceptionFromDal(ex);
             }
         }
+    }
+    
+    /// <summary>
+    /// The function will sort all orders by status and return the oldest order ID,
+    /// if it doesn't exist it will return NULL.
+    /// </summary>
+    /// <returns></returns>
+    public BO.OrderForList? GetOrderToSimulator()
+    {
+        IEnumerable<BO.OrderForList>? orders = GetAll();
+        orders.OrderBy(o => o.Status);
+        return orders.First().Status == BO.OrderStatus.ProvidedCustomerOrder ? null : orders.First();
     }
 }
