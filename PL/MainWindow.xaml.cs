@@ -78,5 +78,10 @@ namespace PL
             string? orderIdBeforeParse = this.txtOrderTracking.Text;
             int.TryParse(orderIdBeforeParse, out orderId);
         }
+
+        private void btnStartSimulator_Click(object sender, RoutedEventArgs e)
+        {
+            new Simulator(bl, simulator).Show();
+        }
     }
 }
