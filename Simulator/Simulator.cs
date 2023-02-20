@@ -2,7 +2,7 @@
 using BlImplementation;
 using System;
 
-namespace Simulator;
+namespace SimulatorLib;
 
 public class Simulator
 {
