@@ -8,13 +8,6 @@
     <InStock>81</InStock>
   </Product>
   <Product>
-    <ID>575417</ID>
-    <Name>Bass_Clarinet</Name>
-    <Price>22000</Price>
-    <Category>Wind</Category>
-    <InStock>55</InStock>
-  </Product>
-  <Product>
     <ID>575419</ID>
     <Name>Bass_Drumt</Name>
     <Price>600</Price>
@@ -34,13 +27,6 @@
     <Price>11000</Price>
     <Category>KeyBoard</Category>
     <InStock>27</InStock>
-  </Product>
-  <Product>
-    <ID>8888</ID>
-    <Name>jjjjj</Name>
-    <Price>526</Price>
-    <Category></Category>
-    <InStock>123</InStock>
   </Product>
   <Product>
     <ID>66666</ID>
@@ -71,13 +57,6 @@
     <InStock>50</InStock>
   </Product>
   <Product>
-    <ID>575416</ID>
-    <Name>Pocket_Trumpet</Name>
-    <Price>3700</Price>
-    <Category>Stringed</Category>
-    <InStock>18</InStock>
-  </Product>
-  <Product>
     <ID>575418</ID>
     <Name>Contra_alto_Clarinet</Name>
     <Price>620</Price>
@@ -85,10 +64,31 @@
     <InStock>88</InStock>
   </Product>
   <Product>
+    <ID>575417</ID>
+    <Name>Bass_Clarinet</Name>
+    <Price>22000</Price>
+    <Category>Wind</Category>
+    <InStock>54</InStock>
+  </Product>
+  <Product>
+    <ID>8888</ID>
+    <Name>jjjjj</Name>
+    <Price>526</Price>
+    <Category>Percussion</Category>
+    <InStock>122</InStock>
+  </Product>
+  <Product>
+    <ID>575416</ID>
+    <Name>Pocket_Trumpet</Name>
+    <Price>3700</Price>
+    <Category>Stringed</Category>
+    <InStock>16</InStock>
+  </Product>
+  <Product>
     <ID>575423</ID>
     <Name>Five_string_Violin</Name>
     <Price>400</Price>
     <Category>Stringed</Category>
-    <InStock>41</InStock>
+    <InStock>39</InStock>
   </Product>
 </Products>
