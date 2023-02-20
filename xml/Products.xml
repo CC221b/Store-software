@@ -43,13 +43,6 @@
     <InStock>26</InStock>
   </Product>
   <Product>
-    <ID>575414</ID>
-    <Name>Electro_acoustic_Guitar</Name>
-    <Price>900</Price>
-    <Category>Stringed</Category>
-    <InStock>71</InStock>
-  </Product>
-  <Product>
     <ID>575415</ID>
     <Name>Piccolo_Trumpet</Name>
     <Price>8700</Price>
@@ -90,5 +83,12 @@
     <Price>400</Price>
     <Category>Stringed</Category>
     <InStock>39</InStock>
+  </Product>
+  <Product>
+    <ID>575414</ID>
+    <Name>Electro_acoustic_Guitar</Name>
+    <Price>900</Price>
+    <Category>Stringed</Category>
+    <InStock>70</InStock>
   </Product>
 </Products>

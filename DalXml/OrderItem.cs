@@ -8,19 +8,9 @@ internal class OrderItem : IOrderItem
 {
     public int Add(DO.OrderItem orderItem)
     {
+        Config config = new();
         var listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>("OrderItems");
-        if (listOrderItems.Exists(oi => oi.ID == orderItem.ID))
-            throw new ExceptionExists();
-        var element = XDocument.Load(@"../xml/Config.xml")?.Root;
-        var res = element?.Element("OrderItemID");
-        orderItem.ID = Convert.ToInt32(res?.Value) + 1;
-        if (element != null)
-        {
-            res?.Remove();
-            XElement orderItemID = new XElement("OrderItemID", orderItem.ID);
-            element.Add(orderItemID);
-            element.Save(@"../xml/Config.xml");
-        }
+        orderItem.ID = config.OrderItemID;
         listOrderItems.Add(orderItem);
         XMLTools.SaveListToXMLSerializer(listOrderItems, "OrderItems");
         return orderItem.ID;
