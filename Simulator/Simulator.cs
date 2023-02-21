@@ -1,61 +1,56 @@
 ﻿using BlApi;
 using BlImplementation;
+using BO;
 using System;
 
 namespace SimulatorLib;
 
-public class Simulator
+public static class Simulator
 {
-    public event EventHandler? StatusChanged;
-    public delegate void StateChangeDel(BO.OrderStatus? prevState, DateTime startAt, BO.OrderStatus? newState, int durationInMinuts);
-    event StateChangeDel? StateChangedEvent;
-    volatile bool stopRequest = false;
-    Random random = new Random();
-    public IBl? blp;
+    public delegate void StatusChanged(BO.Order order, DateTime prev, DateTime next);
+    public static event StatusChanged? StatusChangedEvent = null;
+    public delegate void EndSimulator(DateTime end);
+    public static event EndSimulator? EndSimulatorEvent = null;
+    volatile private static bool stopRequest = false;
 
-    public Simulator GetInstance(IBl bl)
-    {
-        blp = bl;
-        return Nested.simulatorInstance;
-    }
-
-    class Nested
-    {
-        internal static readonly Simulator simulatorInstance = new Simulator();
-    }
-
-    public void SimulatorStart()
+    public static void SimulatorStart()
     {
         Thread thread = new Thread(SimulatorDo);
         stopRequest = false;
         thread.Start();
     }
 
-    public void SimulatorDo()
+    public static void SimulatorDo()
     {
+        IBl blp = BlApi.Factory.Get();
+        Random random = new Random();
         while (!stopRequest)
         {
-            BO.OrderForList? current = blp?.Order.GetOrderToSimulator();
-            if (current == null)
+            int? currentID = blp?.Order.GetOrderToSimulator();
+            if (currentID == null)
             {
                 stopRequest = true;
                 break;
             }
+            BO.Order? current = blp?.Order.Get(Convert.ToInt32(currentID));
             if (stopRequest) break;
             int treatTime = random.Next(2000, 10000);
-            BO.OrderStatus? prevState = current.Status;
+            BO.OrderStatus? prevState = current?.Status;
             DateTime startChangeAt = DateTime.Now;
-            StatusChanged?.Invoke(this, EventArgs.Empty);
             Thread.Sleep(treatTime);
-            if (current.Status == BO.OrderStatus.ConfirmedOrder)
-                blp?.Order.UpdateOrderShipping(current.ID);
+            if (current?.Status == BO.OrderStatus.ConfirmedOrder)
+                blp?.Order.UpdateOrderShipping(Convert.ToInt32(currentID));
             else
-                blp?.Order.UpdateOrderDelivery(current.ID);
-            StateChangedEvent?.Invoke(prevState, startChangeAt, current.Status, treatTime / 1000);
+                blp?.Order.UpdateOrderDelivery(Convert.ToInt32(currentID));
+            DateTime endChangeAt = DateTime.Now;
+            if (StatusChangedEvent!= null)
+                StatusChangedEvent(current, startChangeAt, endChangeAt);
         }
+        if (EndSimulatorEvent!=null)
+            EndSimulatorEvent(DateTime.Now);
     }
 
-    public void SimulatorStop()
+    public static void SimulatorStop()
     {
         stopRequest = true;
     }

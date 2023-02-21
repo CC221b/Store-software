@@ -26,7 +26,9 @@ internal class Order : IOrder
     public void Update(DO.Order order)
     {
         Delete(order.ID);
-        Add(order);
+        var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>("Orders");
+        listOrders.Add(order);
+        XMLTools.SaveListToXMLSerializer(listOrders, "Orders");
     }
 
     public DO.Order Get(int ID)

@@ -35,5 +35,5 @@ public interface IOrder
     /// This function is intended to tell the Threads which order to update
     /// in order to create a simulator of the system's behavior.
     /// </summary>
-    public BO.OrderForList? GetOrderToSimulator();
+    public int? GetOrderToSimulator();
 }

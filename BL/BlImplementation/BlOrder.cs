@@ -133,7 +133,7 @@ internal class BlOrder : IOrder
         {
             DO.Order orderTypeDO = new DO.Order();
             orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
-            if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now) > 0)
+            if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now) < 0)
             {
                 BO.Order orderTypeBO = new BO.Order();
                 orderTypeDO.DeliveryDate = DateTime.Now;
@@ -255,10 +255,11 @@ internal class BlOrder : IOrder
     /// if it doesn't exist it will return NULL.
     /// </summary>
     /// <returns></returns>
-    public BO.OrderForList? GetOrderToSimulator()
+    public int? GetOrderToSimulator()
     {
-        IEnumerable<BO.OrderForList>? orders = GetAll();
-        orders.OrderBy(o => o.Status);
-        return orders.First().Status == BO.OrderStatus.ProvidedCustomerOrder ? null : orders.First();
+        IEnumerable<DO.Order>? orders = Dal?.Order.GetAll()
+            .Where(order => order.DeliveryDate == DateTime.MinValue)
+            .OrderBy(order => order.ShipDate != DateTime.MinValue ? order.ShipDate : order.OrderDate);
+        return orders != null ? orders.First().ID : null;
     }
 }

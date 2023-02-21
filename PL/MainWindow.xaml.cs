@@ -23,7 +23,6 @@ namespace PL
     public partial class MainWindow : Window
     {
         IBl bl = BlApi.Factory.Get();
-        readonly Simulator simulator = new();
         public static BO.Cart cart = new BO.Cart();
         int orderId = 0;
 
@@ -81,7 +80,7 @@ namespace PL
 
         private void btnStartSimulator_Click(object sender, RoutedEventArgs e)
         {
-            //new Simulator(bl, simulator).Show();
+            new Order.SimulatorWindow().Show();
         }
     }
 }
