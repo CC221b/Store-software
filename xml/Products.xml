@@ -78,17 +78,17 @@
     <InStock>16</InStock>
   </Product>
   <Product>
-    <ID>575423</ID>
-    <Name>Five_string_Violin</Name>
-    <Price>400</Price>
-    <Category>Stringed</Category>
-    <InStock>39</InStock>
-  </Product>
-  <Product>
     <ID>575414</ID>
     <Name>Electro_acoustic_Guitar</Name>
     <Price>900</Price>
     <Category>Stringed</Category>
-    <InStock>69</InStock>
+    <InStock>68</InStock>
+  </Product>
+  <Product>
+    <ID>575423</ID>
+    <Name>Five_string_Violin</Name>
+    <Price>400</Price>
+    <Category>Stringed</Category>
+    <InStock>38</InStock>
   </Product>
 </Products>

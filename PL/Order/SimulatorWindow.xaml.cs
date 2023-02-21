@@ -29,7 +29,7 @@ namespace PL.Order
         BackgroundWorker timerWorker;
         private Stopwatch stopWatch;
         private bool isTimerRun;
-        
+
         public SimulatorWindow()
         {
             InitializeComponent();
@@ -56,19 +56,21 @@ namespace PL.Order
             Simulator.StatusChangedEvent += StatusChanged;
             e.Result = "finished ok!";
         }
-        public void StatusChanged(BO.Order? order, DateTime prev, DateTime next)
+        public void StatusChanged(BO.Order? order, string newStatus, DateTime prev, DateTime next)
         {
             this.Dispatcher.Invoke(() =>
             {
                 txtsim.Text = $"The result for this order: " + order?.ID.ToString() + "\n" +
                 $"Previous status: " + order?.Status.ToString() + "\n" +
-                $"begin to change at: " + $" {prev} \n" +
-                $"now:  {next}  ";
+                $"Current status: " + newStatus + "\n" +
+                    $"begin to change at: " + $" {prev} \n" +
+                    $"now:  {next}  ";
             });
         }
         private void StopSimulator_Click(object sender, RoutedEventArgs e)
         {
             Simulator.SimulatorStop();
+            Close();
         }
 
         public void EndSimulator(DateTime end)

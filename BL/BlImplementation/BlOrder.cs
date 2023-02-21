@@ -67,9 +67,9 @@ internal class BlOrder : IOrder
                 orderTypeBO.ShipDate = orderTypeDO.ShipDate ?? throw new BO.ExceptionNull();
                 orderTypeBO.OrderDate = orderTypeDO.OrderDate ?? throw new BO.ExceptionNull();
                 orderTypeBO.DeliveryDate = orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull();
-                if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now) <= 0)
+                if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), Convert.ToDateTime(orderTypeDO.OrderDate)) >= 0)
                     orderTypeBO.Status = BO.OrderStatus.SendOrder;
-                else if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now) <= 0)
+                else if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), Convert.ToDateTime(orderTypeDO.OrderDate)) >= 0)
                     orderTypeBO.Status = BO.OrderStatus.ProvidedCustomerOrder;
                 else
                     orderTypeBO.Status = BO.OrderStatus.ConfirmedOrder;
@@ -102,7 +102,7 @@ internal class BlOrder : IOrder
         {
             DO.Order orderTypeDO = new DO.Order();
             orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
-            if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now) > 0)
+            if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now) < 0)
             {
                 BO.Order orderTypeBO = new BO.Order();
                 orderTypeDO.ShipDate = DateTime.Now;
@@ -249,7 +249,7 @@ internal class BlOrder : IOrder
             }
         }
     }
-    
+
     /// <summary>
     /// The function will sort all orders by status and return the oldest order ID,
     /// if it doesn't exist it will return NULL.
@@ -260,6 +260,6 @@ internal class BlOrder : IOrder
         IEnumerable<DO.Order>? orders = Dal?.Order.GetAll()
             .Where(order => order.DeliveryDate == DateTime.MinValue)
             .OrderBy(order => order.ShipDate != DateTime.MinValue ? order.ShipDate : order.OrderDate);
-        return orders != null ? orders.First().ID : null;
+        return orders?.Any() ?? false ? orders?.First().ID : null;
     }
 }
