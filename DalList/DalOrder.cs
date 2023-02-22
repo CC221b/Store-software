@@ -1,12 +1,14 @@
 ﻿using DalApi;
 using DO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 
 namespace Dal;
 
 internal class DalOrder : IOrder
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(int id)
     {
         Order order1 = (from order in DataSource.s_orderList
@@ -18,12 +20,12 @@ internal class DalOrder : IOrder
         }
         throw new ExceptionNotExists();
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(Predicate<Order> func)
     {
         return DataSource.s_orderList.Find(func);
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order o)
     {
         try
@@ -43,7 +45,7 @@ internal class DalOrder : IOrder
         }
         throw new ExceptionExists();
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order> GetAll(Func<Order, bool>? func = null)
     {
         if (DataSource.s_orderList.Count == 0)
@@ -52,12 +54,13 @@ internal class DalOrder : IOrder
         }
         return (func == null) ? DataSource.s_orderList.OrderBy(item => item.ID) : DataSource.s_orderList.Where(func).OrderBy(item => item.ID);
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     private List<string> getAll(Func<string, bool>? func = null)
     {
         List<string> result = new List<string>();
         return (func == null) ? result : result.Where(func).ToList();
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order o)
     {
         try
@@ -71,7 +74,7 @@ internal class DalOrder : IOrder
             throw ex == null ? new ExceptionNull() : ex;
         }
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         try

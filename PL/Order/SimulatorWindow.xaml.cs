@@ -29,6 +29,7 @@ namespace PL.Order
         BackgroundWorker timerWorker;
         private Stopwatch stopWatch;
         private bool isTimerRun;
+        bool flagClose = true;
 
         public SimulatorWindow()
         {
@@ -54,7 +55,8 @@ namespace PL.Order
         {
             Simulator.SimulatorStart();
             Simulator.StatusChangedEvent += StatusChanged;
-            e.Result = "finished ok!";
+            Simulator.EndSimulatorEvent += EndSimulator;
+            if (!Dispatcher.Thread.IsAlive) { e.Cancel = false; }
         }
         public void StatusChanged(BO.Order? order, string newStatus, DateTime prev, DateTime next)
         {
@@ -70,21 +72,20 @@ namespace PL.Order
         private void StopSimulator_Click(object sender, RoutedEventArgs e)
         {
             Simulator.SimulatorStop();
-            Close();
+            flagClose = false;
+            Close();    
         }
 
-        public void EndSimulator(DateTime end)
+        public void EndSimulator(DateTime end, string reasonStop)
         {
             this.Dispatcher.Invoke(() =>
             {
                 isTimerRun = false;
-                MessageBox.Show(end.ToString());
-            });
-        }
-
-        private void MyWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            e.Cancel = true;
+                if (reasonStop != "")
+                {
+                    MessageBox.Show("Finishing the simulator: " + end.ToString() + "\n" + "Becouse: " + reasonStop);
+                }       
+            }); 
         }
 
         private void WorkerTimer_ProgressChangedTimer(object? sender, ProgressChangedEventArgs e)
@@ -108,6 +109,11 @@ namespace PL.Order
                 stopWatch.Stop();
                 isTimerRun = false;
             }
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = flagClose;
         }
     }
 }

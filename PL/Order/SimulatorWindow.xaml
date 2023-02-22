@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
+        Closing="MainWindow_Closing"
         Title="SimulatorWindow" Height="450" Width="800">
     <Grid>
         <TextBox Name="txtsim" HorizontalAlignment="Left" Height="121" Margin="54,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="399"/>

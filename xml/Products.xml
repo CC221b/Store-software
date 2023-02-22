@@ -8,13 +8,6 @@
     <InStock>81</InStock>
   </Product>
   <Product>
-    <ID>575419</ID>
-    <Name>Bass_Drumt</Name>
-    <Price>600</Price>
-    <Category>Percussion</Category>
-    <InStock>44</InStock>
-  </Product>
-  <Product>
     <ID>575420</ID>
     <Name>Grand_Piano</Name>
     <Price>1450</Price>
@@ -22,73 +15,80 @@
     <InStock>97</InStock>
   </Product>
   <Product>
-    <ID>575421</ID>
-    <Name>Upright_Piano</Name>
-    <Price>11000</Price>
-    <Category>KeyBoard</Category>
-    <InStock>27</InStock>
+    <ID>575422</ID>
+    <Name>Semi_Acoustic_Violin</Name>
+    <Price>3000</Price>
+    <Category>Stringed</Category>
+    <InStock>24</InStock>
   </Product>
   <Product>
     <ID>66666</ID>
     <Name>yhyhy</Name>
     <Price>6666</Price>
     <Category>Percussion</Category>
-    <InStock>88</InStock>
+    <InStock>87</InStock>
   </Product>
   <Product>
-    <ID>575422</ID>
-    <Name>Semi_Acoustic_Violin</Name>
-    <Price>3000</Price>
-    <Category>Stringed</Category>
+    <ID>575421</ID>
+    <Name>Upright_Piano</Name>
+    <Price>11000</Price>
+    <Category>Percussion</Category>
     <InStock>26</InStock>
-  </Product>
-  <Product>
-    <ID>575415</ID>
-    <Name>Piccolo_Trumpet</Name>
-    <Price>8700</Price>
-    <Category>Wind</Category>
-    <InStock>50</InStock>
   </Product>
   <Product>
     <ID>575418</ID>
     <Name>Contra_alto_Clarinet</Name>
     <Price>620</Price>
     <Category>Wind</Category>
-    <InStock>88</InStock>
-  </Product>
-  <Product>
-    <ID>575417</ID>
-    <Name>Bass_Clarinet</Name>
-    <Price>22000</Price>
-    <Category>Wind</Category>
-    <InStock>54</InStock>
-  </Product>
-  <Product>
-    <ID>8888</ID>
-    <Name>jjjjj</Name>
-    <Price>526</Price>
-    <Category>Percussion</Category>
-    <InStock>122</InStock>
-  </Product>
-  <Product>
-    <ID>575416</ID>
-    <Name>Pocket_Trumpet</Name>
-    <Price>3700</Price>
-    <Category>Stringed</Category>
-    <InStock>16</InStock>
-  </Product>
-  <Product>
-    <ID>575414</ID>
-    <Name>Electro_acoustic_Guitar</Name>
-    <Price>900</Price>
-    <Category>Stringed</Category>
-    <InStock>68</InStock>
+    <InStock>87</InStock>
   </Product>
   <Product>
     <ID>575423</ID>
     <Name>Five_string_Violin</Name>
     <Price>400</Price>
     <Category>Stringed</Category>
-    <InStock>38</InStock>
+    <InStock>35</InStock>
+  </Product>
+  <Product>
+    <ID>575417</ID>
+    <Name>Bass_Clarinet</Name>
+    <Price>22000</Price>
+    <Category>Wind</Category>
+    <InStock>53</InStock>
+  </Product>
+  <Product>
+    <ID>575415</ID>
+    <Name>Piccolo_Trumpet</Name>
+    <Price>8700</Price>
+    <Category>Wind</Category>
+    <InStock>49</InStock>
+  </Product>
+  <Product>
+    <ID>575414</ID>
+    <Name>Electro_acoustic_Guitar</Name>
+    <Price>900</Price>
+    <Category>Stringed</Category>
+    <InStock>66</InStock>
+  </Product>
+  <Product>
+    <ID>575419</ID>
+    <Name>Bass_Drumt</Name>
+    <Price>600</Price>
+    <Category>Percussion</Category>
+    <InStock>41</InStock>
+  </Product>
+  <Product>
+    <ID>575416</ID>
+    <Name>Pocket_Trumpet</Name>
+    <Price>3700</Price>
+    <Category>Stringed</Category>
+    <InStock>13</InStock>
+  </Product>
+  <Product>
+    <ID>8888</ID>
+    <Name>jjjjj</Name>
+    <Price>526</Price>
+    <Category>Percussion</Category>
+    <InStock>121</InStock>
   </Product>
 </Products>

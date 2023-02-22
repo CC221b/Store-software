@@ -1,10 +1,12 @@
 ﻿namespace Dal;
 using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
 internal class Order : IOrder
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Order order)
     {
         Config config = new();
@@ -14,7 +16,7 @@ internal class Order : IOrder
         XMLTools.SaveListToXMLSerializer(listOrders, "Orders");
         return order.ID;
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>("Orders");
@@ -22,7 +24,7 @@ internal class Order : IOrder
             throw new ExceptionNotExists();
         XMLTools.SaveListToXMLSerializer(listOrders, "Orders");
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Order order)
     {
         Delete(order.ID);
@@ -30,7 +32,7 @@ internal class Order : IOrder
         listOrders.Add(order);
         XMLTools.SaveListToXMLSerializer(listOrders, "Orders");
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order Get(int ID)
     {
         DO.Order order = XMLTools.LoadListFromXMLSerializer<DO.Order>("Orders")
@@ -41,12 +43,12 @@ internal class Order : IOrder
         }
         throw new ExceptionNotExists();
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order Get(Predicate<DO.Order> func)
     {
         return XMLTools.LoadListFromXMLSerializer<DO.Order>("Orders").Find(func);
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Order> GetAll(Func<DO.Order, bool>? func = null)
     {
         var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>("Orders");
