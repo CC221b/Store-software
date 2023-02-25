@@ -420,4 +420,11 @@
     <Price>900</Price>
     <Amount>1</Amount>
   </OrderItem>
+  <OrderItem>
+    <ID>123524</ID>
+    <ProductId>575420</ProductId>
+    <OrderId>222279</OrderId>
+    <Price>1450</Price>
+    <Amount>1</Amount>
+  </OrderItem>
 </ArrayOfOrderItem>

@@ -29,5 +29,6 @@
             <ComboBoxItem Name="DeleteItemFromCart" Content="DeleteItemFromCart"/>
             <ComboBoxItem Name="UpdateAmountOfItem" Content="UpdateAmountOfItem"/>
         </ComboBox>
+        <TextBlock x:Name="txtBlockInstructions" HorizontalAlignment="Left" Height="83" Margin="28,326,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="535" FontSize="14" TextDecorations="Underline"/>
     </Grid>
 </Window>

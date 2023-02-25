@@ -22,6 +22,7 @@
             <ComboBox Name="CategorySelector" ItemsSource="{Binding}" Grid.Column="1"  HorizontalAlignment="Stretch" Height="21" Margin="0,31,0,0" VerticalAlignment="Stretch" Width="136" SelectionChanged="CategorySelector_SelectionChanged"/>
             <Label Name="lblCategorySelector" Grid.Column="1" Content="Choose a category:" HorizontalAlignment="Left" Height="36" Margin="32,68,0,0" VerticalAlignment="Top" Width="139"/>
             <Label Name="lblProductList" Content="ProductList" HorizontalAlignment="Center" Height="44" Margin="0,76,0,0" VerticalAlignment="Top" Width="152" FontWeight="Bold" FontSize="18"/>
+            <Button Name="btnShowAllProducts" Grid.Column="2" Content="Show All" HorizontalAlignment="Left" Height="26" Margin="0,104,0,0" VerticalAlignment="Top" Width="70" Click="btnShowAllProducts_Click"/>
         </Grid>
         <ListView x:Name="ProductForListListview" ItemsSource="{Binding UpdateSourceTrigger=LostFocus}" Margin="55,26,292,36" Grid.RowSpan="2" MouseDoubleClick="ProductsListview_MouseDoubleClick" Grid.Row="1">
             <ListView.View>

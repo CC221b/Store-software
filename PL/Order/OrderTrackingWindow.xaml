@@ -7,13 +7,18 @@
         mc:Ignorable="d"
         Title="OrderTrackingWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid Name="orderTrackingDataGrid" ItemsSource="{Binding Path=DateAndStatus}" HorizontalAlignment="Left" Height="139" Margin="34,127,0,0" VerticalAlignment="Top" Width="226" d:ItemsSource="{d:SampleData ItemCount=5}" Visibility="{Binding isVisibleForErrorInOrderTrackingWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}"/>
         <Label Name="lblOrderTracking" Content="OrderTracking:" HorizontalAlignment="Left" Height="30" Margin="32,10,0,0" VerticalAlignment="Top" Width="141" FontSize="16" FontWeight="Bold"/>
         <Label Name="lblOrderID" Content="OrderId:" HorizontalAlignment="Left" Height="28" Margin="34,45,0,0" VerticalAlignment="Top" Width="111"/>
-        <Label Name="lblOrderStatus" Visibility="{Binding isVisibleForErrorInOrderTrackingWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}" Content="OrderStatus:" HorizontalAlignment="Left" Height="49" Margin="34,88,0,0" VerticalAlignment="Top" Width="120"/>
         <TextBox Name="txtOrderID" HorizontalAlignment="Left" Height="28" Margin="102,45,0,0" TextWrapping="Wrap" Text="{Binding Path=ID}" VerticalAlignment="Top" Width="54"/>
-        <TextBox Name="txtOrderStatus" HorizontalAlignment="Left" Height="28" Margin="129,88,0,0" TextWrapping="Wrap" Text="{Binding Path=Status}" VerticalAlignment="Top" Width="99" RenderTransformOrigin="-0.055,0.654" Visibility="{Binding isVisibleForErrorInOrderTrackingWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}"/>
-        <Label Name="lblErrorMessage" Content="" HorizontalAlignment="Left" Height="34" Margin="34,84,0,0" VerticalAlignment="Top" Width="552"/>
-        <Button Name="btnOrderData" Content="OrderData" HorizontalAlignment="Left" Height="34" Margin="645,25,0,0" VerticalAlignment="Top" Width="113" Click="btnOrderData_Click"/>
+        <Grid Visibility="{Binding isVisibleForExistsOrderWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}">
+            <DataGrid Name="orderTrackingDataGrid" ItemsSource="{Binding Path=DateAndStatus}" HorizontalAlignment="Left" Height="139" Margin="34,127,0,0" VerticalAlignment="Top" Width="290" d:ItemsSource="{d:SampleData ItemCount=3}"/>
+            <Label Name="lblOrderStatus" Content="OrderStatus:" HorizontalAlignment="Left" Height="49" Margin="34,88,0,0" VerticalAlignment="Top" Width="120"/>
+            <TextBox Name="txtOrderStatus" HorizontalAlignment="Left" Height="28" Margin="129,88,0,0" TextWrapping="Wrap" Text="{Binding Path=Status}" VerticalAlignment="Top" Width="150" RenderTransformOrigin="-0.055,0.654"/>
+            <Button Name="btnOrderData" Content="OrderData" HorizontalAlignment="Left" Height="34" Margin="645,25,0,0" VerticalAlignment="Top" Width="113" Click="btnOrderData_Click"/>
+        </Grid>
+        <Grid Visibility="{Binding isVisibleForNotExistsOrderWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}">
+            <Label Name="lblErrorMessage" Content="" HorizontalAlignment="Left" Height="34" Margin="34,84,0,0" VerticalAlignment="Top" Width="552"/>
+            <Button Name="btnOkExit" Content="OK" HorizontalAlignment="Left" Height="28" Margin="38,118,0,0" VerticalAlignment="Top" Width="52" Click="btnOkExit_Click"/>
+        </Grid>
     </Grid>
 </Window>

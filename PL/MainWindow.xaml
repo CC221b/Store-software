@@ -5,14 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="857">
+    <Window.Resources>
+        <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
     <Grid>
-        <Button Name="btnAdmin" Visibility="{Binding isVisibleForUserWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}" Content="Admin" HorizontalAlignment="Left" Height="37" Margin="81,56,0,0" VerticalAlignment="Top" Width="122" Click="btnAdmin_Click"/>
-        <Button Name="btnShowProductsAdmin" Visibility="{Binding isVisibleForAdminWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}" Content="ShowProducts" HorizontalAlignment="Left" Height="41" Margin="82,15,0,0" VerticalAlignment="Top" Width="120" Click="btnShowProductsAdmin_Click"/>
-        <Button Name="btnShowOrdersAdmin" Visibility="{Binding isVisibleForAdminWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}" Content="ShowOrders" HorizontalAlignment="Left" Height="41" Margin="240,15,0,0" VerticalAlignment="Top" Width="120" Click="btnShowOrdersAdmin_Click"/>
-        <Button Name="btnNewOrder" Visibility="{Binding isVisibleForUserWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}" Content="New Order" HorizontalAlignment="Left" Height="37" Margin="240,56,0,0" VerticalAlignment="Top" Width="122" Click="btnNewOrder_Click"/>
-        <Button Name="btnOrderTracking" Visibility="{Binding isVisibleForUserWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}" Content="OrderTracking" HorizontalAlignment="Left" Height="37" Margin="399,56,0,0" VerticalAlignment="Top" Width="122" Click="btnOrderTracking_Click"/>
-        <TextBox Name="txtOrderTracking" Visibility="{Binding isVisibleForUserWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}" HorizontalAlignment="Left" Height="30" Margin="399,100,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="122" TextChanged="txtOrderTracking_TextChanged"/>
-        <Button Name="btnStartSimulator" Visibility="{Binding isVisibleForUserWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}" Content="StartSimulator" HorizontalAlignment="Left" Height="51" Margin="65,277,0,0" VerticalAlignment="Top" Width="137" Click="btnStartSimulator_Click"/>
+        <Grid Visibility="{Binding AdminWindowVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Button Name="btnShowProductsAdmin" Content="ShowProducts" HorizontalAlignment="Left" Height="41" Margin="82,15,0,0" VerticalAlignment="Top" Width="120" Click="btnShowProductsAdmin_Click"/>
+            <Button Name="btnShowOrdersAdmin" Content="ShowOrders" HorizontalAlignment="Left" Height="41" Margin="240,15,0,0" VerticalAlignment="Top" Width="120" Click="btnShowOrdersAdmin_Click"/>
+            <Button Name="btnMainWindow" Content="return main window" HorizontalAlignment="Left" Height="41" Margin="623,362,0,0" VerticalAlignment="Top" Width="135" Click="btnMainWindow_Click"/>
+        </Grid>
+        <Grid Visibility="{Binding UserWindowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,-36">
+            <Button Name="btnAdmin" Content="Admin" HorizontalAlignment="Left" Height="37" Margin="81,56,0,0" VerticalAlignment="Top" Width="122" Click="btnAdmin_Click"/>
+            <Button Name="btnNewOrder" Content="New Order" HorizontalAlignment="Left" Height="37" Margin="240,56,0,0" VerticalAlignment="Top" Width="122" Click="btnNewOrder_Click"/>
+            <Border BorderThickness="1" BorderBrush="Black" Height="120" Width="180" Margin="561,22,59,292">
+                <StackPanel Margin="-1,-1,11,11">
+                <Button Name="btnOrderTracking" Content="OrderTracking" HorizontalAlignment="Left" Height="37" Margin="28,20,0,0" VerticalAlignment="Top" Width="122" Click="btnOrderTracking_Click"/>
+                <TextBox Name="txtOrderTracking" HorizontalAlignment="Left" Height="30" Margin="28,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="122" TextChanged="txtOrderTracking_TextChanged"/>
+                </StackPanel>
+            </Border>
+            <Button Name="btnStartSimulator" Content="StartSimulator" HorizontalAlignment="Left" Height="37" Margin="400,56,0,0" VerticalAlignment="Top" Width="122" Click="btnStartSimulator_Click" RenderTransformOrigin="0.399,0.539"/>
+        </Grid>
     </Grid>
 </Window>

@@ -23,7 +23,8 @@ namespace PL.Order
     {
         private IBl blp;
         BO.OrderTracking orderTracking = new();
-        public string isVisibleForErrorInOrderTrackingWindow { get; set; } = "Visible";
+        public string isVisibleForExistsOrderWindow { get; set; } = "Visible";
+        public string isVisibleForNotExistsOrderWindow { get; set; } = "Hidden";
 
         public OrderTrackingWindow(IBl bl, int orderId1)
         {
@@ -33,13 +34,12 @@ namespace PL.Order
             try
             {
                 orderTracking = bl.Order.GetOrderTracking(orderTracking.ID);
-                lblErrorMessage.Visibility = Visibility.Hidden;
             }
             catch (Exception)
             {
-                btnOrderData.Visibility = Visibility.Hidden;
+                isVisibleForExistsOrderWindow = "Hidden";
+                isVisibleForNotExistsOrderWindow = "Visible";
                 lblErrorMessage.Content = "Sorry, no order found.";
-                isVisibleForErrorInOrderTrackingWindow = "Hidden";
             }
             DataContext = orderTracking;
         }
@@ -59,6 +59,11 @@ namespace PL.Order
                 else
                     MessageBox.Show(ex.Message + "\n" + ex.InnerException.Message);
             }
+        }
+
+        private void btnOkExit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

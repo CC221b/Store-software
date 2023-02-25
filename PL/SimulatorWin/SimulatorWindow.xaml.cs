@@ -56,7 +56,6 @@ namespace PL.SimulatorWin
                 Simulator.SimulatorStart();
                 Simulator.StatusChangedEvent += StatusChanged;
                 Simulator.EndSimulatorEvent += EndSimulator;
-                if (!Dispatcher.Thread.IsAlive) { e.Cancel = false; }
                 while (isTimerRun)
                 {
                     Worker.ReportProgress(1);

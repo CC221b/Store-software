@@ -28,8 +28,8 @@ internal class BlOrder : IOrder
                             ID = item.ID,
                             CustomerName = item.CustomerName,
                             Status =
-                             resultCompareShipDate <= 0 ? BO.OrderStatus.SendOrder :
-                             resultCompareDeliveryDate <= 0 ? BO.OrderStatus.ProvidedCustomerOrder :
+                              resultCompareDeliveryDate <= 0 ? BO.OrderStatus.ProvidedCustomerOrder :
+                              resultCompareShipDate <= 0 ? BO.OrderStatus.SendOrder :
                              BO.OrderStatus.ConfirmedOrder,
                             AmountOfItems = orderItems != null ? orderItems.Count() : throw new BO.ExceptionNull(),
                             TotalPrice = orderItems != null ? orderItems.Sum(item => item.Price) : throw new BO.ExceptionNull()
@@ -72,10 +72,10 @@ internal class BlOrder : IOrder
                     orderTypeBO.ShipDate = orderTypeDO.ShipDate ?? throw new BO.ExceptionNull();
                     orderTypeBO.OrderDate = orderTypeDO.OrderDate ?? throw new BO.ExceptionNull();
                     orderTypeBO.DeliveryDate = orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull();
-                    if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), Convert.ToDateTime(orderTypeDO.OrderDate)) >= 0)
-                        orderTypeBO.Status = BO.OrderStatus.SendOrder;
-                    else if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), Convert.ToDateTime(orderTypeDO.OrderDate)) >= 0)
+                    if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), Convert.ToDateTime(orderTypeDO.ShipDate)) >= 0)
                         orderTypeBO.Status = BO.OrderStatus.ProvidedCustomerOrder;
+                    else if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), Convert.ToDateTime(orderTypeDO.OrderDate)) >= 0)
+                        orderTypeBO.Status = BO.OrderStatus.SendOrder;
                     else
                         orderTypeBO.Status = BO.OrderStatus.ConfirmedOrder;
                     orderTypeBO.Items = orderItem.ToList();

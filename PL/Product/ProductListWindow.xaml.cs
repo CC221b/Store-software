@@ -31,12 +31,14 @@ namespace PL.Product
 
         public void WindowProductForListRefresh(Func<DO.Product, bool>? func = null)
         {
+            btnShowAllProducts.Visibility = Visibility.Hidden;
             _productForListCollection.Clear();
             blp.Product.GetAll(func).ToList().ForEach(product => _productForListCollection.Add(product));
         }
 
         public void WindowProductItemsRefresh(Func<DO.Product, bool>? func = null)
         {
+            btnShowAllProducts.Visibility = Visibility.Hidden;
             _productItemCollection.Clear();
             blp.Product.GetCatalog(func).ToList().ForEach(product => _productItemCollection.Add(product));
         }
@@ -71,6 +73,7 @@ namespace PL.Product
                 WindowProductForListRefresh(item => (item.Category == null ? null : (int)item.Category) == Convert.ToInt32(selectedCategory));
             else
                 WindowProductItemsRefresh(item => (item.Category == null ? null : (int)item.Category) == Convert.ToInt32(selectedCategory));
+            btnShowAllProducts.Visibility = Visibility.Visible;
         }
 
         private void ProductsListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -121,6 +124,14 @@ namespace PL.Product
             new Cart.CartWindow(blp).ShowDialog();
             MainWindow.cart = new();
             MainWindow.cart.Items = new();
+        }
+
+        private void btnShowAllProducts_Click(object sender, RoutedEventArgs e)
+        {
+            if (status == "Admin")
+                WindowProductForListRefresh();
+            else
+                WindowProductItemsRefresh();
         }
     }
 }

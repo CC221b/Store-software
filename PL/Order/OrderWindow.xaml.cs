@@ -35,6 +35,14 @@ namespace PL.Order
                 btnUpdateDeliveryDate.Visibility = Visibility.Hidden;
                 btnUpdateShipDate.Visibility = Visibility.Hidden;
             }
+            if (order.Status >= BO.OrderStatus.SendOrder)
+            {
+                btnUpdateShipDate.IsEnabled = false;
+            }
+            if (order.Status == BO.OrderStatus.ProvidedCustomerOrder)
+            {
+                btnUpdateDeliveryDate.IsEnabled = false;
+            }
         }
 
         private void btnUpdateShipDate_Click(object sender, RoutedEventArgs e)
