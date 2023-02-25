@@ -64,13 +64,6 @@
     <InStock>49</InStock>
   </Product>
   <Product>
-    <ID>575414</ID>
-    <Name>Electro_acoustic_Guitar</Name>
-    <Price>900</Price>
-    <Category>Stringed</Category>
-    <InStock>66</InStock>
-  </Product>
-  <Product>
     <ID>575419</ID>
     <Name>Bass_Drumt</Name>
     <Price>600</Price>
@@ -90,5 +83,12 @@
     <Price>526</Price>
     <Category>Percussion</Category>
     <InStock>121</InStock>
+  </Product>
+  <Product>
+    <ID>575414</ID>
+    <Name>Electro_acoustic_Guitar</Name>
+    <Price>900</Price>
+    <Category>Stringed</Category>
+    <InStock>65</InStock>
   </Product>
 </Products>

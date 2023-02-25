@@ -46,7 +46,7 @@ namespace PL
 
         private void btnShowProductsAdmin_Click(object sender, RoutedEventArgs e)
         {
-            new Product.ProductListWindow(bl, "Admin").Show();
+            new Product.ProductListWindow(bl, "Admin").ShowDialog();
         }
 
         private void btnShowOrdersAdmin_Click(object sender, RoutedEventArgs e)
@@ -80,7 +80,7 @@ namespace PL
 
         private void btnStartSimulator_Click(object sender, RoutedEventArgs e)
         {
-            new Order.SimulatorWindow().Show();
+            new SimulatorWin.SimulatorWindow().Show();
         }
     }
 }

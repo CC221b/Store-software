@@ -15,27 +15,30 @@ internal class BlOrder : IOrder
     /// <exception cref="BO.ExceptionFromDal"></exception>
     public IEnumerable<BO.OrderForList> GetAll(Func<DO.Order, bool>? func = null)
     {
-        try
+        lock (Dal ?? throw new BO.ExceptionNull())
         {
-            return (from item in Dal?.Order.GetAll(func)
-                    let orderItems = Dal?.OrderItem.GetByOrderID(item.ID)
-                    let resultCompareShipDate = DateTime.Compare(item.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now)
-                    let resultCompareDeliveryDate = DateTime.Compare(item.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now)
-                    select new BO.OrderForList()
-                    {
-                        ID = item.ID,
-                        CustomerName = item.CustomerName,
-                        Status =
-                         resultCompareShipDate <= 0 ? BO.OrderStatus.SendOrder :
-                         resultCompareDeliveryDate <= 0 ? BO.OrderStatus.ProvidedCustomerOrder :
-                         BO.OrderStatus.ConfirmedOrder,
-                        AmountOfItems = orderItems != null ? orderItems.Count() : throw new BO.ExceptionNull(),
-                        TotalPrice = orderItems != null ? orderItems.Sum(item => item.Price) : throw new BO.ExceptionNull()
-                    });
-        }
-        catch (Exception ex)
-        {
-            throw new BO.ExceptionFromDal(ex);
+            try
+            {
+                return (from item in Dal?.Order.GetAll(func)
+                        let orderItems = Dal?.OrderItem.GetByOrderID(item.ID)
+                        let resultCompareShipDate = DateTime.Compare(item.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now)
+                        let resultCompareDeliveryDate = DateTime.Compare(item.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now)
+                        select new BO.OrderForList()
+                        {
+                            ID = item.ID,
+                            CustomerName = item.CustomerName,
+                            Status =
+                             resultCompareShipDate <= 0 ? BO.OrderStatus.SendOrder :
+                             resultCompareDeliveryDate <= 0 ? BO.OrderStatus.ProvidedCustomerOrder :
+                             BO.OrderStatus.ConfirmedOrder,
+                            AmountOfItems = orderItems != null ? orderItems.Count() : throw new BO.ExceptionNull(),
+                            TotalPrice = orderItems != null ? orderItems.Sum(item => item.Price) : throw new BO.ExceptionNull()
+                        });
+            }
+            catch (Exception ex)
+            {
+                throw new BO.ExceptionFromDal(ex);
+            }
         }
     }
 
@@ -51,40 +54,43 @@ internal class BlOrder : IOrder
     /// <exception cref="BO.ExceptionInvalidID"></exception>
     public BO.Order Get(int id)
     {
-        if (id > 0)
+        lock (Dal ?? throw new BO.ExceptionNull())
         {
-            try
+            if (id > 0)
             {
-                DO.Order orderTypeDO = new DO.Order();
-                BO.Order orderTypeBO = new BO.Order();
-                orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
-                IEnumerable<DO.OrderItem> orderItem = new List<DO.OrderItem>();
-                orderItem = Dal.OrderItem.GetByOrderID(orderTypeDO.ID);
-                orderTypeBO.ID = orderTypeDO.ID;
-                orderTypeBO.CustomerName = orderTypeDO.CustomerName;
-                orderTypeBO.CustomerAdress = orderTypeDO.CustomerAdress;
-                orderTypeBO.CustomerEmail = orderTypeDO.CustomerEmail;
-                orderTypeBO.ShipDate = orderTypeDO.ShipDate ?? throw new BO.ExceptionNull();
-                orderTypeBO.OrderDate = orderTypeDO.OrderDate ?? throw new BO.ExceptionNull();
-                orderTypeBO.DeliveryDate = orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull();
-                if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), Convert.ToDateTime(orderTypeDO.OrderDate)) >= 0)
-                    orderTypeBO.Status = BO.OrderStatus.SendOrder;
-                else if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), Convert.ToDateTime(orderTypeDO.OrderDate)) >= 0)
-                    orderTypeBO.Status = BO.OrderStatus.ProvidedCustomerOrder;
-                else
-                    orderTypeBO.Status = BO.OrderStatus.ConfirmedOrder;
-                orderTypeBO.Items = orderItem.ToList();
-                double sum = 0;
-                sum = orderItem.Sum(item => item.Price);
-                orderTypeBO.TotalPrice = sum;
-                return orderTypeBO;
+                try
+                {
+                    DO.Order orderTypeDO = new DO.Order();
+                    BO.Order orderTypeBO = new BO.Order();
+                    orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
+                    IEnumerable<DO.OrderItem> orderItem = new List<DO.OrderItem>();
+                    orderItem = Dal.OrderItem.GetByOrderID(orderTypeDO.ID);
+                    orderTypeBO.ID = orderTypeDO.ID;
+                    orderTypeBO.CustomerName = orderTypeDO.CustomerName;
+                    orderTypeBO.CustomerAdress = orderTypeDO.CustomerAdress;
+                    orderTypeBO.CustomerEmail = orderTypeDO.CustomerEmail;
+                    orderTypeBO.ShipDate = orderTypeDO.ShipDate ?? throw new BO.ExceptionNull();
+                    orderTypeBO.OrderDate = orderTypeDO.OrderDate ?? throw new BO.ExceptionNull();
+                    orderTypeBO.DeliveryDate = orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull();
+                    if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), Convert.ToDateTime(orderTypeDO.OrderDate)) >= 0)
+                        orderTypeBO.Status = BO.OrderStatus.SendOrder;
+                    else if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), Convert.ToDateTime(orderTypeDO.OrderDate)) >= 0)
+                        orderTypeBO.Status = BO.OrderStatus.ProvidedCustomerOrder;
+                    else
+                        orderTypeBO.Status = BO.OrderStatus.ConfirmedOrder;
+                    orderTypeBO.Items = orderItem.ToList();
+                    double sum = 0;
+                    sum = orderItem.Sum(item => item.Price);
+                    orderTypeBO.TotalPrice = sum;
+                    return orderTypeBO;
+                }
+                catch (Exception ex)
+                {
+                    throw new BO.ExceptionFromDal(ex);
+                }
             }
-            catch (Exception ex)
-            {
-                throw new BO.ExceptionFromDal(ex);
-            }
+            throw new BO.ExceptionInvalidID();
         }
-        throw new BO.ExceptionInvalidID();
     }
 
     /// <summary>
@@ -98,24 +104,27 @@ internal class BlOrder : IOrder
     /// <exception cref="BO.ExceptionNotExists"></exception>
     public BO.Order UpdateOrderShipping(int id)
     {
-        try
+        lock (Dal ?? throw new BO.ExceptionNull())
         {
-            DO.Order orderTypeDO = new DO.Order();
-            orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
-            if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now) < 0)
+            try
             {
-                BO.Order orderTypeBO = new BO.Order();
-                orderTypeDO.ShipDate = DateTime.Now;
-                Dal.Order.Update(orderTypeDO);
-                orderTypeBO = Get(id);
-                return orderTypeBO;
+                DO.Order orderTypeDO = new DO.Order();
+                orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
+                if (DateTime.Compare(orderTypeDO.ShipDate ?? throw new BO.ExceptionNull(), DateTime.Now) < 0)
+                {
+                    BO.Order orderTypeBO = new BO.Order();
+                    orderTypeDO.ShipDate = DateTime.Now;
+                    Dal.Order.Update(orderTypeDO);
+                    orderTypeBO = Get(id);
+                    return orderTypeBO;
+                }
             }
+            catch (Exception ex)
+            {
+                throw new BO.ExceptionFromDal(ex);
+            }
+            throw new BO.ExceptionNotExists();
         }
-        catch (Exception ex)
-        {
-            throw new BO.ExceptionFromDal(ex);
-        }
-        throw new BO.ExceptionNotExists();
     }
 
     /// <summary>
@@ -129,45 +138,51 @@ internal class BlOrder : IOrder
     /// <exception cref="BO.ExceptionNotExists"></exception>
     public BO.Order UpdateOrderDelivery(int id)
     {
-        try
+        lock (Dal ?? throw new BO.ExceptionNull())
         {
-            DO.Order orderTypeDO = new DO.Order();
-            orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
-            if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now) < 0)
+            try
             {
-                BO.Order orderTypeBO = new BO.Order();
-                orderTypeDO.DeliveryDate = DateTime.Now;
-                Dal.Order.Update(orderTypeDO);
-                orderTypeBO = Get(id);
-                return orderTypeBO;
+                DO.Order orderTypeDO = new DO.Order();
+                orderTypeDO = Dal?.Order.Get(id) ?? throw new BO.ExceptionNull();
+                if (DateTime.Compare(orderTypeDO.DeliveryDate ?? throw new BO.ExceptionNull(), DateTime.Now) < 0)
+                {
+                    BO.Order orderTypeBO = new BO.Order();
+                    orderTypeDO.DeliveryDate = DateTime.Now;
+                    Dal.Order.Update(orderTypeDO);
+                    orderTypeBO = Get(id);
+                    return orderTypeBO;
+                }
             }
+            catch (Exception ex)
+            {
+                throw new BO.ExceptionFromDal(ex);
+            }
+            throw new BO.ExceptionNotExists();
         }
-        catch (Exception ex)
-        {
-            throw new BO.ExceptionFromDal(ex);
-        }
-        throw new BO.ExceptionNotExists();
     }
 
     public BO.OrderTracking GetOrderTracking(int id)
     {
-        BO.Order order = new BO.Order();
-        BO.OrderTracking orderTracking = new BO.OrderTracking();
-        orderTracking.DateAndStatus = new();
-        try
+        lock (Dal ?? throw new BO.ExceptionNull())
         {
-            order = Get(id);
+            BO.Order order = new BO.Order();
+            BO.OrderTracking orderTracking = new BO.OrderTracking();
+            orderTracking.DateAndStatus = new();
+            try
+            {
+                order = Get(id);
+            }
+            catch (Exception ex)
+            {
+                throw new BO.ExceptionFromDal(ex);
+            }
+            orderTracking.ID = id;
+            orderTracking.Status = order.Status;
+            if (order.Status >= BO.OrderStatus.ConfirmedOrder) orderTracking?.DateAndStatus?.Add(order.OrderDate, "ConfirmedOrder");
+            if (order.Status >= BO.OrderStatus.SendOrder) orderTracking?.DateAndStatus?.Add(order.ShipDate, "SendOrder");
+            if (order.Status >= BO.OrderStatus.ProvidedCustomerOrder) orderTracking?.DateAndStatus?.Add(order.DeliveryDate, "ProvidedCustomerOrder");
+            return orderTracking ?? throw new BO.ExceptionNull();
         }
-        catch (Exception ex)
-        {
-            throw new BO.ExceptionFromDal(ex);
-        }
-        orderTracking.ID = id;
-        orderTracking.Status = order.Status;
-        if (order.Status >= BO.OrderStatus.ConfirmedOrder) orderTracking?.DateAndStatus?.Add(order.OrderDate, "ConfirmedOrder");
-        if (order.Status >= BO.OrderStatus.SendOrder) orderTracking?.DateAndStatus?.Add(order.ShipDate, "SendOrder");
-        if (order.Status >= BO.OrderStatus.ProvidedCustomerOrder) orderTracking?.DateAndStatus?.Add(order.DeliveryDate, "ProvidedCustomerOrder");
-        return orderTracking ?? throw new BO.ExceptionNull();
     }
 
     /// <summary>
@@ -183,69 +198,72 @@ internal class BlOrder : IOrder
     /// <exception cref="Exception"></exception>
     public void Update(BO.Order order, string action, DO.OrderItem? orderItem = null, int newAmount = 0)
     {
-        BO.Order order1 = Get(order.ID);
-        if (action == "Add")
+        lock (Dal ?? throw new BO.ExceptionNull())
         {
-            try
+            BO.Order order1 = Get(order.ID);
+            if (action == "Add")
             {
-                DO.Product product = new DO.Product();
-                product = Dal?.Product.Get(orderItem?.ProductId ?? throw new BO.ExceptionNull()) ?? throw new BO.ExceptionNull();
-                if (product.InStock <= orderItem?.Amount)
+                try
                 {
-                    throw new BO.ExceptionOutOfStock();
+                    DO.Product product = new DO.Product();
+                    product = Dal?.Product.Get(orderItem?.ProductId ?? throw new BO.ExceptionNull()) ?? throw new BO.ExceptionNull();
+                    if (product.InStock <= orderItem?.Amount)
+                    {
+                        throw new BO.ExceptionOutOfStock();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new BO.ExceptionFromDal(ex);
+                }
+                if (orderItem != null)
+                    order1?.Items?.Add((DO.OrderItem)orderItem);
+                else
+                    throw new BO.ExceptionNull();
+            }
+            else if (action == "Delete")
+            {
+                try
+                {
+                    DO.OrderItem orderItem1 = new DO.OrderItem();
+                    orderItem1 = Dal?.OrderItem.GetByProductIDAndOrderID(Convert.ToInt32(orderItem?.ProductId), order1.ID) ?? throw new BO.ExceptionNull();
+                    if (order1.Status == BO.OrderStatus.ProvidedCustomerOrder)
+                    {
+                        order1?.Items?.Remove(orderItem1);
+                    }
+                    else
+                    {
+                        throw new BO.ExceptionOrderSent();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new BO.ExceptionFromDal(ex);
                 }
             }
-            catch (Exception ex)
-            {
-                throw new BO.ExceptionFromDal(ex);
-            }
-            if (orderItem != null)
-                order1?.Items?.Add((DO.OrderItem)orderItem);
             else
-                throw new BO.ExceptionNull();
-        }
-        else if (action == "Delete")
-        {
-            try
             {
-                DO.OrderItem orderItem1 = new DO.OrderItem();
-                orderItem1 = Dal?.OrderItem.GetByProductIDAndOrderID(Convert.ToInt32(orderItem?.ProductId), order1.ID) ?? throw new BO.ExceptionNull();
-                if (order1.Status == BO.OrderStatus.ProvidedCustomerOrder)
+                try
                 {
-                    order1?.Items?.Remove(orderItem1);
+                    DO.Product product = new DO.Product();
+                    product = Dal?.Product.Get(Convert.ToInt32(orderItem?.ProductId)) ?? throw new BO.ExceptionNull();
+                    DO.OrderItem orderItem1 = Dal.OrderItem.GetByProductIDAndOrderID(Convert.ToInt32(orderItem?.ProductId), order1.ID);
+                    if (product.InStock >= (newAmount > orderItem1.Amount ? newAmount - orderItem1.Amount : orderItem1.Amount - newAmount))
+                    {
+                        DO.OrderItem updateOrderItem = order1.Items != null ? order1.Items.Find(item => item.ID == orderItem1.ID) : throw new BO.ExceptionNull();
+                        order1.Items.Remove(orderItem1);
+                        updateOrderItem.Amount = newAmount;
+                        updateOrderItem.Price = product.Price * newAmount;
+                    }
+                    else
+                    {
+                        throw new BO.ExceptionOutOfStock();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    throw new BO.ExceptionOrderSent();
+                    throw new BO.ExceptionFromDal(ex);
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new BO.ExceptionFromDal(ex);
-            }
-        }
-        else
-        {
-            try
-            {
-                DO.Product product = new DO.Product();
-                product = Dal?.Product.Get(Convert.ToInt32(orderItem?.ProductId)) ?? throw new BO.ExceptionNull();
-                DO.OrderItem orderItem1 = Dal.OrderItem.GetByProductIDAndOrderID(Convert.ToInt32(orderItem?.ProductId), order1.ID);
-                if (product.InStock >= (newAmount > orderItem1.Amount ? newAmount - orderItem1.Amount : orderItem1.Amount - newAmount))
-                {
-                    DO.OrderItem updateOrderItem = order1.Items != null ? order1.Items.Find(item => item.ID == orderItem1.ID) : throw new BO.ExceptionNull();
-                    order1.Items.Remove(orderItem1);
-                    updateOrderItem.Amount = newAmount;
-                    updateOrderItem.Price = product.Price * newAmount;
-                }
-                else
-                {
-                    throw new BO.ExceptionOutOfStock();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new BO.ExceptionFromDal(ex);
             }
         }
     }
@@ -257,9 +275,12 @@ internal class BlOrder : IOrder
     /// <returns></returns>
     public int? GetOrderToSimulator()
     {
-        IEnumerable<DO.Order>? orders = Dal?.Order.GetAll()
+        lock (Dal ?? throw new BO.ExceptionNull())
+        {
+            IEnumerable<DO.Order>? orders = Dal?.Order.GetAll()
             .Where(order => order.DeliveryDate == DateTime.MinValue)
             .OrderBy(order => order.ShipDate != DateTime.MinValue ? order.ShipDate : order.OrderDate);
-        return orders?.Any() ?? false ? orders?.First().ID : null;
+            return orders?.Any() ?? false ? orders?.First().ID : null;
+        }
     }
 }
