@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="OrderWindow" Height="450" Width="800">
     <Grid>
+        <Grid.Background>
+            <ImageBrush/>
+        </Grid.Background>
         <Label Name="lblID" Content="ID" HorizontalAlignment="Left" Height="32" Margin="30,10,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Name="lblCustomerName" Content="CustomerName" HorizontalAlignment="Left" Height="32" Margin="30,45,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Name="lblCustomerEmail" Content="CustomerEmail" HorizontalAlignment="Left" Height="32" Margin="30,80,0,0" VerticalAlignment="Top" Width="100"/>
@@ -29,5 +32,10 @@
         <ListBox Name="itemsListView" HorizontalAlignment="Left" Height="83" Margin="176,325,0,0" VerticalAlignment="Top" Width="150" d:ItemsSource="{Binding Path=Items}" IsEnabled="False"/>
         <Button Name="btnUpdateShipDate" Content="UpdateShipDate" HorizontalAlignment="Left" Height="30" Margin="347,185,0,0" VerticalAlignment="Top" Width="136" Click="btnUpdateShipDate_Click"/>
         <Button Name="btnUpdateDeliveryDate" Content="UpdateDeliveryDate" HorizontalAlignment="Left" Height="30" Margin="347,220,0,0" VerticalAlignment="Top" Width="136" Click="btnUpdateDeliveryDate_Click"/>
+        <Grid>
+            <Grid.Background>
+                <ImageBrush/>
+            </Grid.Background>
+        </Grid>
     </Grid>
 </Window>

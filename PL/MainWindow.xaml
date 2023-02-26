@@ -10,21 +10,38 @@
         <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
     <Grid>
-        <Grid Visibility="{Binding AdminWindowVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Button Name="btnShowProductsAdmin" Content="ShowProducts" HorizontalAlignment="Left" Height="41" Margin="82,15,0,0" VerticalAlignment="Top" Width="120" Click="btnShowProductsAdmin_Click"/>
-            <Button Name="btnShowOrdersAdmin" Content="ShowOrders" HorizontalAlignment="Left" Height="41" Margin="240,15,0,0" VerticalAlignment="Top" Width="120" Click="btnShowOrdersAdmin_Click"/>
-            <Button Name="btnMainWindow" Content="return main window" HorizontalAlignment="Left" Height="41" Margin="623,362,0,0" VerticalAlignment="Top" Width="135" Click="btnMainWindow_Click"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="97*"/>
+            <RowDefinition Height="337*"/>
+            <RowDefinition Height="0*"/>
+            <RowDefinition Height="0*"/>
+        </Grid.RowDefinitions>
+        <Grid Visibility="{Binding AdminWindowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="-20,0,-54,-30" Grid.RowSpan="4">
+            <Grid.Background>
+                <ImageBrush ImageSource="/musi.jpg"/>
+            </Grid.Background>
+            <Button Name="btnShowProductsAdmin" Content="ShowProducts" HorizontalAlignment="Left" Height="41" Margin="57,340,0,0" VerticalAlignment="Top" Width="140" Click="btnShowProductsAdmin_Click"  Background="Black" Foreground="#FFE788D0" FontSize="18" FontWeight="Bold" RenderTransformOrigin="0.486,7.196"/>
+            <Button Name="btnShowOrdersAdmin" Content="ShowOrders" HorizontalAlignment="Left" Height="41" Margin="330,340,0,0" VerticalAlignment="Top" Width="120" Click="btnShowOrdersAdmin_Click"  Background="Black" Foreground="#FFE788D0" FontSize="18" FontWeight="Bold"/>
+            <Button Name="btnMainWindow" Content="return main window" HorizontalAlignment="Left" Height="41" Margin="567,340,0,0" VerticalAlignment="Top" Width="204" Click="btnMainWindow_Click"  Background="Black" Foreground="#FFE788D0" FontSize="18" FontWeight="Bold"/>
         </Grid>
-        <Grid Visibility="{Binding UserWindowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,0,0,-36">
-            <Button Name="btnAdmin" Content="Admin" HorizontalAlignment="Left" Height="37" Margin="81,56,0,0" VerticalAlignment="Top" Width="122" Click="btnAdmin_Click"/>
-            <Button Name="btnNewOrder" Content="New Order" HorizontalAlignment="Left" Height="37" Margin="240,56,0,0" VerticalAlignment="Top" Width="122" Click="btnNewOrder_Click"/>
-            <Border BorderThickness="1" BorderBrush="Black" Height="120" Width="180" Margin="561,22,59,292">
-                <StackPanel Margin="-1,-1,11,11">
-                <Button Name="btnOrderTracking" Content="OrderTracking" HorizontalAlignment="Left" Height="37" Margin="28,20,0,0" VerticalAlignment="Top" Width="122" Click="btnOrderTracking_Click"/>
-                <TextBox Name="txtOrderTracking" HorizontalAlignment="Left" Height="30" Margin="28,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="122" TextChanged="txtOrderTracking_TextChanged"/>
-                </StackPanel>
-            </Border>
-            <Button Name="btnStartSimulator" Content="StartSimulator" HorizontalAlignment="Left" Height="37" Margin="400,56,0,0" VerticalAlignment="Top" Width="122" Click="btnStartSimulator_Click" RenderTransformOrigin="0.399,0.539"/>
+        <Grid Visibility="{Binding UserWindowVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,10,-41,-30" Grid.RowSpan="4">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="0*"/>
+            </Grid.RowDefinitions>
+            <Grid.Background>
+                <ImageBrush ImageSource="/musi.jpg"/>
+            </Grid.Background>
+            <Button Name="btnAdmin" Content="Admin" HorizontalAlignment="Left" Height="37" Margin="52,343,0,0" VerticalAlignment="Top" Width="122" Click="btnAdmin_Click"  Background="Black" Foreground="#FFE788D0" FontSize="18" FontWeight="Bold"/>
+            <Button Content="New Order" HorizontalAlignment="Left" Height="37" Margin="215,343,0,0" VerticalAlignment="Top" Width="122" Click="btnNewOrder_Click"  Background="Black" Foreground="#FFE788D0" FontSize="18" FontWeight="Bold"/>
+
+            <Grid>
+                <TextBox Name="txtOrderTracking" Height="34" Margin="573,343,127,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" TextChanged="txtOrderTracking_TextChanged" FontSize="18" FontWeight="Bold" BorderBrush="Black"/>
+                <Button Name="btnOrderTracking" Content="orderTracking" HorizontalAlignment="Left" Height="34" Margin="690,343,0,0" VerticalAlignment="Top" Width="128" Click="btnOrderTracking_Click" RenderTransformOrigin="0.489,-0.205"  Background="Black" Foreground="#FFE788D0" FontSize="18" FontWeight="Bold"/>
+
+            </Grid>
+
+            <Button Name="btnStartSimulator" Content="StartSimulator" HorizontalAlignment="Left" Height="37" Margin="378,343,0,0" VerticalAlignment="Top" Width="146" Click="btnStartSimulator_Click" RenderTransformOrigin="0.399,0.539"  Background="Black" Foreground="#FFE788D0" FontSize="18" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>

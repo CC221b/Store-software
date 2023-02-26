@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="800">
     <Grid Name="MainGrid">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Product/musi.jpg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="50*"/>
@@ -21,10 +24,10 @@
             </Grid.ColumnDefinitions >
             <ComboBox Name="CategorySelector" ItemsSource="{Binding}" Grid.Column="1"  HorizontalAlignment="Stretch" Height="21" Margin="0,31,0,0" VerticalAlignment="Stretch" Width="136" SelectionChanged="CategorySelector_SelectionChanged"/>
             <Label Name="lblCategorySelector" Grid.Column="1" Content="Choose a category:" HorizontalAlignment="Left" Height="36" Margin="32,68,0,0" VerticalAlignment="Top" Width="139"/>
-            <Label Name="lblProductList" Content="ProductList" HorizontalAlignment="Center" Height="44" Margin="0,76,0,0" VerticalAlignment="Top" Width="152" FontWeight="Bold" FontSize="18"/>
-            <Button Name="btnShowAllProducts" Grid.Column="2" Content="Show All" HorizontalAlignment="Left" Height="26" Margin="0,104,0,0" VerticalAlignment="Top" Width="70" Click="btnShowAllProducts_Click"/>
+            <Label Name="lblProductList" Content="ProductList" HorizontalAlignment="Center" Height="44" Margin="0,76,0,0" VerticalAlignment="Top" Width="152" FontWeight="Bold" FontSize="18" Foreground="#FFEFBEE1"/>
+            <Button Name="btnShowAllProducts" Grid.Column="2" Content="Show All" HorizontalAlignment="Left" Height="26" Margin="0,104,0,0" VerticalAlignment="Top" Width="70" Click="btnShowAllProducts_Click" Background="Black" Foreground="#FFFD9DDE"/>
         </Grid>
-        <ListView x:Name="ProductForListListview" ItemsSource="{Binding UpdateSourceTrigger=LostFocus}" Margin="55,26,292,36" Grid.RowSpan="2" MouseDoubleClick="ProductsListview_MouseDoubleClick" Grid.Row="1">
+        <ListView x:Name="ProductForListListview" ItemsSource="{Binding UpdateSourceTrigger=LostFocus}" Margin="55,26,292,36" Grid.RowSpan="2" MouseDoubleClick="ProductsListview_MouseDoubleClick" Grid.Row="1" Background="#E5FFFFFF">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="70" DisplayMemberBinding="{Binding ID}" />
@@ -34,9 +37,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Name="btnAddProduct" Content="AddProduct" Visibility="{Binding ElementName=ProductForListListview, Path=Visibility}" HorizontalAlignment="Left" Height="51" Margin="528,26,0,0" Grid.Row="1" VerticalAlignment="Top" Width="152" Click="btnAddProduct_Click"/>
-        <Button Name="btnGoToCart" Content="Go to cart" Visibility="{Binding ElementName=ProductItemsListview, Path=Visibility}" HorizontalAlignment="Left" Height="46" Margin="633,126,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Click="btnGoToCart_Click"/>
-        <ListView x:Name="ProductItemsListview" ItemsSource="{Binding UpdateSourceTrigger=LostFocus}" Margin="12,26,272,36" Grid.Row="1" Grid.RowSpan="2" MouseDoubleClick="ProductsListview_MouseDoubleClick">
+        <Button Name="btnAddProduct" Content="AddProduct" Visibility="{Binding ElementName=ProductForListListview, Path=Visibility}" HorizontalAlignment="Left" Height="51" Margin="633,38,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Click="btnAddProduct_Click" Foreground="#FFFFD0F6" Background="Black"/>
+        <Button Name="btnGoToCart" Content="Go to cart" Visibility="{Binding ElementName=ProductItemsListview, Path=Visibility}" HorizontalAlignment="Left" Height="46" Margin="633,126,0,0" Grid.Row="2" VerticalAlignment="Top" Width="127" Click="btnGoToCart_Click" Background="Black" Foreground="#FFFECFF1"/>
+        <ListView x:Name="ProductItemsListview" ItemsSource="{Binding UpdateSourceTrigger=LostFocus}" Margin="55,26,229,36" Grid.RowSpan="2" MouseDoubleClick="ProductsListview_MouseDoubleClick" Background="#E5FFFFFF" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="70" DisplayMemberBinding="{Binding ID}" />

@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="UpdateItemInCartWindow" Height="200" Width="400">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Cart/musi.jpg"/>
+        </Grid.Background>
         <TextBox Name="txtUpdateAmount" HorizontalAlignment="Left" Height="40" Margin="40,52,0,0" TextWrapping="Wrap" Text="{Binding newAmount, Mode=OneWayToSource, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}"  VerticalAlignment="Top" Width="137"/>
-        <Button Name="btnUpdateAmount" Content="UpdateAmount" HorizontalAlignment="Left" Height="40" Margin="196,52,0,0" VerticalAlignment="Top" Width="137" Click="btnUpdateAmount_Click"/>
+        <Button Name="btnUpdateAmount" Content="UpdateAmount" HorizontalAlignment="Left" Height="40" Margin="196,52,0,0" VerticalAlignment="Top" Width="147" Click="btnUpdateAmount_Click"  Background="Black" Foreground="#FFE788D0" FontSize="14" FontWeight="Bold"/>
     </Grid>
 </Window>

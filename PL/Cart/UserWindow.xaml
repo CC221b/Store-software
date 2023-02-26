@@ -7,12 +7,15 @@
         mc:Ignorable="d"
         Title="UserWindow" Height="450" Width="800">
     <Grid>
-        <Label Name="lblCustomerName" Content="CustomerName:" HorizontalAlignment="Left" Height="27" Margin="223,60,0,0" VerticalAlignment="Top" Width="119" FontSize="14" FontWeight="Bold"/>
-        <Label Name="lblCustomerEmail" Content="CustomerEmail:" HorizontalAlignment="Left" Height="27" Margin="223,100,0,0" VerticalAlignment="Top" Width="119" FontSize="14" FontWeight="Bold"/>
-        <Label Name="lblCustomerAdress" Content="CustomerAdress:" HorizontalAlignment="Left" Height="27" Margin="223,140,0,0" VerticalAlignment="Top" Width="119" FontSize="14" FontWeight="Bold"/>
-        <TextBox Name="txtCustomerName" HorizontalAlignment="Left" Height="27" Margin="361,60,0,0" TextWrapping="Wrap" Text="{Binding Path=customerName, Mode=TwoWay}" VerticalAlignment="Top" Width="108"/>
-        <TextBox Name="txtCustomerEmail" HorizontalAlignment="Left" Height="27" Margin="361,100,0,0" TextWrapping="Wrap" Text="{Binding Path=customerEmail, Mode=TwoWay}" VerticalAlignment="Top" Width="108"/>
-        <TextBox Name="txtCustomerAdress" HorizontalAlignment="Left" Height="27" Margin="361,140,0,0" TextWrapping="Wrap" Text="{Binding Path=customerAdress, Mode=TwoWay}" VerticalAlignment="Top" Width="108"/>
-        <Button Name="btnConfirmationFillingTheDetails" Content="OK" HorizontalAlignment="Left" Height="27" Margin="361,193,0,0" VerticalAlignment="Top" Width="108" Click="btnConfirmationFillingTheDetails_Click"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Cart/musi.jpg"/>
+        </Grid.Background>
+        <Label Name="lblCustomerName" Content="CustomerName:" HorizontalAlignment="Left" Height="27" Margin="31,40,0,0" VerticalAlignment="Top" Width="119" FontSize="14" FontWeight="Bold"/>
+        <Label Name="lblCustomerEmail" Content="CustomerEmail:" HorizontalAlignment="Left" Height="26" Margin="31,74,0,0" VerticalAlignment="Top" Width="119" FontSize="14" FontWeight="Bold"/>
+        <Label Name="lblCustomerAdress" Content="CustomerAdress:" HorizontalAlignment="Left" Height="26" Margin="31,114,0,0" VerticalAlignment="Top" Width="119" FontSize="14" FontWeight="Bold"/>
+        <TextBox Name="txtCustomerName" HorizontalAlignment="Left" Height="27" Margin="203,40,0,0" TextWrapping="Wrap" Text="{Binding Path=customerName, Mode=TwoWay}" VerticalAlignment="Top" Width="108" Background="Transparent"/>
+        <TextBox Name="txtCustomerEmail" HorizontalAlignment="Left" Height="27" Margin="203,74,0,0" TextWrapping="Wrap" Text="{Binding Path=customerEmail, Mode=TwoWay}" VerticalAlignment="Top" Width="108" Background="Transparent"/>
+        <TextBox Name="txtCustomerAdress" HorizontalAlignment="Left" Height="27" Margin="203,106,0,0" TextWrapping="Wrap" Text="{Binding Path=customerAdress, Mode=TwoWay}" VerticalAlignment="Top" Width="108" Background="Transparent"/>
+        <Button Name="btnConfirmationFillingTheDetails" Content="OK" HorizontalAlignment="Left" Height="27" Margin="107,162,0,0" VerticalAlignment="Top" Width="108" Click="btnConfirmationFillingTheDetails_Click"  Background="Black" Foreground="#FFE788D0" FontSize="18" FontWeight="Bold"/>
     </Grid>
 </Window>

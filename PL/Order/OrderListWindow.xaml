@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="OrderListWindow" Height="450" Width="800">
     <Grid Name="MainGrid">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Order/musi.jpg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="50*"/>
@@ -19,9 +22,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <Label Name="lblOrderList" Content="OrderList" HorizontalAlignment="Center" Height="41" Margin="0,22,0,0" VerticalAlignment="Top" Width="164" RenderTransformOrigin="0.641,0.054" FontWeight="Bold" FontSize="18"/>
+            <Label Name="lblOrderList" Content="OrderList" HorizontalAlignment="Center" Height="41" Margin="0,22,0,0" VerticalAlignment="Top" Width="164" RenderTransformOrigin="0.641,0.054" FontWeight="Bold" FontSize="28" Foreground="#FFFF00B1"/>
         </Grid>
-        <ListView x:Name="OrderListview" ItemsSource="{Binding}" Margin="10,26,271,36" Grid.Row="1" Grid.RowSpan="2" MouseDoubleClick="OrderListview_MouseDoubleClick">
+        <ListView x:Name="OrderListview" ItemsSource="{Binding}" Margin="10,26,271,36" Grid.Row="1" Grid.RowSpan="2" MouseDoubleClick="OrderListview_MouseDoubleClick" Background="#E5FFFFFF">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="70" DisplayMemberBinding="{Binding ID}" />

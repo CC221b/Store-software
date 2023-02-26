@@ -90,7 +90,7 @@ internal class Product : IProduct
             {
                 ID = Convert.ToInt32(product?.Element("ID")?.Value),
                 Name = product?.Element("Name")?.Value,
-                Price = Convert.ToInt32(product?.Element("Price")?.Value),
+                Price = Convert.ToDouble(product?.Element("Price")?.Value),
                 Category = DO.Categories.TryParse(product?.Element("Category")?.Value, out DO.Categories category) ? (DO.Categories)category : 0,
                 InStock = Convert.ToInt32(product?.Element("InStock")?.Value)
             };
@@ -117,7 +117,7 @@ internal class Product : IProduct
                                            {
                                                ID = Convert.ToInt32(product?.Element("ID")?.Value),
                                                Name = product?.Element("Name")?.Value,
-                                               Price = Convert.ToInt32(product?.Element("Price")?.Value),
+                                               Price = Convert.ToDouble(product?.Element("Price")?.Value),
                                                Category = category,
                                                InStock = Convert.ToInt32(product?.Element("InStock")?.Value)
                                            };

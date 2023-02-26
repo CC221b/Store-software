@@ -133,5 +133,10 @@ namespace PL.Product
             else
                 WindowProductItemsRefresh();
         }
+
+        private void ProductItemsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

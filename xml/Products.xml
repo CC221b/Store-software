@@ -22,27 +22,6 @@
     <InStock>87</InStock>
   </Product>
   <Product>
-    <ID>575421</ID>
-    <Name>Upright_Piano</Name>
-    <Price>11000</Price>
-    <Category>Percussion</Category>
-    <InStock>26</InStock>
-  </Product>
-  <Product>
-    <ID>575418</ID>
-    <Name>Contra_alto_Clarinet</Name>
-    <Price>620</Price>
-    <Category>Wind</Category>
-    <InStock>87</InStock>
-  </Product>
-  <Product>
-    <ID>575423</ID>
-    <Name>Five_string_Violin</Name>
-    <Price>400</Price>
-    <Category>Stringed</Category>
-    <InStock>35</InStock>
-  </Product>
-  <Product>
     <ID>575417</ID>
     <Name>Bass_Clarinet</Name>
     <Price>22000</Price>
@@ -64,13 +43,6 @@
     <InStock>41</InStock>
   </Product>
   <Product>
-    <ID>575416</ID>
-    <Name>Pocket_Trumpet</Name>
-    <Price>3700</Price>
-    <Category>Stringed</Category>
-    <InStock>13</InStock>
-  </Product>
-  <Product>
     <ID>8888</ID>
     <Name>jjjjj</Name>
     <Price>526</Price>
@@ -85,17 +57,59 @@
     <InStock>65</InStock>
   </Product>
   <Product>
-    <ID>125478</ID>
-    <Name>gitur</Name>
-    <Price>500</Price>
-    <Category></Category>
-    <InStock>40</InStock>
-  </Product>
-  <Product>
     <ID>575420</ID>
     <Name>Grand_Piano</Name>
     <Price>1450</Price>
     <Category>Keyboard</Category>
     <InStock>96</InStock>
+  </Product>
+  <Product>
+    <ID>123333</ID>
+    <Name>efraat piano</Name>
+    <Price>1.25</Price>
+    <Category></Category>
+    <InStock>22</InStock>
+  </Product>
+  <Product>
+    <ID>123321</ID>
+    <Name>efrat piano</Name>
+    <Price>100</Price>
+    <Category></Category>
+    <InStock>50</InStock>
+  </Product>
+  <Product>
+    <ID>575418</ID>
+    <Name>Contra_alto_Clarinet</Name>
+    <Price>620</Price>
+    <Category>Wind</Category>
+    <InStock>86</InStock>
+  </Product>
+  <Product>
+    <ID>125478</ID>
+    <Name>gitur</Name>
+    <Price>500</Price>
+    <Category>Percussion</Category>
+    <InStock>39</InStock>
+  </Product>
+  <Product>
+    <ID>575416</ID>
+    <Name>Pocket_Trumpet</Name>
+    <Price>3700</Price>
+    <Category>Stringed</Category>
+    <InStock>12</InStock>
+  </Product>
+  <Product>
+    <ID>575421</ID>
+    <Name>Upright_Piano</Name>
+    <Price>11000</Price>
+    <Category>Percussion</Category>
+    <InStock>25</InStock>
+  </Product>
+  <Product>
+    <ID>575423</ID>
+    <Name>Five_string_Violin</Name>
+    <Price>400</Price>
+    <Category>Stringed</Category>
+    <InStock>35</InStock>
   </Product>
 </Products>

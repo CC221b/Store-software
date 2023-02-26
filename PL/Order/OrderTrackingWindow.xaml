@@ -10,15 +10,21 @@
         <Label Name="lblOrderTracking" Content="OrderTracking:" HorizontalAlignment="Left" Height="30" Margin="32,10,0,0" VerticalAlignment="Top" Width="141" FontSize="16" FontWeight="Bold"/>
         <Label Name="lblOrderID" Content="OrderId:" HorizontalAlignment="Left" Height="28" Margin="34,45,0,0" VerticalAlignment="Top" Width="111"/>
         <TextBox Name="txtOrderID" HorizontalAlignment="Left" Height="28" Margin="102,45,0,0" TextWrapping="Wrap" Text="{Binding Path=ID}" VerticalAlignment="Top" Width="54"/>
-        <Grid Visibility="{Binding isVisibleForExistsOrderWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}">
-            <DataGrid Name="orderTrackingDataGrid" ItemsSource="{Binding Path=DateAndStatus}" HorizontalAlignment="Left" Height="139" Margin="34,127,0,0" VerticalAlignment="Top" Width="290" d:ItemsSource="{d:SampleData ItemCount=3}"/>
-            <Label Name="lblOrderStatus" Content="OrderStatus:" HorizontalAlignment="Left" Height="49" Margin="34,88,0,0" VerticalAlignment="Top" Width="120"/>
-            <TextBox Name="txtOrderStatus" HorizontalAlignment="Left" Height="28" Margin="129,88,0,0" TextWrapping="Wrap" Text="{Binding Path=Status}" VerticalAlignment="Top" Width="150" RenderTransformOrigin="-0.055,0.654"/>
-            <Button Name="btnOrderData" Content="OrderData" HorizontalAlignment="Left" Height="34" Margin="645,25,0,0" VerticalAlignment="Top" Width="113" Click="btnOrderData_Click"/>
+        <Grid Visibility="{Binding isVisibleForExistsOrderWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}" Margin="0,-4,0,4">
+            <Grid.Background>
+                <ImageBrush ImageSource="/Order/musi.jpg"/>
+            </Grid.Background>
+            <DataGrid Name="orderTrackingDataGrid" ItemsSource="{Binding Path=DateAndStatus}" HorizontalAlignment="Left" Height="87" Margin="180,164,0,0" VerticalAlignment="Top" Width="381" d:ItemsSource="{d:SampleData ItemCount=3}" SelectionChanged="orderTrackingDataGrid_SelectionChanged" Background="#FFF6F6F6"/>
+            <Label Name="lblOrderStatus" Content="OrderStatus:" HorizontalAlignment="Left" Height="49" Margin="237,76,0,0" VerticalAlignment="Top" Width="120" Background="#00F0F0F0" Foreground="#FFF48AD4" FontSize="16" FontWeight="Bold"/>
+            <TextBox Name="txtOrderStatus" HorizontalAlignment="Left" Height="28" Margin="357,86,0,0" TextWrapping="Wrap" Text="{Binding Path=Status}" VerticalAlignment="Top" Width="150" RenderTransformOrigin="-0.055,0.654"/>
+            <Button Name="btnOrderData" Content="OrderData" HorizontalAlignment="Left" Height="34" Margin="645,25,0,0" VerticalAlignment="Top" Width="113" Click="btnOrderData_Click" Background="#FF192526" Foreground="#FFFFADE5" FontSize="16" FontWeight="Bold"/>
         </Grid>
-        <Grid Visibility="{Binding isVisibleForNotExistsOrderWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}">
+        <Grid Visibility="{Binding isVisibleForNotExistsOrderWindow, RelativeSource={RelativeSource FindAncestor , AncestorType=Window}}" Margin="10,10,0,0">
+            <Grid.Background>
+                <ImageBrush ImageSource="/Order/musi.jpg"/>
+            </Grid.Background>
             <Label Name="lblErrorMessage" Content="" HorizontalAlignment="Left" Height="34" Margin="34,84,0,0" VerticalAlignment="Top" Width="552"/>
-            <Button Name="btnOkExit" Content="OK" HorizontalAlignment="Left" Height="28" Margin="38,118,0,0" VerticalAlignment="Top" Width="52" Click="btnOkExit_Click"/>
+            <Button Name="btnOkExit" Content="OK" HorizontalAlignment="Left" Height="28" Margin="38,118,0,0" VerticalAlignment="Top" Width="52" Click="btnOkExit_Click" Background="Black" Foreground="#FFFBAAE6" FontSize="16" FontWeight="Bold"/>
         </Grid>
     </Grid>
 </Window>

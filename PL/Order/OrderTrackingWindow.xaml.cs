@@ -65,5 +65,10 @@ namespace PL.Order
         {
             Close();
         }
+
+        private void orderTrackingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

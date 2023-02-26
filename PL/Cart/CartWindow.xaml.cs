@@ -53,7 +53,7 @@ public partial class CartWindow : Window
         blp = bl;
         WindowRefresh();
         txtBlockInstructions.Text = "Instructions:\nWhen you want to update/delete an item from the basket," +
-            "\n you have to click on the item twice and then you are presented with a choice of which option to do.";
+            "you have to click on the item twice and then you are presented with a choice of which option to do.";
     }
 
     private void cartListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)

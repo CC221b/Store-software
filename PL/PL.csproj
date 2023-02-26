@@ -14,8 +14,30 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Cart\musi.jpg" />
+	  <None Remove="musi.jpg" />
+	  <None Remove="Order\mus.jpg" />
+	  <None Remove="Order\musi.jpg" />
+	  <None Remove="Order\מוזיקה.jpg" />
+	  <None Remove="Product\musi.jpg" />
+	  <None Remove="SimulatorWin\musi.jpg" />
+	  <None Remove="מוזיקה.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\BL\BL.csproj" />
 	  <ProjectReference Include="..\Simulator\SimulatorLib.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Cart\musi.jpg" />
+	  <Resource Include="musi.jpg" />
+	  <Resource Include="Order\mus.jpg" />
+	  <Resource Include="Order\musi.jpg" />
+	  <Resource Include="Order\מוזיקה.jpg" />
+	  <Resource Include="Product\musi.jpg" />
+	  <Resource Include="SimulatorWin\musi.jpg" />
+	  <Resource Include="מוזיקה.jpg" />
 	</ItemGroup>
 
 </Project>
