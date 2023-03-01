@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\325288785\\Source\\Repos\\dotNet5783_8785\\Stage0\\Stage0.csproj": {}
+    "C:\\Users\\325288785\\source\\repos\\dotNet5783_8785\\Stage0\\Stage0.csproj": {}
   },
   "projects": {
-    "C:\\Users\\325288785\\Source\\Repos\\dotNet5783_8785\\Stage0\\Stage0.csproj": {
+    "C:\\Users\\325288785\\source\\repos\\dotNet5783_8785\\Stage0\\Stage0.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\325288785\\Source\\Repos\\dotNet5783_8785\\Stage0\\Stage0.csproj",
+        "projectUniqueName": "C:\\Users\\325288785\\source\\repos\\dotNet5783_8785\\Stage0\\Stage0.csproj",
         "projectName": "Stage0",
-        "projectPath": "C:\\Users\\325288785\\Source\\Repos\\dotNet5783_8785\\Stage0\\Stage0.csproj",
+        "projectPath": "C:\\Users\\325288785\\source\\repos\\dotNet5783_8785\\Stage0\\Stage0.csproj",
         "packagesPath": "C:\\Users\\325288785\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\325288785\\Source\\Repos\\dotNet5783_8785\\Stage0\\obj\\",
+        "outputPath": "C:\\Users\\325288785\\source\\repos\\dotNet5783_8785\\Stage0\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\325288785\\AppData\\Roaming\\NuGet\\NuGet.Config",
